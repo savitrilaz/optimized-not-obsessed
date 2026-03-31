@@ -1,99 +1,115 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="My Dashboard">
-<title>My Dashboard</title>
+<meta name="apple-mobile-web-app-title" content="Optimized">
+<title>Optimized</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8f7f4;color:#1a1a18;max-width:480px;margin:0 auto;padding-bottom:60px}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8f7f4;color:#1a1a18;max-width:480px;margin:0 auto;padding-bottom:70px}
 .hdr{padding:20px 16px 0;display:flex;align-items:flex-start;justify-content:space-between}
-.tabs{display:flex;border-bottom:1px solid #e0dfd8;margin:14px 0 0;padding:0 16px;overflow-x:auto;scrollbar-width:none}
+.tabs{display:flex;border-bottom:1px solid #e0dfd8;margin:14px 0 0;padding:0 12px;overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
-.tab{padding:8px 13px;font-size:12px;cursor:pointer;border:none;background:none;color:#888780;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;flex-shrink:0}
+.tab{padding:8px 11px;font-size:12px;cursor:pointer;border:none;background:none;color:#888780;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;flex-shrink:0}
 .tab.on{color:#1a1a18;font-weight:500;border-bottom:2px solid #7F77DD}
 .pg{padding:16px;display:none}
 .pg.on{display:block}
-.sl{font-size:10px;font-weight:600;color:#888780;text-transform:uppercase;letter-spacing:.08em;margin:16px 0 7px}
+.sl{font-size:10px;font-weight:600;color:#888780;text-transform:uppercase;letter-spacing:.08em;margin:18px 0 8px}
 .sl:first-child{margin-top:0}
 .card{background:#fff;border:0.5px solid #e0dfd8;border-radius:14px;padding:14px 16px;margin-bottom:10px}
-.grade{font-size:22px;font-weight:500;padding:4px 10px;border-radius:8px}
+.grade{font-size:21px;font-weight:500;padding:4px 10px;border-radius:8px}
 
-/* MORNING CHECK-IN */
-.checkin{background:#fff;border:0.5px solid #e0dfd8;border-radius:16px;padding:18px;margin-bottom:12px}
-.checkin-q{font-size:16px;font-weight:500;margin-bottom:12px;color:#1a1a18}
-.sleep-btns{display:flex;gap:6px;flex-wrap:wrap}
-.slp-btn{padding:8px 14px;border-radius:20px;border:1px solid #e0dfd8;background:#f1efe8;font-size:13px;color:#888780;cursor:pointer;user-select:none}
-.slp-btn.on{background:#7F77DD;border-color:#7F77DD;color:#fff;font-weight:500}
+/* AI SPARKLE — anything with class .ai gets sparkle treatment */
+.ai-block{background:#FDFCFF;border:1px solid #AFA9EC;border-radius:12px;padding:12px 14px;margin-bottom:8px;position:relative}
+.ai-block::before{content:‘✦’;position:absolute;top:10px;right:12px;font-size:11px;color:#7F77DD;opacity:.8}
+.ai-inline{color:#7F77DD;font-size:10px;margin-right:4px}
+.ai-tag{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:600;color:#7F77DD;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.ai-text{font-size:13px;color:#1a1a18;line-height:1.55;margin-bottom:4px}
+.ai-goal{font-size:11px;color:#534AB7;opacity:.85;line-height:1.4;margin-bottom:8px}
+.ai-btns{display:flex;gap:6px;flex-wrap:wrap}
+.ai-btn{font-size:11px;padding:5px 12px;border-radius:20px;border:1.5px solid;cursor:pointer;background:transparent}
+.ai-btn.acc{background:#7F77DD;border-color:#7F77DD;color:#fff}
+.ai-btn.rej{border-color:#c5c4bc;color:#888780}
 
-/* TONIGHT MODES */
-.tonight-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
-.mode-pill{padding:7px 13px;border-radius:20px;border:1.5px solid #e0dfd8;background:#f8f7f4;font-size:12px;color:#888780;cursor:pointer;user-select:none;transition:all .15s}
-.mode-pill.on{border-color:#7F77DD;background:#EEEDFE;color:#3C3489;font-weight:500}
+/* BASELINE blocks — plain logged data */
+.base-block{background:#fff;border:0.5px solid #e0dfd8;border-radius:12px;padding:12px 14px;margin-bottom:8px}
 
-/* OPT STRIPS */
-.opt{border-radius:12px;padding:12px 14px;margin-bottom:8px;border:1.5px solid}
-.opt.warn{background:#FAECE7;border-color:#F0997B}
-.opt.sug{background:#EEEDFE;border-color:#AFA9EC}
-.opt.ok{background:#EAF3DE;border-color:#97C459}
-.opt.info{background:#E6F1FB;border-color:#85B7EB}
-.opt-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
-.opt-text{font-size:13px;line-height:1.5;margin-bottom:4px}
-.opt-why{font-size:11px;opacity:.7;line-height:1.4;margin-bottom:8px}
-.opt-btns{display:flex;gap:6px;flex-wrap:wrap}
-.obtn{font-size:11px;padding:5px 12px;border-radius:20px;border:1.5px solid;cursor:pointer;background:transparent}
-.obtn.acc{background:#7F77DD;border-color:#7F77DD;color:#fff}
-.obtn.rej{border-color:#c5c4bc;color:#888780}
+/* CHECK-IN */
+.ci-card{background:#fff;border:0.5px solid #e0dfd8;border-radius:16px;padding:18px;margin-bottom:12px}
+.ci-q{font-size:15px;font-weight:500;color:#1a1a18;margin-bottom:10px}
+.ci-opts{display:flex;gap:6px;flex-wrap:wrap}
+.ci-opt{padding:7px 14px;border-radius:20px;border:1px solid #e0dfd8;background:#f8f7f4;font-size:13px;color:#888780;cursor:pointer;user-select:none}
+.ci-opt.on{background:#7F77DD;border-color:#7F77DD;color:#fff;font-weight:500}
+.ci-opt.multi.on{background:#EEEDFE;border-color:#AFA9EC;color:#3C3489;font-weight:500}
+.ci-divider{border:none;border-top:0.5px solid #f1efe8;margin:14px 0}
+.ci-start{width:100%;padding:11px;border-radius:10px;background:#7F77DD;border:none;color:#fff;font-size:14px;font-weight:500;cursor:pointer;margin-top:4px}
 
-/* MEAL RECS */
-.meal-rec{padding:10px 0;border-bottom:0.5px solid #f1efe8}
-.meal-rec:last-child{border-bottom:none}
-.mr-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:4px}
-.mr-time{font-size:10px;font-weight:600;color:#b4b2a9;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
-.mr-meal{font-size:13px;font-weight:500;color:#1a1a18}
-.mr-why{font-size:11px;color:#888780;line-height:1.4;margin-top:2px}
-.mr-btns{display:flex;gap:5px;margin-top:6px}
-.mr-btn{font-size:11px;padding:4px 11px;border-radius:20px;border:1px solid;cursor:pointer;background:transparent}
-.mr-btn.yes{background:#EAF3DE;border-color:#97C459;color:#27500A}
-.mr-btn.swap{border-color:#c5c4bc;color:#888780}
-.bub{display:inline-flex;align-items:center;gap:4px;border-radius:20px;padding:4px 10px 4px 11px;font-size:12px;font-weight:500;cursor:pointer;margin:2px}
+/* SUMMARY BAR */
+.sbar{display:flex;gap:0;background:#fff;border:0.5px solid #e0dfd8;border-radius:12px;margin-bottom:12px;overflow:hidden}
+.sbar-item{flex:1;padding:10px 12px;border-right:0.5px solid #f1efe8;text-align:center}
+.sbar-item:last-child{border-right:none}
+.sbar-l{font-size:10px;color:#b4b2a9;margin-bottom:2px}
+.sbar-v{font-size:13px;font-weight:500;color:#1a1a18}
+.sbar-edit{text-align:center;padding:10px 12px;cursor:pointer}
+
+/* EATING LOG */
+.meal-slot{padding:10px 0;border-bottom:0.5px solid #f1efe8}
+.meal-slot:last-child{border-bottom:none}
+.ms-time{font-size:10px;font-weight:600;color:#b4b2a9;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.ms-bubbles{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin-bottom:4px}
+.bub{display:inline-flex;align-items:center;gap:4px;border-radius:20px;padding:5px 10px 5px 12px;font-size:12px;font-weight:500;cursor:pointer}
 .bub:active{opacity:.75}
-.bx{font-size:11px;opacity:.4;margin-left:2px}
-.badd{width:26px;height:26px;border-radius:50%;background:#f1efe8;border:1.5px dashed #c5c4bc;display:inline-flex;align-items:center;justify-content:center;font-size:17px;color:#888780;cursor:pointer;flex-shrink:0;vertical-align:middle}
+.bx{font-size:11px;opacity:.4;margin-left:1px}
+.badd{width:26px;height:26px;border-radius:50%;background:#f1efe8;border:1.5px dashed #c5c4bc;display:inline-flex;align-items:center;justify-content:center;font-size:17px;color:#888780;cursor:pointer;flex-shrink:0}
+
+/* MACROS */
+.macro-bar-wrap{margin:8px 0 4px}
+.macro-bar-bg{background:#f1efe8;border-radius:4px;height:6px;margin-bottom:3px;overflow:hidden}
+.macro-bar-fill{height:100%;border-radius:4px;transition:width .4s}
 
 /* WORKOUT */
 .wo-row{display:flex;align-items:center;justify-content:space-between}
-.wo-info{flex:1}
-.wo-name{font-size:15px;font-weight:500}
-.wo-det{font-size:11px;color:#888780;margin-top:2px}
-.wo-acts{display:flex;gap:7px;align-items:center;margin-left:12px}
+.wo-acts{display:flex;gap:7px;align-items:center;margin-left:12px;flex-shrink:0}
 .xbtn{width:26px;height:26px;border-radius:7px;border:0.5px solid #e0dfd8;background:#f1efe8;display:flex;align-items:center;justify-content:center;font-size:13px;color:#888780;cursor:pointer}
-.chk{width:26px;height:26px;border-radius:7px;border:0.5px solid #c5c4bc;background:#f1efe8;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;user-select:none}
+.chk{width:26px;height:26px;border-radius:7px;border:0.5px solid #c5c4bc;background:#f1efe8;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;user-select:none}
 .chk.on{background:#7F77DD;border-color:#7F77DD;color:#fff}
 .chk.gr{background:#1D9E75;border-color:#1D9E75;color:#fff}
 .tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;margin:2px 3px 0 0}
 .pill{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;margin:2px 3px 2px 0}
 
-/* WEEK VIEW */
-.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:12px}
-.wday{border-radius:10px;padding:8px 4px;text-align:center;cursor:pointer;border:1.5px solid transparent;transition:all .15s;background:#f8f7f4}
-.wday.today{background:#EEEDFE;border-color:#AFA9EC}
-.wday.past{background:#f1efe8}
-.wd-n{font-size:10px;font-weight:500;color:#888780;margin-bottom:3px}
-.wd-score{font-size:13px;font-weight:500;margin-bottom:2px}
-.wd-wo{font-size:9px;color:#b4b2a9}
-.day-detail{border-radius:14px;padding:14px 16px;background:#fff;border:0.5px solid #e0dfd8;margin-bottom:10px}
-
-/* LOG */
-.lrow{display:flex;gap:8px;align-items:center;padding:7px 0;border-bottom:0.5px solid #f1efe8}
-.lrow:last-child{border-bottom:none}
-.ll{font-size:13px;color:#1a1a18;flex:1}
-.li{font-size:12px;padding:4px 8px;border-radius:8px;border:0.5px solid #e0dfd8;background:#f1efe8;color:#1a1a18}
+/* SKINCARE */
+.skin-item{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:0.5px solid #f1efe8}
+.skin-item:last-child{border-bottom:none}
+.skin-name{font-size:13px;color:#1a1a18;flex:1}
+.skin-note{font-size:10px;color:#b4b2a9;margin-top:1px}
 .sm-chk{width:22px;height:22px;border-radius:5px;border:0.5px solid #c5c4bc;background:#f1efe8;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;user-select:none}
 .sm-chk.on{background:#7F77DD;border-color:#7F77DD;color:#fff}
+
+/* WEEK CARDS */
+.wday-card{background:#fff;border:0.5px solid #e0dfd8;border-radius:14px;padding:13px 15px;margin-bottom:8px;cursor:pointer}
+.wday-card.today{border:1.5px solid #AFA9EC;background:#FDFCFF}
+.wday-card.expanded .wdc-body{display:block}
+.wdc-row{display:flex;align-items:center;gap:10px}
+.wdc-day{min-width:34px}
+.wdc-name{font-size:12px;font-weight:500;color:#888780}
+.wdc-date{font-size:10px;color:#b4b2a9;margin-top:1px}
+.wdc-info{flex:1}
+.wdc-title{font-size:13px;font-weight:500;color:#1a1a18}
+.wdc-sub{font-size:11px;color:#888780;margin-top:2px}
+.wdc-score{font-size:13px;font-weight:500;padding:3px 9px;border-radius:8px;flex-shrink:0}
+.wdc-body{display:none;margin-top:10px;padding-top:10px;border-top:0.5px solid #f1efe8}
+.wdc-sowhat{font-size:12px;line-height:1.6;padding:9px 12px;border-radius:8px;margin-top:6px}
+
+/* AHEAD */
+.ahead-item{padding:11px 0;border-bottom:0.5px solid #f1efe8;display:flex;gap:10px}
+.ahead-item:last-child{border-bottom:none}
+.ai-day{min-width:30px}
+.ai-dayname{font-size:11px;font-weight:500;color:#888780}
+.ai-daydate{font-size:9px;color:#b4b2a9;margin-top:1px}
 
 /* HISTORY */
 .hdrow{display:grid;grid-template-columns:34px 1fr repeat(5,20px);gap:4px;align-items:center;padding:6px 0;border-bottom:0.5px solid #f1efe8}
@@ -104,15 +120,27 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .wbtn{background:none;border:0.5px solid #e0dfd8;border-radius:8px;padding:5px 12px;font-size:12px;color:#888780;cursor:pointer}
 
 /* TRENDS */
-.trend-card{background:#fff;border:0.5px solid #e0dfd8;border-radius:14px;padding:14px 16px;margin-bottom:10px}
-.trend-title{font-size:13px;font-weight:500;margin-bottom:12px}
-.bar-chart{display:flex;gap:5px;align-items:flex-end;height:80px;margin-bottom:6px}
-.bc-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
-.bc-bar{width:100%;border-radius:4px 4px 0 0;min-height:3px;transition:height .3s}
-.bc-lbl{font-size:9px;color:#b4b2a9;text-align:center}
-.bc-val{font-size:9px;color:#888780;text-align:center}
-.line-chart{position:relative;height:80px;margin-bottom:6px}
-.trend-stat{display:inline-block;font-size:11px;padding:3px 9px;border-radius:20px;margin-right:5px}
+.trend-block{background:#fff;border:0.5px solid #e0dfd8;border-radius:14px;padding:14px 16px;margin-bottom:10px}
+.trend-title{font-size:13px;font-weight:500;margin-bottom:3px}
+.trend-sowhat{font-size:12px;color:#534AB7;line-height:1.5;margin-bottom:10px;padding:8px 10px;background:#EEEDFE;border-radius:8px}
+.bars{display:flex;gap:4px;align-items:flex-end;height:72px;margin-bottom:4px}
+.b-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px}
+.b-bar{width:100%;border-radius:3px 3px 0 0;min-height:3px}
+.b-lbl{font-size:9px;color:#b4b2a9;text-align:center}
+.wo-dots{display:flex;gap:3px;flex-wrap:wrap;margin-bottom:8px}
+.wo-dot{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;flex-shrink:0}
+.clean-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff}
+.t-stat{display:inline-block;font-size:11px;padding:3px 9px;border-radius:20px;margin:2px 3px 2px 0}
+
+/* LOG */
+.lrow{display:flex;gap:8px;align-items:center;padding:8px 0;border-bottom:0.5px solid #f1efe8}
+.lrow:last-child{border-bottom:none}
+.ll{font-size:13px;color:#1a1a18;flex:1}
+.li{font-size:12px;padding:4px 8px;border-radius:8px;border:0.5px solid #e0dfd8;background:#f1efe8;color:#1a1a18}
+
+/* LIBRARY */
+.lib-chip{display:inline-flex;background:#f1efe8;border:0.5px solid #e0dfd8;border-radius:20px;padding:5px 12px;font-size:12px;color:#1a1a18;margin:3px;cursor:pointer}
+.lib-chip:active{background:#EEEDFE;color:#3C3489}
 
 /* MODALS */
 .mbk{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:flex;align-items:flex-end;justify-content:center}
@@ -122,19 +150,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .lchip:active{background:#EEEDFE;color:#3C3489}
 .minp{width:100%;font-size:13px;padding:10px 12px;border-radius:10px;border:0.5px solid #e0dfd8;background:#f1efe8;color:#1a1a18;margin-top:12px}
 .mbtn2{width:100%;margin-top:8px;font-size:13px;padding:10px;border-radius:10px;border:0.5px solid #c5c4bc;background:transparent;color:#1a1a18;cursor:pointer}
-.mbtn2:active{background:#f1efe8}
 .abtn{font-size:12px;padding:7px 14px;border-radius:10px;border:0.5px solid #c5c4bc;background:transparent;color:#888780;cursor:pointer;display:block;width:100%;text-align:left;margin-top:7px}
 .abtn:active{background:#f1efe8}
 .hidden{display:none}
 </style>
+
 </head>
 <body>
 
-<!-- HEADER -->
+<!-- HEADER — dynamic date -->
+
 <div class="hdr">
   <div>
-    <div style="font-size:18px;font-weight:500">Tuesday, Apr 1</div>
-    <div style="font-size:11px;color:#888780;margin-top:2px">10-day recenter · day 2</div>
+    <div style="font-size:18px;font-weight:500" id="hdr-date"></div>
+    <div style="font-size:11px;color:#888780;margin-top:2px" id="hdr-sub"></div>
   </div>
   <div style="text-align:right">
     <div style="font-size:10px;color:#b4b2a9;margin-bottom:2px">week</div>
@@ -144,110 +173,164 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 <div class="tabs">
   <button class="tab on" onclick="showTab('today',this)">Today</button>
+  <button class="tab" onclick="showTab('log',this)">Log</button>
   <button class="tab" onclick="showTab('week',this)">Week</button>
   <button class="tab" onclick="showTab('ahead',this)">Ahead</button>
   <button class="tab" onclick="showTab('history',this)">History</button>
   <button class="tab" onclick="showTab('trends',this)">Trends</button>
-  <button class="tab" onclick="showTab('log',this)">Log</button>
-  <button class="tab" onclick="showTab('meals',this)">Meals</button>
+  <button class="tab" onclick="showTab('library',this)">Library</button>
 </div>
 
-<!-- TODAY -->
+<!-- ══ TODAY ══════════════════════════════════════════════════════════════ -->
+
 <div id="pg-today" class="pg on">
 
-  <!-- MORNING CHECK-IN (shows if not done) -->
-  <div id="checkin-wrap">
-    <div class="checkin">
-      <div class="checkin-q">Good morning. How much did you sleep?</div>
-      <div class="sleep-btns" id="sleep-btns"></div>
-      <div style="margin-top:14px;padding-top:12px;border-top:0.5px solid #f1efe8">
-        <div style="font-size:13px;font-weight:500;margin-bottom:8px;color:#1a1a18">What's tonight?</div>
-        <div class="tonight-row" id="tonight-pills"></div>
-        <button style="margin-top:12px;width:100%;padding:10px;border-radius:10px;background:#7F77DD;border:none;color:#fff;font-size:13px;font-weight:500;cursor:pointer" onclick="completeCheckin()">Start my day →</button>
-      </div>
+  <!-- CHECK-IN (shown until completed) -->
+
+  <div id="ci-wrap">
+    <div class="ci-card">
+      <div class="ci-q" id="ci-greeting">Hey — how'd you sleep last night?</div>
+      <div class="ci-opts" id="ci-sleep-opts"></div>
+      <hr class="ci-divider">
+      <div class="ci-q" style="font-size:13px">Where are you working from today?</div>
+      <div class="ci-opts" style="margin-top:8px" id="ci-location-opts"></div>
+      <hr class="ci-divider">
+      <div class="ci-q" style="font-size:13px">What's happening tonight? <span style="font-size:11px;color:#b4b2a9;font-weight:400">select all that apply</span></div>
+      <div class="ci-opts" style="margin-top:8px" id="ci-tonight-opts"></div>
+      <button class="ci-start" style="margin-top:16px" onclick="completeCheckin()">Start my day →</button>
     </div>
   </div>
 
-  <!-- AFTER CHECK-IN -->
-  <div id="day-wrap" class="hidden">
+  <!-- DAY VIEW (shown after check-in) -->
 
-    <!-- TONIGHT SUMMARY -->
-    <div id="tonight-summary" style="margin-bottom:10px"></div>
+  <div id="day-view" class="hidden">
 
-    <!-- OPT STRIPS -->
-    <div id="opt-zone"></div>
+```
+<!-- SUMMARY BAR -->
+<div class="sbar" id="sbar">
+  <div class="sbar-item">
+    <div class="sbar-l">slept</div>
+    <div class="sbar-v" id="sb-sleep">—</div>
+  </div>
+  <div class="sbar-item">
+    <div class="sbar-l">location</div>
+    <div class="sbar-v" id="sb-loc">—</div>
+  </div>
+  <div class="sbar-item">
+    <div class="sbar-l">tonight</div>
+    <div class="sbar-v" id="sb-tonight">—</div>
+  </div>
+  <div class="sbar-edit" onclick="resetCheckin()" style="font-size:11px;color:#7F77DD;padding:10px 10px;display:flex;align-items:center">edit</div>
+</div>
 
-    <!-- MEALS -->
-    <div class="sl">recommended meals</div>
-    <div class="card" id="meal-card"></div>
+<!-- AI INSIGHTS (sparkle) -->
+<div id="ai-zone"></div>
 
-    <!-- WORKOUT -->
-    <div class="sl">movement</div>
-    <div class="card">
-      <div class="wo-row">
-        <div class="wo-info">
-          <div class="wo-name" id="wo-name">Stairmaster</div>
-          <div class="wo-det" id="wo-det">30 min · level 6/7/8 · cardio day</div>
-          <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px" id="wo-tags"></div>
-        </div>
-        <div class="wo-acts">
-          <div class="xbtn" onclick="openWoModal()">✕</div>
-          <div class="chk" id="wo-chk" onclick="toggleWo()"></div>
-        </div>
-      </div>
+<!-- EATING LOG -->
+<div class="sl">clean eating today</div>
+<div style="display:flex;gap:10px;align-items:flex-start">
+  <div class="card" style="flex:1;margin-bottom:10px" id="meal-card"></div>
+</div>
+<!-- MACRO SUMMARY -->
+<div class="card" id="macro-card" style="margin-top:-4px;margin-bottom:10px"></div>
+
+<!-- MOVEMENT -->
+<div class="sl">movement</div>
+<div class="card">
+  <div class="wo-row">
+    <div style="flex:1">
+      <div style="font-size:15px;font-weight:500" id="wo-name">Incline walk</div>
+      <div style="font-size:11px;color:#888780;margin-top:2px" id="wo-det">30 min · treadmill · flex day</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px" id="wo-tags"></div>
     </div>
-
-    <!-- SKINCARE -->
-    <div class="sl">skincare</div>
-    <div class="card" style="margin-bottom:0">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <div>
-          <span style="font-size:10px;color:#b4b2a9;margin-right:4px">AM</span>
-          <span class="pill" style="background:#FBEAF0;color:#72243E">belif water bomb</span>
-          <span class="pill" style="background:#FBEAF0;color:#72243E">shiseido SPF</span>
-        </div>
-        <div class="sm-chk" id="am-chk" onclick="toggleSmChk('am-chk')"></div>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:0.5px solid #f1efe8">
-        <div>
-          <span style="font-size:10px;color:#b4b2a9;margin-right:4px">PM</span>
-          <span class="pill" style="background:#FBEAF0;color:#72243E" id="pm-pill">Paula's Choice BHA</span>
-          <span class="pill" style="background:#FBEAF0;color:#72243E">belif water bomb</span>
-        </div>
-        <div class="sm-chk" id="pm-chk" onclick="toggleSmChk('pm-chk')"></div>
-      </div>
-      <div style="font-size:11px;color:#888780;margin-top:7px" id="skin-note"></div>
+    <div class="wo-acts">
+      <div class="xbtn" onclick="openWoModal()">✕</div>
+      <div class="chk" id="wo-chk" onclick="toggleWo()"></div>
     </div>
   </div>
 </div>
+<!-- AI workout insight -->
+<div id="wo-ai-wrap"></div>
 
-<!-- WEEK -->
+<!-- SKINCARE -->
+<div class="sl">skincare</div>
+<div class="card" id="skin-card"></div>
+<div id="skin-ai-wrap"></div>
+```
+
+  </div>
+</div>
+
+<!-- ══ LOG ════════════════════════════════════════════════════════════════ -->
+
+<div id="pg-log" class="pg">
+  <div class="sl">today's quick log</div>
+  <div class="card">
+    <div style="font-size:13px;font-weight:500;margin-bottom:10px">Eating</div>
+    <div class="lrow"><span class="ll">Ate clean today</span><div class="sm-chk" id="lc-clean" onclick="toggleSmChk('lc-clean')"></div></div>
+    <div class="lrow"><span class="ll">No added sugar</span><div class="sm-chk" id="lc-sugar" onclick="toggleSmChk('lc-sugar')"></div></div>
+    <div class="lrow"><span class="ll">Protein (g)</span><input class="li" id="log-prot" type="number" min="0" max="200" step="1" value="18" style="width:60px;text-align:center" oninput="updateMacros()"></div>
+    <div class="lrow"><span class="ll">Water (oz)</span><input class="li" id="log-water" type="number" min="0" max="100" step="8" value="16" style="width:60px;text-align:center"></div>
+  </div>
+  <div class="card">
+    <div style="font-size:13px;font-weight:500;margin-bottom:10px">Movement</div>
+    <div class="lrow"><span class="ll">Workout done</span><div class="sm-chk" id="lc-wo" onclick="toggleSmChk('lc-wo');syncWo()"></div></div>
+    <div class="lrow"><span class="ll">Type</span>
+      <select class="li" id="log-wo-type" style="width:170px;font-size:11px">
+        <option>incline walk 30m</option>
+        <option>stairmaster 30m · 6/7/8</option>
+        <option>own lift — chest/back/abs</option>
+        <option>own lift — total body</option>
+        <option>Barry's double floor</option>
+        <option>hot yoga</option>
+        <option>heated mat pilates</option>
+        <option>rest</option>
+      </select>
+    </div>
+    <div class="lrow"><span class="ll">Duration (min)</span><input class="li" type="number" value="30" style="width:60px;text-align:center"></div>
+  </div>
+  <div class="card">
+    <div style="font-size:13px;font-weight:500;margin-bottom:10px">Sleep & recovery</div>
+    <div class="lrow"><span class="ll">Hours slept</span><input class="li" type="number" min="3" max="12" step="0.5" value="6" style="width:60px;text-align:center"></div>
+    <div class="lrow"><span class="ll">In bed by target</span><div class="sm-chk" id="lc-bed" onclick="toggleSmChk('lc-bed')"></div></div>
+    <div class="lrow"><span class="ll">Energy today</span>
+      <select class="li" style="width:100px;font-size:11px"><option>great</option><option>good</option><option selected>okay</option><option>low</option><option>exhausted</option></select>
+    </div>
+    <div class="lrow"><span class="ll">Mood</span>
+      <select class="li" style="width:100px;font-size:11px"><option>great</option><option>good</option><option selected>okay</option><option>tired</option><option>off</option></select>
+    </div>
+  </div>
+  <div class="card">
+    <div style="font-size:13px;font-weight:500;margin-bottom:10px">Social & drinks</div>
+    <div class="lrow"><span class="ll">Drinks tonight</span><input class="li" type="number" min="0" max="10" value="0" style="width:60px;text-align:center"></div>
+    <div class="lrow"><span class="ll">Notes</span><input class="li" type="text" style="width:170px;font-size:11px" placeholder="e.g. Drew dinner, feel off..."></div>
+  </div>
+  <button class="abtn" onclick="saveLog()">Save today ↗</button>
+</div>
+
+<!-- ══ WEEK ════════════════════════════════════════════════════════════════ -->
+
 <div id="pg-week" class="pg">
-  <div class="sl">this week</div>
-  <div class="week-grid" id="week-grid"></div>
-  <div id="day-detail-wrap"></div>
-  <div class="card" style="margin-bottom:0">
-    <div style="font-size:12px;color:#888780;line-height:1.8">
-      <span style="font-weight:500;color:#1a1a18">Lift streak</span> — ~20 weeks unbroken Wed + Fri. Now fully self-programmed, no Barry's.<br>
-      <span style="font-weight:500;color:#1a1a18">Cardio days</span> — Stairmaster 30 min at 6/7/8. Tue + Thu + occasional Sat.
-    </div>
-  </div>
+  <div class="sl">this week · tap any day</div>
+  <div id="week-cards"></div>
 </div>
 
-<!-- AHEAD -->
+<!-- ══ AHEAD ══════════════════════════════════════════════════════════════ -->
+
 <div id="pg-ahead" class="pg">
-  <div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px">
+  <div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px">
     <div>
       <div style="font-size:12px;font-weight:500;margin-bottom:2px">Google Calendar</div>
       <div style="font-size:11px;color:#888780">Sync to auto-detect what's happening each night</div>
     </div>
-    <button class="abtn" style="width:auto;margin:0;padding:5px 12px" onclick="alert('Coming soon — will auto-set your evening plans each day.')">Connect ↗</button>
+    <button class="abtn" style="width:auto;margin:0;padding:5px 12px" onclick="alert('Coming soon!')">Connect ↗</button>
   </div>
   <div class="sl">week ahead</div>
   <div class="card" id="ahead-card"></div>
 </div>
 
-<!-- HISTORY -->
+<!-- ══ HISTORY ════════════════════════════════════════════════════════════ -->
+
 <div id="pg-history" class="pg">
   <div class="wnav">
     <button class="wbtn" onclick="changeWeek(-1)">← prev</button>
@@ -266,128 +349,85 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div id="hist-rows"></div>
   </div>
   <div class="sl">week summary</div>
-  <div class="card" style="margin-bottom:0">
-    <div id="hist-sum" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px"></div>
+  <div class="card">
+    <div id="hist-sum" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:12px"></div>
+    <!-- SO WHAT -->
+    <div class="ai-block" id="hist-sowhat"></div>
   </div>
 </div>
 
-<!-- TRENDS -->
+<!-- ══ TRENDS ══════════════════════════════════════════════════════════════ -->
+
 <div id="pg-trends" class="pg">
-  <div class="sl">sleep · last 2 weeks</div>
-  <div class="trend-card">
-    <div class="trend-title">Hours slept per night</div>
-    <div class="bar-chart" id="sleep-chart"></div>
-    <div style="display:flex;gap:4px" id="sleep-chart-lbls"></div>
-    <div style="margin-top:8px">
-      <span class="trend-stat" style="background:#EEEDFE;color:#3C3489">avg 6.8h</span>
-      <span class="trend-stat" style="background:#EAF3DE;color:#27500A">target 7h</span>
-    </div>
+
+  <div class="trend-block">
+    <div class="trend-title">Sleep · last 2 weeks</div>
+    <div class="trend-sowhat" id="sleep-sowhat"></div>
+    <div class="bars" id="sleep-bars"></div>
+    <div style="display:flex;gap:4px" id="sleep-lbls"></div>
   </div>
 
-  <div class="sl">workouts · last 2 weeks</div>
-  <div class="trend-card">
-    <div class="trend-title">Workout type by day</div>
-    <div id="wo-trend-chart" style="display:flex;gap:4px;flex-wrap:wrap"></div>
-    <div style="margin-top:10px;font-size:12px;color:#888780;line-height:1.7" id="wo-trend-summary"></div>
+  <div class="trend-block">
+    <div class="trend-title">Workouts · last 2 weeks</div>
+    <div class="trend-sowhat" id="wo-sowhat"></div>
+    <div class="wo-dots" id="wo-dots"></div>
+    <div style="font-size:11px;color:#888780" id="wo-legend"></div>
   </div>
 
-  <div class="sl">clean eating · last 2 weeks</div>
-  <div class="trend-card">
-    <div class="trend-title">Clean days streak</div>
-    <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px" id="clean-dots"></div>
-    <div style="font-size:12px;color:#888780" id="clean-summary"></div>
+  <div class="trend-block">
+    <div class="trend-title">Clean eating streak</div>
+    <div class="trend-sowhat" id="clean-sowhat"></div>
+    <div style="display:flex;gap:3px;flex-wrap:wrap;margin-bottom:8px" id="clean-dots"></div>
   </div>
 
-  <div class="sl">energy & mood · last 2 weeks</div>
-  <div class="trend-card" style="margin-bottom:0">
-    <div class="trend-title">Self-reported energy</div>
-    <div class="bar-chart" id="energy-chart"></div>
-    <div style="display:flex;gap:4px" id="energy-chart-lbls"></div>
-    <div style="margin-top:8px;font-size:11px;color:#888780">Log your energy daily in the Log tab to build this trend.</div>
+  <div class="trend-block" style="margin-bottom:0">
+    <div class="trend-title">Energy & mood · last 2 weeks</div>
+    <div class="trend-sowhat" id="energy-sowhat"></div>
+    <div class="bars" id="energy-bars"></div>
+    <div style="display:flex;gap:4px" id="energy-lbls"></div>
   </div>
 </div>
 
-<!-- LOG -->
-<div id="pg-log" class="pg">
-  <div class="sl">tonight's plan</div>
+<!-- ══ LIBRARY ════════════════════════════════════════════════════════════ -->
+
+<div id="pg-library" class="pg">
+  <div style="font-size:12px;color:#888780;margin-bottom:14px;line-height:1.6">Add once, always available. Used to pre-fill your daily log and swap in meals, workouts, and activities.</div>
+
+  <div class="sl">foods & meals</div>
   <div class="card">
-    <div style="font-size:12px;color:#888780;margin-bottom:10px">Select all that apply</div>
-    <div class="tonight-row" id="log-mode-pills"></div>
+    <div style="font-size:12px;color:#b4b2a9;margin-bottom:6px">proteins</div>
+    <div id="lib-p" style="margin-bottom:10px"></div>
+    <div style="font-size:12px;color:#b4b2a9;margin-bottom:6px">combos</div>
+    <div id="lib-c" style="margin-bottom:10px"></div>
+    <div style="font-size:12px;color:#b4b2a9;margin-bottom:6px">snacks & drinks</div>
+    <div id="lib-s"></div>
   </div>
-  <div class="card">
-    <div style="font-size:13px;font-weight:500;margin-bottom:8px">Eating</div>
-    <div class="lrow"><span class="ll">Clean today</span><div class="sm-chk" id="lc-clean" onclick="toggleSmChk('lc-clean')"></div></div>
-    <div class="lrow"><span class="ll">No added sugar</span><div class="sm-chk" id="lc-sugar" onclick="toggleSmChk('lc-sugar')"></div></div>
-    <div class="lrow"><span class="ll">Protein (g today)</span><input class="li" id="prot-in" type="number" min="0" max="200" step="1" value="18" style="width:60px;text-align:center" oninput="reopt()"></div>
-    <div class="lrow"><span class="ll">Water (oz)</span><input class="li" type="number" min="0" max="100" step="8" value="24" style="width:60px;text-align:center"></div>
-  </div>
-  <div class="card">
-    <div style="font-size:13px;font-weight:500;margin-bottom:8px">Movement</div>
-    <div class="lrow"><span class="ll">Workout done</span><div class="sm-chk" id="lc-wo" onclick="toggleSmChk('lc-wo')"></div></div>
-    <div class="lrow"><span class="ll">Type</span>
-      <select class="li" style="width:170px;font-size:11px">
-        <option>stairmaster 30m · 6/7/8</option>
-        <option>incline walk 30m</option>
-        <option>own lift — chest/back/abs</option>
-        <option>own lift — total body</option>
-        <option>Barry's double floor</option>
-        <option>hot yoga</option>
-        <option>heated mat pilates</option>
-        <option>rest</option>
-      </select>
-    </div>
-    <div class="lrow"><span class="ll">Duration (min)</span><input class="li" type="number" value="30" style="width:60px;text-align:center"></div>
-  </div>
-  <div class="card">
-    <div style="font-size:13px;font-weight:500;margin-bottom:8px">Sleep & recovery</div>
-    <div class="lrow"><span class="ll">Hours slept</span><input class="li" type="number" min="3" max="12" step="0.5" value="6.5" style="width:60px;text-align:center"></div>
-    <div class="lrow"><span class="ll">In bed by target</span><div class="sm-chk" id="lc-bed" onclick="toggleSmChk('lc-bed')"></div></div>
-    <div class="lrow"><span class="ll">Energy today</span>
-      <select class="li" style="width:100px;font-size:11px"><option>great</option><option>good</option><option selected>okay</option><option>low</option><option>exhausted</option></select>
-    </div>
-    <div class="lrow"><span class="ll">Mood</span>
-      <select class="li" style="width:100px;font-size:11px"><option>great</option><option>good</option><option selected>okay</option><option>tired</option><option>off</option></select>
-    </div>
-  </div>
-  <div class="card">
-    <div style="font-size:13px;font-weight:500;margin-bottom:8px">Social & drinks</div>
-    <div class="lrow"><span class="ll">Drinks tonight</span><input class="li" type="number" min="0" max="10" value="0" style="width:60px;text-align:center"></div>
-    <div class="lrow"><span class="ll">Plans</span><input class="li" type="text" style="width:160px;font-size:11px" placeholder="e.g. Drew dinner, Soho House"></div>
-  </div>
+
+  <div class="sl">workouts & activities</div>
+  <div class="card" id="lib-wo"></div>
+
+  <div class="sl">add new item</div>
   <div class="card" style="margin-bottom:0">
-    <div style="font-size:13px;font-weight:500;margin-bottom:6px">Notes</div>
-    <textarea class="li" style="width:100%;height:64px;resize:none;font-size:12px;padding:8px" placeholder="Travel, how you felt, anything off..."></textarea>
-  </div>
-  <button class="abtn" onclick="saveLog()">Save today ↗</button>
-</div>
-
-<!-- MEALS LIBRARY -->
-<div id="pg-meals" class="pg">
-  <div style="font-size:12px;color:#888780;margin-bottom:12px;line-height:1.6">Add once, always in your library. The app recommends from here based on your workout and tonight's plan.</div>
-  <div class="sl">proteins</div>
-  <div class="card" id="lib-p"></div>
-  <div class="sl">full combos</div>
-  <div class="card" id="lib-c"></div>
-  <div class="sl">snacks & drinks</div>
-  <div class="card" id="lib-s"></div>
-  <div class="sl">add new</div>
-  <div class="card" style="margin-bottom:0">
-    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
-      <select class="li" id="new-cat" style="width:90px;font-size:12px">
-        <option value="p">protein</option><option value="c">combo</option><option value="s">snack/drink</option>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap">
+      <select class="li" id="new-cat" style="width:100px;font-size:12px">
+        <option value="p">protein</option>
+        <option value="c">combo</option>
+        <option value="s">snack/drink</option>
+        <option value="wo">workout</option>
       </select>
-      <input type="text" id="new-food" class="li" style="flex:1;font-size:12px" placeholder="e.g. ground turkey + zucchini noodles">
+      <input type="text" id="new-item" class="li" style="flex:1;min-width:140px;font-size:12px" placeholder="e.g. turkey taco bowl">
     </div>
-    <button class="abtn" style="margin-top:0" onclick="addFood()">Add to library ↗</button>
+    <button class="abtn" style="margin-top:0" onclick="addLibItem()">Add to library ↗</button>
   </div>
 </div>
 
-<!-- MODALS -->
+<!-- ══ MODALS ═════════════════════════════════════════════════════════════ -->
+
 <div id="meal-modal" class="mbk" style="display:none" onclick="if(event.target===this)this.style.display='none'">
   <div class="mod">
     <span class="mclose" onclick="document.getElementById('meal-modal').style.display='none'">×</span>
-    <h3 style="font-size:15px;font-weight:500;margin-bottom:3px">Swap meal</h3>
-    <div style="font-size:12px;color:#888780;margin-bottom:12px" id="mm-sub">Choose from your library or add something new</div>
+    <h3 style="font-size:15px;font-weight:500;margin-bottom:3px">Add item</h3>
+    <div style="font-size:12px;color:#888780;margin-bottom:12px" id="mm-sub">Choose or type something new</div>
     <div id="mm-lib"></div>
     <input type="text" class="minp" id="mm-new" placeholder="Type something new...">
     <button class="mbtn2" onclick="addAndSwap()">Add & use this</button>
@@ -406,238 +446,268 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </div>
 
 <script>
-// ── DATA ──────────────────────────────────────────────────────────────────
+// ── DYNAMIC DATE ──────────────────────────────────────────────────────────
+const NOW = new Date();
+const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DOW = DAYS[NOW.getDay()];
+const DATESTR = DOW + ', ' + MONTHS[NOW.getMonth()] + ' ' + NOW.getDate();
+const HOUR = NOW.getHours();
+const GREETING = HOUR < 12 ? 'Good morning' : HOUR < 17 ? 'Good afternoon' : 'Hey';
+document.getElementById('hdr-date').textContent = DATESTR;
+document.getElementById('hdr-sub').textContent = '10-day recenter · day 1';
 
-const TONIGHT_MODES = [
-  {id:'work', label:'Startup work block'},
-  {id:'networking', label:'Startup event / networking'},
-  {id:'social', label:'Social out'},
-  {id:'early', label:'Early night'}
+// ── GOALS ─────────────────────────────────────────────────────────────────
+const GOALS = {
+  muscle: 'muscle building & tone',
+  lean: 'stay lean',
+  startup: 'startup energy & focus',
+  sharp: 'show up sharp',
+  skin: 'skin clarity & glow',
+  sleep: 'sleep quality'
+};
+
+// ── STATE ─────────────────────────────────────────────────────────────────
+let state = {
+  checkinDone: false,
+  sleep: 6,
+  location: 'office',
+  tonightModes: [],
+  woDone: false,
+  swapSlot: null,
+  histOffset: -1
+};
+
+let meals = [
+  {time:'morning',items:['incline walk prep — light'],bg:'#EEEDFE',tc:'#3C3489',protein:18,carbs:20},
+  {time:'lunch',items:['salmon','kale salad','brown rice'],bg:'#EAF3DE',tc:'#27500A',protein:35,carbs:45},
+  {time:'dinner',items:['top sirloin','sweet potato','broccoli'],bg:'#EAF3DE',tc:'#27500A',protein:45,carbs:40}
 ];
 
+let wo = {name:'Incline walk',det:'30 min · treadmill · flex day',done:false,
+  tags:[{t:'flex day',c:'#EEEDFE',tc:'#3C3489'},{t:'travel recovery',c:'#f1efe8',tc:'#888780'}]};
+
+// SKINCARE STATE — per product
+let skinAM = [
+  {name:'Belif water bomb',done:false,note:'moisturizer'},
+  {name:'Shiseido SPF',done:false,note:'sunscreen — non-negotiable'}
+];
+// Alternates: even days = BHA, odd = retinol (based on day of month)
+const isRetinolDay = NOW.getDate() % 2 === 1;
+let skinPM = [
+  {name: isRetinolDay ? 'Kiehl\'s retinol' : 'Paula\'s Choice BHA', done:false, note: isRetinolDay ? 'retinol night' : 'BHA night — pore minimizing'},
+  {name:'Belif water bomb',done:false,note:'lock in moisture'}
+];
+
+// FOOD LIBRARY
 const FOOD = {
   p:['top sirloin','rotisserie chicken','salmon','egg whites','ground turkey'],
   c:['chicken + kale + brown rice','sirloin + sweet potato + broccoli','salmon + kale + brown rice','egg white wrap (strength)','egg white wrap (low carb)','ground turkey + red sauce + zucchini noodles'],
-  s:['Oikos protein drink 10g','string cheese','slate latte 20g','Catalina Crunch 18g','hard boiled eggs']
+  s:['Oikos protein drink 10g','string cheese','slate latte 20g','Catalina Crunch 18g','hard boiled eggs'],
+  wo:['stairmaster 30m · 6/7/8','incline walk 30m','own lift — chest/back/abs','own lift — total body','Barry\'s double floor','hot yoga','heated mat pilates','rest day']
 };
 
-const WO_OPTS = ['stairmaster 30m · 6/7/8','incline walk 30m','own lift — chest/back/abs','own lift — total body','Barry\'s double floor','hot yoga','heated mat pilates','rest day'];
-
-// Skincare alternates: true = retinol, false = BHA. Monday was BHA.
-// Day index 0=Mon. Today is Tue = index 1 = retinol
-const SKIN_SCHEDULE = [false, true, false, true, false, true, false]; // BHA Mon, Retinol Tue, etc.
-
-const HIST_DATA = {
-  '-1':{label:'Last week — Mar 24–30',days:[
-    {n:'Mon',note:'clean · no workout',eat:true,wo:'rest',slp:7,drk:0,sk:true,free:false,score:'B'},
-    {n:'Tue',note:'stairmaster 30m',eat:true,wo:'cardio',slp:7,drk:1,sk:true,free:false,score:'A'},
-    {n:'Wed',note:'travel to LA · clean',eat:true,wo:'rest',slp:6.5,drk:0,sk:true,free:false,score:'B'},
-    {n:'Thu',note:'LA · heated mat pilates',eat:true,wo:'pilates',slp:7,drk:1,sk:true,free:false,score:'A'},
-    {n:'Fri',note:'travel back',eat:false,wo:'rest',slp:6,drk:1,sk:false,free:true,score:'C'},
-    {n:'Sat',note:'heated mat pilates',eat:false,wo:'pilates',slp:7,drk:2,sk:false,free:true,score:'B'},
-    {n:'Sun',note:'rest day',eat:false,wo:'rest',slp:7.5,drk:0,sk:true,free:false,score:'B'}
-  ]},
-  '0':{label:'This week — Apr 1–7',days:[
-    {n:'Mon',note:'clean · no workout',eat:true,wo:'rest',slp:6,drk:0,sk:true,free:false,score:'B'},
-    {n:'Tue',note:'stairmaster planned',eat:false,wo:'cardio',slp:null,drk:0,sk:false,free:false,score:null},
-    {n:'Wed',note:'own lift planned',eat:false,wo:'lift',slp:null,drk:0,sk:false,free:false,score:null},
-    {n:'Thu',note:'stairmaster planned',eat:false,wo:'cardio',slp:null,drk:0,sk:false,free:false,score:null},
-    {n:'Fri',note:'own lift planned',eat:false,wo:'lift',slp:null,drk:0,sk:false,free:true,score:null},
-    {n:'Sat',note:'free day',eat:false,wo:'rest',slp:null,drk:0,sk:false,free:true,score:null},
-    {n:'Sun',note:'optional yoga',eat:false,wo:'rest',slp:null,drk:0,sk:false,free:false,score:null}
-  ]}
+// HISTORY DATA
+const HIST = {
+  '-1':{label:'Last week — Mar 23–29',days:[
+    {n:'Mon',note:'clean · no workout',eat:true,wo:'rest',slp:7,drk:0,sk:true,free:false},
+    {n:'Tue',note:'stairmaster 30m · clean',eat:true,wo:'cardio',slp:7,drk:1,sk:true,free:false},
+    {n:'Wed',note:'travel to LA · clean',eat:true,wo:'rest',slp:6.5,drk:0,sk:true,free:false},
+    {n:'Thu',note:'LA · heated mat pilates · clean',eat:true,wo:'pilates',slp:7,drk:1,sk:true,free:false},
+    {n:'Fri',note:'travel back',eat:false,wo:'rest',slp:6,drk:1,sk:false,free:true},
+    {n:'Sat',note:'heated mat pilates',eat:false,wo:'pilates',slp:7,drk:2,sk:false,free:true},
+    {n:'Sun',note:'rest',eat:false,wo:'rest',slp:7.5,drk:0,sk:true,free:false}
+  ],
+  sowhat:'You hit 4/7 workouts despite LA travel — that\'s a win. Clean eating Mon–Thu was solid. The two 5am lifts that got missed are what you\'re making up for this week. → Supports: muscle building, stay lean.'},
+  '0':{label:'This week — Mar 30+',days:[
+    {n:'Mon',note:'flex walk · clean start',eat:true,wo:'flex',slp:6,drk:0,sk:true,free:false},
+    {n:'Tue',note:'planned',eat:false,wo:'cardio',slp:null,drk:0,sk:false,free:false},
+    {n:'Wed',note:'5am own lift planned',eat:false,wo:'lift',slp:null,drk:0,sk:false,free:false},
+    {n:'Thu',note:'stairmaster planned',eat:false,wo:'cardio',slp:null,drk:0,sk:false,free:false},
+    {n:'Fri',note:'5am own lift planned',eat:false,wo:'lift',slp:null,drk:0,sk:false,free:true},
+    {n:'Sat',note:'free day',eat:false,wo:'rest',slp:null,drk:0,sk:false,free:true},
+    {n:'Sun',note:'optional yoga',eat:false,wo:'rest',slp:null,drk:0,sk:false,free:false}
+  ],
+  sowhat:'Week just started. Last week\'s travel disrupted both 5am lifts. This week: protect Wednesday and Friday no matter what. Those are the sessions building the arm and inner thigh tone you\'re after.'}
 };
 
-const AHEAD_DATA = [
-  {day:'Tue',date:'Apr 1',title:'Stairmaster 30m · social out tonight',
-   detail:'Cardio day. Lighter lunch, full dinner — carb load for tomorrow\'s 5am lift. 1 drink max.',
-   tags:[{t:'cardio',c:'#EEEDFE',tc:'#3C3489'},{t:'social out',c:'#FBEAF0',tc:'#72243E'}]},
-  {day:'Wed',date:'Apr 2',title:'Own lift — chest/back/abs · family office call',
-   detail:'First solo Wednesday. High-alert evening. Protein-forward all day, sharp at the call.',
+// AHEAD DATA
+const AHEAD = [
+  {day:'Mon',date:'Mar 30',title:'Flex walk · startup work block',
+   detail:'Travel recovery. Incline walk, heads down evening. Carb load at dinner for tomorrow\'s stairmaster.',
+   tags:[{t:'flex',c:'#EEEDFE',tc:'#3C3489'},{t:'work block',c:'#f1efe8',tc:'#888780'}]},
+  {day:'Tue',date:'Mar 31',title:'Stairmaster 30m · social out',
+   detail:'Cardio day. Lighter lunch, full protein dinner. 1 drink max — you lift Wednesday.',
+   tags:[{t:'cardio',c:'#EAF3DE',tc:'#27500A'},{t:'social',c:'#FBEAF0',tc:'#72243E'}]},
+  {day:'Wed',date:'Apr 1',title:'Own lift — chest/back/abs · family office call',
+   detail:'First solo Wednesday lift. High-alert evening — stay sharp for the call. Protein-forward all day.',
    tags:[{t:'strength · 5am',c:'#EAF3DE',tc:'#27500A'},{t:'startup',c:'#E1F5EE',tc:'#085041'}]},
-  {day:'Thu',date:'Apr 3',title:'Stairmaster 30m · Drew dinner (Resy)',
+  {day:'Thu',date:'Apr 2',title:'Stairmaster 30m · Drew dinner',
    detail:'Cardio + social evening. Explore event partnership. Relaxed, conversational.',
    tags:[{t:'cardio',c:'#EEEDFE',tc:'#3C3489'},{t:'social',c:'#FBEAF0',tc:'#72243E'}]},
-  {day:'Fri',date:'Apr 4',title:'Own lift — total body · startup block',
-   detail:'Second solo lift. Heads down evening. Strong close to the week.',
+  {day:'Fri',date:'Apr 3',title:'Own lift — total body · work block',
+   detail:'Second solo lift. Strong close to the week. Heads down evening.',
    tags:[{t:'strength · 5am',c:'#EAF3DE',tc:'#27500A'},{t:'work block',c:'#EEEDFE',tc:'#3C3489'}]},
-  {day:'Sat',date:'Apr 5',title:'Free day · brunch',
-   detail:'Bigger social day. Tequila soda or dry white wine. Pilates if you want it.',
+  {day:'Sat',date:'Apr 4',title:'Free day · brunch',
+   detail:'Your one bigger social night. Tequila soda or dry white wine.',
    tags:[{t:'free day',c:'#FAEEDA',tc:'#633806'}]},
-  {day:'Sun',date:'Apr 6',title:'Recovery · optional hot yoga',
-   detail:'Clean eating. Early night. Reset for next week.',
+  {day:'Sun',date:'Apr 5',title:'Recovery · optional hot yoga',
+   detail:'Clean eating. Early night. Reset for the week.',
    tags:[{t:'early night',c:'#FAEEDA',tc:'#633806'}]}
 ];
 
-const WEEK_DAYS = [
-  {n:'Mon',score:'B',wo:'rest',planned:false,past:true,today:false,modes:['early']},
-  {n:'Tue',score:null,wo:'cardio',planned:true,past:false,today:true,modes:['social']},
-  {n:'Wed',score:null,wo:'lift',planned:true,past:false,today:false,modes:['networking']},
-  {n:'Thu',score:null,wo:'cardio',planned:true,past:false,today:false,modes:['social']},
-  {n:'Fri',score:null,wo:'lift',planned:true,past:false,today:false,modes:['work']},
-  {n:'Sat',score:null,wo:'rest',planned:true,past:false,today:false,modes:['social']},
-  {n:'Sun',score:null,wo:'rest',planned:true,past:false,today:false,modes:['early']}
+// WEEK CARDS DATA
+const WEEK = [
+  {n:'Mon',date:'Mar 30',title:'Flex walk · work block',sub:'clean eating · 6h sleep',score:'B',past:true,today:true,
+   insight:'You got 6h — slightly under your 7h target. Flex walk was the right call for travel recovery. Clean eating held. The work block tonight is where you make progress on the dashboard.',
+   sowhat:'One notch under on sleep. Everything else on track. Tomorrow: stairmaster + 1 drink max to protect Wednesday\'s 5am lift.',sowhatColor:'#EAF3DE',sowhatTC:'#27500A'},
+  {n:'Tue',date:'Mar 31',title:'Stairmaster 30m · social out',sub:'cardio day · plans tonight',score:null,past:false,today:false,
+   insight:'Stairmaster 30 min at 6/7/8. Cardio day = lighter lunch, full dinner with carbs. 1 drink max tonight — tomorrow is your first solo 5am lift.',
+   sowhat:'This day sets up Wednesday. Protect your sleep.',sowhatColor:'#EEEDFE',sowhatTC:'#3C3489'},
+  {n:'Wed',date:'Apr 1',title:'Own lift — chest/back/abs',sub:'5am · first solo Wednesday',score:null,past:false,today:false,
+   insight:'This is the most important session of the week for the arm tone you\'re building. Your first fully self-programmed Wednesday. Treat it like an appointment.',
+   sowhat:'This lift is directly connected to your arm + inner thigh goal. Don\'t skip.',sowhatColor:'#EAF3DE',sowhatTC:'#27500A'},
+  {n:'Thu',date:'Apr 2',title:'Stairmaster 30m · Drew dinner',sub:'cardio · Resy connection',score:null,past:false,today:false,
+   insight:'Cardio + social evening. Drew is your event partnership opportunity. Stay energized — eat well at lunch.',
+   sowhat:'Key relationship dinner. Be present and conversational.',sowhatColor:'#FBEAF0',sowhatTC:'#72243E'},
+  {n:'Fri',date:'Apr 3',title:'Own lift — total body',sub:'5am · work block evening',score:null,past:false,today:false,
+   insight:'Second strength session of the week. Total body — glutes, arms, core. Strong finish.',
+   sowhat:'Two lifts this week = reset complete. You\'re back on track.',sowhatColor:'#EAF3DE',sowhatTC:'#27500A'},
+  {n:'Sat',date:'Apr 4',title:'Free day · brunch',sub:'social · enjoy it',score:null,past:false,today:false,
+   insight:'Your one bigger night. Tequila soda or dry white wine if drinking. Pilates if you want movement.',
+   sowhat:'Free days are part of the plan. Enjoy it.',sowhatColor:'#FAEEDA',sowhatTC:'#633806'},
+  {n:'Sun',date:'Apr 5',title:'Recovery · optional hot yoga',sub:'reset for next week',score:null,past:false,today:false,
+   insight:'Clean eating, optional yoga stretch, early night. Sets up Monday\'s fresh start.',
+   sowhat:'Recovery is productive. Don\'t skip the early night.',sowhatColor:'#FAEEDA',sowhatTC:'#633806'}
 ];
 
-// TREND DATA (2 weeks of sample data)
-const SLEEP_DATA = [7,7,6.5,7,6,7,7.5, 6,null,null,null,null,null,null];
-const SLEEP_LBLS = ['M','T','W','T','F','S','S','M','T','W','T','F','S','S'];
-const ENERGY_DATA = [3,4,3,4,2,3,4, 3,null,null,null,null,null,null];
-const CLEAN_DATA =  [1,1,1,1,0,0,0, 1,0,null,null,null,null,null];
+// TREND DATA
+const SLEEP_DATA  = [7,7,6.5,7,6,7,7.5,  6,null,null,null,null,null,null];
+const ENERGY_DATA = [3,4,3,4,2,3,4,  3,null,null,null,null,null,null];
+const CLEAN_DATA  = [1,1,1,1,0,0,0,  1,0,null,null,null,null,null];
+const WO_DATA     = ['rest','cardio','rest','pilates','rest','pilates','rest','flex',null,null,null,null,null,null];
+const TREND_LBLS  = ['M','T','W','T','F','S','S','M','T','W','T','F','S','S'];
 
-let checkinDone = false;
-let selectedModes = ['social'];
-let sleepHours = 6;
-let swapSlot = null;
-let selectedDayIdx = 1;
-let histOff = -1;
-let wo = {name:'Stairmaster',det:'30 min · level 6/7/8 · cardio day',done:false,
-  tags:[{t:'cardio day',c:'#EEEDFE',tc:'#3C3489'},{t:'stairmaster',c:'#f1efe8',tc:'#888780'}]};
+// ── CHECK-IN ──────────────────────────────────────────────────────────────
+function buildCheckin() {
+  document.getElementById('ci-greeting').textContent = HOUR < 12 ? 'Good morning — how much did you sleep?' : 'Hey — how\'d you sleep last night?';
 
-let meals = [
-  {time:'morning',items:['slate latte 20g','Oikos protein drink 10g'],bg:'#EEEDFE',tc:'#3C3489',
-   why:'Light protein start — you\'re heading to the office and have a cardio session today.'},
-  {time:'lunch',items:['salmon','kale salad','brown rice'],bg:'#EAF3DE',tc:'#27500A',
-   why:'Salmon + carbs pre-cardio. Fuels your stairmaster without being too heavy.'},
-  {time:'dinner',items:['top sirloin','sweet potato','broccoli'],bg:'#EAF3DE',tc:'#27500A',
-   why:'Carb load tonight — you lift at 5am Wednesday. Steak gives you the protein and iron after travel.'}
-];
-
-// ── INIT ──────────────────────────────────────────────────────────────────
-
-function init() {
-  renderSleepBtns();
-  renderTonightPills('tonight-pills', selectedModes);
-  renderTonightPills('log-mode-pills', selectedModes);
-  renderLib();
-  renderWo();
-  renderSkincare();
-}
-
-// ── MORNING CHECK-IN ──────────────────────────────────────────────────────
-
-function renderSleepBtns() {
-  const cont = document.getElementById('sleep-btns');
-  cont.innerHTML = '';
+  const sleepOpts = document.getElementById('ci-sleep-opts');
   ['4h','5h','6h','6.5h','7h','7.5h','8h','8.5h','9h+'].forEach(h => {
     const b = document.createElement('button');
-    b.className = 'slp-btn' + (h === '6h' ? ' on' : '');
+    b.className = 'ci-opt' + (h==='6h'?' on':'');
     b.textContent = h;
-    b.onclick = () => {
-      document.querySelectorAll('.slp-btn').forEach(x => x.classList.remove('on'));
-      b.classList.add('on');
-      sleepHours = parseFloat(h);
-    };
-    cont.appendChild(b);
+    b.onclick = () => { sleepOpts.querySelectorAll('.ci-opt').forEach(x=>x.classList.remove('on')); b.classList.add('on'); state.sleep = parseFloat(h); };
+    sleepOpts.appendChild(b);
   });
-}
 
-function renderTonightPills(containerId, activeArr) {
-  const cont = document.getElementById(containerId);
-  if (!cont) return;
-  cont.innerHTML = '';
-  TONIGHT_MODES.forEach(m => {
-    const p = document.createElement('div');
-    p.className = 'mode-pill' + (activeArr.includes(m.id) ? ' on' : '');
-    p.textContent = m.label;
-    p.onclick = () => {
-      if (activeArr.includes(m.id)) {
-        activeArr.splice(activeArr.indexOf(m.id), 1);
-      } else {
-        activeArr.push(m.id);
-      }
-      p.classList.toggle('on');
+  const locOpts = document.getElementById('ci-location-opts');
+  ['Office','WFH','Travel'].forEach(loc => {
+    const b = document.createElement('button');
+    b.className = 'ci-opt' + (loc==='Office'?' on':'');
+    b.textContent = loc;
+    b.onclick = () => { locOpts.querySelectorAll('.ci-opt').forEach(x=>x.classList.remove('on')); b.classList.add('on'); state.location = loc.toLowerCase(); };
+    locOpts.appendChild(b);
+  });
+
+  const tonightOpts = document.getElementById('ci-tonight-opts');
+  [{id:'work',label:'Startup work block'},{id:'networking',label:'Startup event / networking'},{id:'social',label:'Social out'},{id:'early',label:'Early night'}].forEach(m => {
+    const b = document.createElement('button');
+    b.className = 'ci-opt multi';
+    b.textContent = m.label;
+    b.onclick = () => {
+      b.classList.toggle('on');
+      if (b.classList.contains('on')) state.tonightModes.push(m.id);
+      else state.tonightModes.splice(state.tonightModes.indexOf(m.id),1);
     };
-    cont.appendChild(p);
+    tonightOpts.appendChild(b);
   });
 }
 
 function completeCheckin() {
-  checkinDone = true;
-  document.getElementById('checkin-wrap').classList.add('hidden');
-  document.getElementById('day-wrap').classList.remove('hidden');
-  renderTonightSummary();
+  if (state.tonightModes.length===0) state.tonightModes=['work'];
+  state.checkinDone = true;
+  document.getElementById('ci-wrap').classList.add('hidden');
+  document.getElementById('day-view').classList.remove('hidden');
+
+  document.getElementById('sb-sleep').textContent = state.sleep + 'h';
+  document.getElementById('sb-loc').textContent = state.location === 'office' ? 'Office' : state.location === 'wfh' ? 'WFH' : 'Travel';
+  document.getElementById('sb-tonight').textContent = state.tonightModes.length === 1
+    ? [{work:'Work block',networking:'Networking',social:'Social out',early:'Early night'}[state.tonightModes[0]]]
+    : state.tonightModes.length + ' plans';
+
   renderMeals();
-  reopt();
+  renderMacros();
+  renderAIInsights();
+  renderWo();
+  renderSkincare();
+  renderWoAI();
+  renderSkinAI();
 }
 
-function renderTonightSummary() {
-  const wrap = document.getElementById('tonight-summary');
-  const modeLabels = selectedModes.map(id => TONIGHT_MODES.find(m => m.id === id)?.label || id);
-  const modeStr = modeLabels.join(' + ');
-  const sleepColor = sleepHours >= 7 ? '#EAF3DE' : sleepHours >= 6 ? '#FAEEDA' : '#FAECE7';
-  const sleepTC = sleepHours >= 7 ? '#27500A' : sleepHours >= 6 ? '#633806' : '#712B13';
-  wrap.innerHTML = `
-    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 14px;background:#fff;border:0.5px solid #e0dfd8;border-radius:12px">
-      <div style="flex:1;min-width:120px">
-        <div style="font-size:10px;color:#b4b2a9;margin-bottom:2px">slept</div>
-        <div style="font-size:14px;font-weight:500">${sleepHours}h</div>
-      </div>
-      <div style="flex:2;min-width:160px">
-        <div style="font-size:10px;color:#b4b2a9;margin-bottom:4px">tonight</div>
-        <div style="display:flex;flex-wrap:wrap;gap:4px">
-          ${modeLabels.map(l => `<span style="font-size:11px;padding:3px 9px;border-radius:20px;background:#EEEDFE;color:#3C3489;font-weight:500">${l}</span>`).join('')}
-        </div>
-      </div>
-      <div style="font-size:11px;padding:4px 10px;border-radius:20px;background:${sleepColor};color:${sleepTC};cursor:pointer" onclick="document.getElementById('checkin-wrap').classList.remove('hidden');document.getElementById('day-wrap').classList.add('hidden')">edit</div>
-    </div>`;
+function resetCheckin() {
+  state.checkinDone = false;
+  document.getElementById('ci-wrap').classList.remove('hidden');
+  document.getElementById('day-view').classList.add('hidden');
 }
 
-// ── OPTIMIZATION ──────────────────────────────────────────────────────────
-
-function reopt() {
-  const zone = document.getElementById('opt-zone');
-  if (!zone) return;
+// ── AI INSIGHTS ───────────────────────────────────────────────────────────
+function renderAIInsights() {
+  const zone = document.getElementById('ai-zone');
   zone.innerHTML = '';
-  const protein = parseInt(document.getElementById('prot-in')?.value || 18);
-  const isNetworking = selectedModes.includes('networking');
-  const isEarly = selectedModes.includes('early');
-  const strips = [];
+  const insights = [];
 
-  if (protein < 40) {
-    strips.push({type:'warn',tag:'protein low',
-      text:`Only ${protein}g protein logged so far. Target is 100–120g today.`,
-      why:'Your steak dinner will help close the gap. Make sure it\'s a full portion — you travel-depleted yesterday.',
-      acc:'Got it',rej:'Log later'});
+  if (state.sleep < 7) {
+    insights.push({
+      type: state.sleep < 6 ? 'warn' : 'sug',
+      tag: 'sleep debt',
+      text: `You got ${state.sleep}h last night. Tomorrow is a stairmaster day — try to be in bed by 10pm tonight.`,
+      goal: '→ ' + GOALS.sleep + ' · ' + GOALS.startup,
+      acc: 'Setting 10pm reminder', rej: 'Noted'
+    });
   }
 
-  if (sleepHours < 6.5 && isNetworking) {
-    strips.push({type:'warn',tag:'sleep + high-alert night',
-      text:`You slept ${sleepHours}h and tonight needs you sharp. Protect your energy all day.`,
-      why:'No heavy carbs at lunch. Protein-forward. Be in bed by 10:30pm after.',
-      acc:'Plan locked',rej:'I\'ll manage'});
+  if (state.tonightModes.includes('networking')) {
+    insights.push({
+      type: 'info',
+      tag: 'tonight · stay sharp',
+      text: 'Startup event tonight. You need to be on — conversational, present, energized.',
+      goal: '→ ' + GOALS.sharp + ' · keep dinner light before the event',
+      acc: 'Got it', rej: null
+    });
   }
 
-  if (sleepHours < 6.5 && !isNetworking) {
-    strips.push({type:'sug',tag:'sleep debt',
-      text:`${sleepHours}h last night. Tonight: aim for bed by ${isEarly ? '9:45pm' : '10pm'}.`,
-      why:'Tomorrow is a 5am lift. You need 7h to get the most from it.',
-      acc:`Setting ${isEarly?'9:45':'10'}pm alarm`,rej:'Noted'});
+  if (state.tonightModes.includes('work')) {
+    insights.push({
+      type: 'sug',
+      tag: 'work block',
+      text: 'Heads down tonight. Protect your focus window — check social only at 6pm, then phone down.',
+      goal: '→ ' + GOALS.startup,
+      acc: 'Focus mode on', rej: null
+    });
   }
 
-  if (isNetworking) {
-    strips.push({type:'info',tag:'tonight · stay sharp',
-      text:'Startup event or networking tonight. You need to be on — conversational, energized, present.',
-      why:'Eat a real dinner before. 1 drink max. Keep the conversation moving toward the brand preview event.',
-      acc:'Got it',rej:null});
-  }
+  insights.push({
+    type: 'ok',
+    tag: 'flex day · right call',
+    text: 'Incline walk today after travel is exactly right. Don\'t compensate for last week — just reset.',
+    goal: '→ ' + GOALS.lean + ' · active recovery supports ' + GOALS.muscle,
+    acc: null, rej: null
+  });
 
-  if (wo.done) {
-    strips.push({type:'ok',tag:'movement done',
-      text:`${wo.name} logged. Strong cardio day.`,
-      why:'Your stairmaster sets up Wednesday\'s lift well. Protein dinner tonight.',
-      acc:null,rej:null});
-  }
-
-  strips.forEach(s => {
+  insights.forEach(ins => {
     const d = document.createElement('div');
-    d.className = 'opt ' + s.type;
-    let h = `<div class="opt-tag">${s.tag}</div><div class="opt-text">${s.text}</div>`;
-    if (s.why) h += `<div class="opt-why">${s.why}</div>`;
-    if (s.acc || s.rej) {
-      h += '<div class="opt-btns">';
-      if (s.acc) h += `<button class="obtn acc" onclick="this.closest('.opt').remove()">${s.acc}</button>`;
-      if (s.rej) h += `<button class="obtn rej" onclick="this.closest('.opt').remove()">${s.rej}</button>`;
+    const typeMap = {warn:'#FAECE7|#F0997B',sug:'#EEEDFE|#AFA9EC',ok:'#EAF3DE|#97C459',info:'#E6F1FB|#85B7EB'};
+    const [bg, border] = typeMap[ins.type].split('|');
+    d.style.cssText = `background:${bg};border:1.5px solid ${border};border-radius:12px;padding:12px 14px;margin-bottom:8px;position:relative`;
+    let h = `<div style="position:absolute;top:10px;right:12px;font-size:11px;color:#7F77DD;opacity:.8">✦</div>`;
+    h += `<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7F77DD;margin-bottom:3px">✦ ${ins.tag}</div>`;
+    h += `<div style="font-size:13px;line-height:1.5;margin-bottom:3px">${ins.text}</div>`;
+    h += `<div style="font-size:11px;color:#534AB7;opacity:.85;line-height:1.4;margin-bottom:${ins.acc||ins.rej?'8':'0'}px">${ins.goal}</div>`;
+    if (ins.acc || ins.rej) {
+      h += '<div style="display:flex;gap:6px;flex-wrap:wrap">';
+      if (ins.acc) h += `<button style="font-size:11px;padding:5px 12px;border-radius:20px;border:1.5px solid #7F77DD;cursor:pointer;background:#7F77DD;color:#fff" onclick="this.closest('div[style]').remove()">${ins.acc}</button>`;
+      if (ins.rej) h += `<button style="font-size:11px;padding:5px 12px;border-radius:20px;border:1.5px solid #c5c4bc;cursor:pointer;background:transparent;color:#888780" onclick="this.closest('div[style]').remove()">${ins.rej}</button>`;
       h += '</div>';
     }
     d.innerHTML = h;
@@ -645,60 +715,34 @@ function reopt() {
   });
 }
 
-// ── MEALS ──────────────────────────────────────────────────────────────────
-
+// ── MEALS ─────────────────────────────────────────────────────────────────
 function renderMeals() {
   const card = document.getElementById('meal-card');
   if (!card) return;
   card.innerHTML = '';
   meals.forEach((slot, si) => {
-    const sec = document.createElement('div');
-    sec.className = 'meal-rec';
-    const bubbles = slot.items.map((item, ii) =>
+    const sec = document.createElement('div'); sec.className = 'meal-slot';
+    const bubbles = slot.items.map((item,ii) =>
       `<span class="bub" style="background:${slot.bg};color:${slot.tc}">${item}<span class="bx" onclick="removeItem(${si},${ii});event.stopPropagation()">✕</span></span>`
     ).join('');
     sec.innerHTML = `
-      <div class="mr-top">
-        <div style="flex:1">
-          <div class="mr-time">${slot.time}</div>
-          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:2px;margin-bottom:4px">
-            ${bubbles}
-            <span class="badd" onclick="openMealModal(${si})">+</span>
-          </div>
-          <div class="mr-why">${slot.why}</div>
-        </div>
-      </div>
-      <div class="mr-btns">
-        <button class="mr-btn yes" onclick="confirmMeal(${si},this)">Looks good ✓</button>
-        <button class="mr-btn swap" onclick="openMealModal(${si})">Swap something</button>
-      </div>`;
+      <div class="ms-time">${slot.time}</div>
+      <div class="ms-bubbles">${bubbles}<span class="badd" onclick="openMealModal(${si})">+</span></div>
+      <div style="font-size:11px;color:#888780">${slot.protein}g protein · ${slot.carbs}g carbs</div>`;
     card.appendChild(sec);
   });
 }
 
-function confirmMeal(si, btn) {
-  btn.textContent = 'Confirmed ✓';
-  btn.style.background = '#EAF3DE';
-  btn.style.borderColor = '#97C459';
-  btn.style.color = '#27500A';
-  btn.disabled = true;
-}
-
-function removeItem(si, ii) {
-  meals[si].items.splice(ii, 1);
-  renderMeals();
-}
+function removeItem(si,ii){meals[si].items.splice(ii,1);renderMeals();renderMacros();}
 
 function openMealModal(si) {
-  swapSlot = si;
+  state.swapSlot = si;
   const modal = document.getElementById('meal-modal');
   document.getElementById('mm-sub').textContent = 'Adding to ' + meals[si].time;
-  const lib = document.getElementById('mm-lib');
-  lib.innerHTML = '';
-  [...FOOD.p, ...FOOD.c, ...FOOD.s].forEach(f => {
-    const chip = document.createElement('span');
-    chip.className = 'lchip'; chip.textContent = f;
-    chip.onclick = () => { meals[swapSlot].items.push(f); renderMeals(); modal.style.display = 'none'; };
+  const lib = document.getElementById('mm-lib'); lib.innerHTML = '';
+  [...FOOD.p,...FOOD.c,...FOOD.s].forEach(f => {
+    const chip = document.createElement('span'); chip.className = 'lchip'; chip.textContent = f;
+    chip.onclick = () => { meals[state.swapSlot].items.push(f); renderMeals(); renderMacros(); modal.style.display='none'; };
     lib.appendChild(chip);
   });
   document.getElementById('mm-new').value = '';
@@ -709,304 +753,310 @@ function addAndSwap() {
   const val = document.getElementById('mm-new').value.trim();
   if (!val) return;
   FOOD.s.push(val);
-  meals[swapSlot].items.push(val);
-  renderMeals(); renderLib();
+  meals[state.swapSlot].items.push(val);
+  renderMeals(); renderMacros(); renderLib();
   document.getElementById('meal-modal').style.display = 'none';
 }
 
-// ── WORKOUT ──────────────────────────────────────────────────────────────
+// ── MACROS ────────────────────────────────────────────────────────────────
+function renderMacros() {
+  const card = document.getElementById('macro-card');
+  if (!card) return;
+  const logProt = parseInt(document.getElementById('log-prot')?.value || 18);
+  const totalP = meals.reduce((a,s)=>a+s.protein,0);
+  const totalC = meals.reduce((a,s)=>a+s.carbs,0);
+  const pTarget = 120;
+  const pPct = Math.min(100, Math.round((totalP/pTarget)*100));
+  const pColor = totalP >= 80 ? '#639922' : totalP >= 50 ? '#EF9F27' : '#D85A30';
 
+  // AI commentary based on goals
+  let commentary = '';
+  if (totalP < 60) commentary = `✦ Only ${totalP}g protein so far. You need ${pTarget-totalP}g more today to support muscle recovery. → ${GOALS.muscle}`;
+  else if (totalP >= 80) commentary = `✦ Strong protein day at ${totalP}g. This directly supports the arm and inner thigh tone you're building. → ${GOALS.muscle}`;
+  else commentary = `✦ ${totalP}g protein — on track. Keep it up through dinner. → ${GOALS.lean}`;
+
+  card.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div style="font-size:12px;font-weight:500">Macros today</div>
+      <div style="font-size:10px;color:#888780">target: 120g protein</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div>
+        <div style="font-size:10px;color:#888780;margin-bottom:3px">protein</div>
+        <div class="macro-bar-bg"><div class="macro-bar-fill" style="width:${pPct}%;background:${pColor}"></div></div>
+        <div style="font-size:11px;color:${pColor};font-weight:500">${totalP}g / ${pTarget}g</div>
+      </div>
+      <div>
+        <div style="font-size:10px;color:#888780;margin-bottom:3px">carbs</div>
+        <div class="macro-bar-bg"><div class="macro-bar-fill" style="width:${Math.min(100,Math.round(totalC/150*100))}%;background:#7F77DD"></div></div>
+        <div style="font-size:11px;color:#7F77DD;font-weight:500">${totalC}g</div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:#534AB7;padding:7px 10px;background:#EEEDFE;border-radius:8px;line-height:1.5">${commentary}</div>`;
+}
+
+function updateMacros() { renderMacros(); }
+
+// ── WORKOUT ───────────────────────────────────────────────────────────────
 function renderWo() {
   document.getElementById('wo-name').textContent = wo.name;
   document.getElementById('wo-det').textContent = wo.det;
   const chk = document.getElementById('wo-chk');
-  chk.className = 'chk' + (wo.done ? ' gr' : '');
-  chk.textContent = wo.done ? '✓' : '';
-  const tags = document.getElementById('wo-tags');
-  tags.innerHTML = '';
+  chk.className = 'chk' + (wo.done?' gr':'');
+  chk.textContent = wo.done?'✓':'';
+  const tags = document.getElementById('wo-tags'); tags.innerHTML = '';
   wo.tags.forEach(t => {
-    const s = document.createElement('span');
-    s.className = 'tag'; s.style.background = t.c; s.style.color = t.tc; s.textContent = t.t;
-    tags.appendChild(s);
+    const s=document.createElement('span');s.className='tag';s.style.background=t.c;s.style.color=t.tc;s.textContent=t.t;tags.appendChild(s);
   });
 }
 
-function toggleWo() { wo.done = !wo.done; renderWo(); reopt(); }
-
-function openWoModal() {
-  const modal = document.getElementById('wo-modal');
-  const opts = document.getElementById('wm-opts');
-  opts.innerHTML = '';
-  WO_OPTS.forEach(w => {
-    const chip = document.createElement('span');
-    chip.className = 'lchip'; chip.textContent = w;
-    chip.onclick = () => { wo.name = w; wo.det = ''; wo.tags = []; renderWo(); modal.style.display = 'none'; };
-    opts.appendChild(chip);
-  });
-  document.getElementById('wm-new').value = '';
-  modal.style.display = 'flex';
-}
-
-function setCustomWo() {
-  const val = document.getElementById('wm-new').value.trim();
-  if (!val) return;
-  wo.name = val; wo.det = ''; wo.tags = []; renderWo();
-  document.getElementById('wo-modal').style.display = 'none';
-}
-
-// ── SKINCARE ──────────────────────────────────────────────────────────────
-
-function renderSkincare() {
-  // Today is Tuesday = day index 1 = retinol
-  const todayIdx = 1;
-  const isRetinol = SKIN_SCHEDULE[todayIdx];
-  const lastNight = isRetinol ? 'BHA' : 'retinol';
-  document.getElementById('pm-pill').textContent = isRetinol ? 'Kiehl\'s retinol' : 'Paula\'s Choice BHA';
-  document.getElementById('skin-note').textContent = `${isRetinol ? 'Retinol' : 'BHA'} tonight — you did ${lastNight} last night.`;
-}
-
-// ── CHECKS ────────────────────────────────────────────────────────────────
-
-function toggleSmChk(id) {
-  const el = document.getElementById(id);
-  el.classList.toggle('on');
-  el.textContent = el.classList.contains('on') ? '✓' : '';
-}
-
-// ── WEEK VIEW ─────────────────────────────────────────────────────────────
-
-function renderWeekGrid() {
-  const grid = document.getElementById('week-grid');
-  if (!grid) return;
-  grid.innerHTML = '';
-  const scoreColors = {A:{bg:'#EEEDFE',tc:'#3C3489'},B:{bg:'#EAF3DE',tc:'#27500A'},C:{bg:'#FAEEDA',tc:'#633806'},D:{bg:'#FAECE7',tc:'#712B13'}};
-  const woColors = {lift:'#7F77DD',cardio:'#1D9E75',pilates:'#D4537E',rest:'#e0dfd8'};
-
-  WEEK_DAYS.forEach((d, i) => {
-    const col = document.createElement('div');
-    col.className = 'wday' + (d.today ? ' today' : d.past ? ' past' : '');
-    col.onclick = () => { selectedDayIdx = i; renderDayDetail(); };
-    let inner = `<div class="wd-n">${d.n}</div>`;
-    if (d.score) {
-      const sc = scoreColors[d.score] || scoreColors.C;
-      inner += `<div class="wd-score" style="color:${sc.tc}">${d.score}</div>`;
-    } else if (d.today) {
-      inner += `<div class="wd-score" style="color:#7F77DD">·</div>`;
-    } else {
-      inner += `<div class="wd-score" style="color:#e0dfd8">—</div>`;
-    }
-    inner += `<div style="width:8px;height:8px;border-radius:50%;background:${woColors[d.wo]||'#e0dfd8'};margin:2px auto"></div>`;
-    col.innerHTML = inner;
-    grid.appendChild(col);
-  });
-  renderDayDetail();
-}
-
-function renderDayDetail() {
-  const wrap = document.getElementById('day-detail-wrap');
+function renderWoAI() {
+  const wrap = document.getElementById('wo-ai-wrap');
   if (!wrap) return;
-  const d = WEEK_DAYS[selectedDayIdx];
-  const ahead = AHEAD_DATA[selectedDayIdx - 1];
-  if (!ahead) { wrap.innerHTML = ''; return; }
-  const tags = ahead.tags.map(t => `<span class="tag" style="background:${t.c};color:${t.tc}">${t.t}</span>`).join('');
   wrap.innerHTML = `
-    <div class="day-detail">
-      <div style="font-size:10px;color:#b4b2a9;margin-bottom:4px">${d.n} · ${d.past ? 'done' : d.today ? 'today' : 'planned'}</div>
-      <div style="font-size:14px;font-weight:500;margin-bottom:4px">${ahead.title}</div>
-      <div style="font-size:12px;color:#888780;margin-bottom:6px">${ahead.detail}</div>
-      <div>${tags}</div>
-      ${d.score ? `<div style="margin-top:8px;font-size:11px;padding:5px 10px;background:#f1efe8;border-radius:8px;color:#888780">Day score: <strong style="color:#1a1a18">${d.score}</strong></div>` : ''}
+    <div style="font-size:11px;color:#534AB7;padding:7px 10px 7px 12px;background:#EEEDFE;border-radius:8px;margin-top:-4px;margin-bottom:10px;line-height:1.5;border-left:3px solid #7F77DD">
+      ✦ Flex day is the right move after travel. Tomorrow: stairmaster 30m at 6/7/8 sets up Wednesday's 5am lift. → ${GOALS.muscle} · ${GOALS.lean}
     </div>`;
 }
 
-// ── HISTORY ──────────────────────────────────────────────────────────────
+function toggleWo() { wo.done=!wo.done; renderWo(); renderWoAI(); }
 
-function renderHist() {
-  const key = String(histOff);
-  const wk = HIST_DATA[key] || HIST_DATA['0'];
-  document.getElementById('wk-label').textContent = wk.label;
-  const cont = document.getElementById('hist-rows'); cont.innerHTML = '';
-  const dc = {eat:'#639922',wo:'#7F77DD',slp:'#1D9E75',drk:'#D85A30',sk:'#D4537E'};
-  wk.days.forEach(d => {
-    const row = document.createElement('div'); row.className = 'hdrow';
-    const dot = (on, c) => `<div class="hd${on?' on':''}" style="${on?'background:'+c+';':''}">${on?'·':''}</div>`;
-    const woOn = d.wo !== 'rest';
-    row.innerHTML =
-      `<div style="font-size:11px;font-weight:500;color:${d.free?'#b4b2a9':'#888780'}">${d.n}</div>` +
-      `<div style="font-size:10px;color:#b4b2a9;line-height:1.3">${d.note}${d.drk>0?' · '+d.drk+'drk':''}</div>` +
-      dot(d.eat,dc.eat)+dot(woOn,dc.wo)+dot(d.slp>=7,dc.slp)+dot(d.drk>0,dc.drk)+dot(d.sk,dc.sk);
-    cont.appendChild(row);
+function openWoModal() {
+  const modal=document.getElementById('wo-modal');
+  const opts=document.getElementById('wm-opts'); opts.innerHTML='';
+  FOOD.wo.forEach(w => {
+    const chip=document.createElement('span');chip.className='lchip';chip.textContent=w;
+    chip.onclick=()=>{wo.name=w;wo.det='';wo.tags=[];renderWo();modal.style.display='none';};
+    opts.appendChild(chip);
   });
-  const wos = wk.days.filter(d=>d.wo!=='rest').length;
-  const eats = wk.days.filter(d=>d.eat).length;
-  const avgSlp = wk.days.filter(d=>d.slp).reduce((a,d)=>a+(d.slp||0),0) / wk.days.filter(d=>d.slp).length;
-  const drinks = wk.days.reduce((a,d)=>a+d.drk,0);
-  document.getElementById('hist-sum').innerHTML = [
-    {l:'workouts',v:wos+'/7'},
-    {l:'clean days',v:eats+'/7'},
-    {l:'avg sleep',v:avgSlp.toFixed(1)+'h'},
-    {l:'drinks',v:drinks}
-  ].map(s=>`<div style="background:#f1efe8;border-radius:8px;padding:8px 10px;text-align:center"><div style="font-size:10px;color:#888780;margin-bottom:2px">${s.l}</div><div style="font-size:16px;font-weight:500">${s.v}</div></div>`).join('');
+  document.getElementById('wm-new').value='';
+  modal.style.display='flex';
+}
+function setCustomWo(){const val=document.getElementById('wm-new').value.trim();if(!val)return;wo.name=val;wo.det='';wo.tags=[];renderWo();document.getElementById('wo-modal').style.display='none';}
+function syncWo(){wo.done=document.getElementById('lc-wo').classList.contains('on');renderWo();}
+
+// ── SKINCARE ──────────────────────────────────────────────────────────────
+function renderSkincare() {
+  const card = document.getElementById('skin-card');
+  if (!card) return;
+  card.innerHTML = '';
+
+  const addSection = (label, items, prefix) => {
+    const header = document.createElement('div');
+    header.style.cssText = 'font-size:10px;font-weight:600;color:#b4b2a9;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;margin-top:' + (label==='AM'?'0':'10px');
+    header.textContent = label;
+    card.appendChild(header);
+    items.forEach((item,i) => {
+      const row = document.createElement('div'); row.className = 'skin-item';
+      row.innerHTML = `
+        <div>
+          <div class="skin-name">${item.name}</div>
+          <div class="skin-note">${item.note}</div>
+        </div>
+        <div class="sm-chk${item.done?' on':''}" id="${prefix}-${i}" onclick="toggleSkin('${prefix}',${i})">${item.done?'✓':''}</div>`;
+      card.appendChild(row);
+    });
+  };
+  addSection('AM', skinAM, 'am');
+  addSection('PM', skinPM, 'pm');
 }
 
-function changeWeek(d) {
-  const keys = Object.keys(HIST_DATA).map(Number).sort((a,b)=>a-b);
-  const nv = histOff + d;
-  if (keys.includes(nv)) { histOff = nv; renderHist(); }
+function renderSkinAI() {
+  const wrap = document.getElementById('skin-ai-wrap');
+  if (!wrap) return;
+  const tonight = isRetinolDay ? 'retinol' : 'BHA';
+  const lastNight = isRetinolDay ? 'BHA' : 'retinol';
+  const dayOfWeek = NOW.getDay();
+  const maskSuggestion = dayOfWeek === 0 ? ' Sunday is a great day for a face mask instead of your usual PM routine.' : '';
+  wrap.innerHTML = `
+    <div style="font-size:11px;color:#534AB7;padding:7px 10px 7px 12px;background:#EEEDFE;border-radius:8px;margin-top:-4px;margin-bottom:10px;line-height:1.5;border-left:3px solid #7F77DD">
+      ✦ ${tonight.charAt(0).toUpperCase()+tonight.slice(1)} tonight — you did ${lastNight} last night. Alternating keeps your skin from getting irritated while still minimizing pores.${maskSuggestion} → ${GOALS.skin}
+    </div>`;
 }
 
-// ── AHEAD ────────────────────────────────────────────────────────────────
+function toggleSkin(prefix, i) {
+  const arr = prefix === 'am' ? skinAM : skinPM;
+  arr[i].done = !arr[i].done;
+  const el = document.getElementById(prefix + '-' + i);
+  el.classList.toggle('on');
+  el.textContent = arr[i].done ? '✓' : '';
+}
 
+// ── WEEK CARDS ────────────────────────────────────────────────────────────
+function renderWeekCards() {
+  const cont = document.getElementById('week-cards');
+  if (!cont) return; cont.innerHTML = '';
+  const scoreColors = {A:{bg:'#EEEDFE',tc:'#3C3489'},B:{bg:'#EAF3DE',tc:'#27500A'},C:{bg:'#FAEEDA',tc:'#633806'},D:{bg:'#FAECE7',tc:'#712B13'}};
+  WEEK.forEach((d,i) => {
+    const card = document.createElement('div');
+    card.className = 'wday-card' + (d.today?' today':'');
+    card.onclick = () => { card.classList.toggle('expanded'); };
+    const sc = d.score ? scoreColors[d.score] : null;
+    let h = `<div class="wdc-row">
+      <div class="wdc-day"><div class="wdc-name">${d.n}</div><div class="wdc-date">${d.date}</div></div>
+      <div style="flex:1"><div class="wdc-title">${d.title}</div><div class="wdc-sub">${d.sub}</div></div>`;
+    if (sc) h += `<div class="wdc-score" style="background:${sc.bg};color:${sc.tc}">${d.score}</div>`;
+    else if (d.today) h += `<div class="wdc-score" style="background:#EEEDFE;color:#7F77DD">today</div>`;
+    else h += `<div class="wdc-score" style="background:#f1efe8;color:#b4b2a9">—</div>`;
+    h += `</div>
+      <div class="wdc-body">
+        <div style="font-size:12px;color:#1a1a18;line-height:1.6;margin-bottom:6px">${d.insight}</div>
+        <div style="font-size:11px;padding:8px 11px;border-radius:8px;background:${d.sowhatColor};color:${d.sowhatTC};line-height:1.5">✦ ${d.sowhat}</div>
+      </div>`;
+    card.innerHTML = h;
+    cont.appendChild(card);
+  });
+}
+
+// ── AHEAD ─────────────────────────────────────────────────────────────────
 function renderAhead() {
   const card = document.getElementById('ahead-card');
   if (!card) return; card.innerHTML = '';
-  AHEAD_DATA.forEach(a => {
-    const row = document.createElement('div');
-    row.style.cssText = 'padding:10px 0;border-bottom:0.5px solid #f1efe8;display:flex;gap:10px';
+  AHEAD.forEach(a => {
+    const row = document.createElement('div'); row.className = 'ahead-item';
     const tags = a.tags.map(t=>`<span class="tag" style="background:${t.c};color:${t.tc}">${t.t}</span>`).join('');
     row.innerHTML = `
-      <div style="min-width:28px">
-        <div style="font-size:11px;font-weight:500;color:#888780">${a.day}</div>
-        <div style="font-size:9px;color:#b4b2a9;margin-top:1px">${a.date}</div>
-      </div>
+      <div class="ai-day"><div class="ai-dayname">${a.day}</div><div class="ai-daydate">${a.date}</div></div>
       <div style="flex:1">
         <div style="font-size:13px;font-weight:500;color:#1a1a18;margin-bottom:2px">${a.title}</div>
-        <div style="font-size:11px;color:#888780;line-height:1.5">${a.detail}</div>
-        <div style="margin-top:3px">${tags}</div>
+        <div style="font-size:11px;color:#888780;line-height:1.5;margin-bottom:4px">${a.detail}</div>
+        <div>${tags}</div>
       </div>`;
-    row.lastElementChild; // prevent eslint
     card.appendChild(row);
   });
-  // fix last border
   if (card.lastChild) card.lastChild.style.borderBottom = 'none';
 }
 
-// ── TRENDS ───────────────────────────────────────────────────────────────
+// ── HISTORY ───────────────────────────────────────────────────────────────
+function renderHist() {
+  const key = String(state.histOffset);
+  const wk = HIST[key] || HIST['0'];
+  document.getElementById('wk-label').textContent = wk.label;
+  const cont = document.getElementById('hist-rows'); cont.innerHTML = '';
+  const dc = {eat:'#639922',cardio:'#7F77DD',lift:'#534AB7',pilates:'#D4537E',flex:'#1D9E75',rest:'#e0dfd8',drk:'#D85A30',sk:'#D4537E'};
+  wk.days.forEach(d => {
+    const row = document.createElement('div'); row.className = 'hdrow';
+    const dot = (on,c) => `<div class="hd${on?' on':''}" style="${on?'background:'+c+';':''}">${on?'·':''}</div>`;
+    const woOn = d.wo !== 'rest';
+    const woColor = dc[d.wo] || '#7F77DD';
+    row.innerHTML =
+      `<div style="font-size:11px;font-weight:500;color:${d.free?'#b4b2a9':'#888780'}">${d.n}</div>` +
+      `<div style="font-size:10px;color:#b4b2a9;line-height:1.3">${d.note}</div>` +
+      dot(d.eat,'#639922')+dot(woOn,woColor)+dot(d.slp>=7,'#1D9E75')+dot(d.drk>0,'#D85A30')+dot(d.sk,'#D4537E');
+    cont.appendChild(row);
+  });
+  const wos=wk.days.filter(d=>d.wo!=='rest').length;
+  const eats=wk.days.filter(d=>d.eat).length;
+  const slpDays=wk.days.filter(d=>d.slp);
+  const avgSlp=slpDays.length?slpDays.reduce((a,d)=>a+(d.slp||0),0)/slpDays.length:0;
+  const drinks=wk.days.reduce((a,d)=>a+d.drk,0);
+  document.getElementById('hist-sum').innerHTML=[
+    {l:'workouts',v:wos+'/7'},{l:'clean days',v:eats+'/7'},{l:'avg sleep',v:avgSlp.toFixed(1)+'h'},{l:'drinks',v:drinks}
+  ].map(s=>`<div style="background:#f1efe8;border-radius:8px;padding:8px 10px;text-align:center"><div style="font-size:10px;color:#888780;margin-bottom:2px">${s.l}</div><div style="font-size:16px;font-weight:500">${s.v}</div></div>`).join('');
 
+  const sowhat = document.getElementById('hist-sowhat');
+  sowhat.innerHTML = `<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7F77DD;margin-bottom:5px">✦ so what</div><div style="font-size:12px;color:#1a1a18;line-height:1.6">${wk.sowhat}</div>`;
+}
+
+function changeWeek(d){
+  const keys=Object.keys(HIST).map(Number).sort((a,b)=>a-b);
+  const nv=state.histOffset+d;
+  if(keys.includes(nv)){state.histOffset=nv;renderHist();}
+}
+
+// ── TRENDS ────────────────────────────────────────────────────────────────
 function renderTrends() {
-  renderBarChart('sleep-chart','sleep-chart-lbls', SLEEP_DATA, SLEEP_LBLS, '#7F77DD', 10, 8);
-  renderEnergyChart();
-  renderCleanDots();
-  renderWoTrend();
+  // SLEEP
+  document.getElementById('sleep-sowhat').innerHTML = '✦ Your average is 6.8h — slightly under your 7h target. The dip on Friday (travel) is consistent with your LA pattern. Protecting Wednesday and Thursday nights is where you gain the most. → ' + GOALS.sleep;
+  renderBarChart('sleep-bars','sleep-lbls',SLEEP_DATA,TREND_LBLS,'#7F77DD',10,7);
+
+  // WORKOUTS
+  document.getElementById('wo-sowhat').innerHTML = '✦ 6 active sessions in the last 2 weeks despite travel. Your pilates sessions in LA are saving your consistency streak. This week: first fully self-programmed Wednesday and Friday lifts. → ' + GOALS.muscle;
+  const woCont = document.getElementById('wo-dots');
+  woCont.innerHTML = '';
+  const woC = {cardio:'#7F77DD',lift:'#534AB7',pilates:'#D4537E',flex:'#1D9E75',rest:'#e0dfd8'};
+  WO_DATA.forEach((w,i) => {
+    const d=document.createElement('div');d.className='wo-dot';
+    d.style.background=w?woC[w]||'#e0dfd8':'#f1efe8';
+    d.style.color=w&&w!=='rest'?'#fff':'#b4b2a9';
+    d.textContent=TREND_LBLS[i];
+    woCont.appendChild(d);
+  });
+  document.getElementById('wo-legend').innerHTML='<span style="color:#7F77DD">■</span> cardio &nbsp;<span style="color:#534AB7">■</span> lift &nbsp;<span style="color:#D4537E">■</span> pilates &nbsp;<span style="color:#1D9E75">■</span> flex &nbsp;<span style="color:#e0dfd8">■</span> rest';
+
+  // CLEAN EATING
+  document.getElementById('clean-sowhat').innerHTML = '✦ 5 clean days last 2 weeks. Your Fri–Sun pattern is the one thing holding you back from a full week. Free days are fine — just notice the pattern. → ' + GOALS.lean;
+  const cleanCont = document.getElementById('clean-dots');
+  cleanCont.innerHTML = '';
+  CLEAN_DATA.forEach((v,i) => {
+    const d=document.createElement('div');d.className='clean-dot';
+    d.style.background=v===1?'#639922':v===0?'#F0997B':'#f1efe8';
+    d.style.color=v!==null?'#fff':'#b4b2a9';
+    d.textContent=TREND_LBLS[i];
+    cleanCont.appendChild(d);
+  });
+
+  // ENERGY
+  document.getElementById('energy-sowhat').innerHTML = '✦ Your best energy days correlate with 7h+ sleep and clean eating the night before. Fridays are consistently your lowest — likely travel + Friday night drinks. → ' + GOALS.startup;
+  renderBarChart('energy-bars','energy-lbls',ENERGY_DATA,TREND_LBLS,'#1D9E75',5,3);
 }
 
-function renderBarChart(chartId, lblId, data, lbls, color, maxVal, targetVal) {
-  const chart = document.getElementById(chartId);
-  const lblCont = document.getElementById(lblId);
-  if (!chart) return;
-  chart.innerHTML = ''; lblCont.innerHTML = '';
-  const max = maxVal || Math.max(...data.filter(x=>x!==null));
-  data.forEach((v, i) => {
-    const col = document.createElement('div'); col.className = 'bc-col';
-    const bar = document.createElement('div'); bar.className = 'bc-bar';
-    const h = v !== null ? Math.round((v / max) * 80) : 3;
-    bar.style.height = h + 'px';
-    bar.style.background = v !== null ? (v >= targetVal ? color : '#F0997B') : '#f1efe8';
+function renderBarChart(chartId,lblId,data,lbls,color,maxVal,targetVal) {
+  const chart=document.getElementById(chartId);
+  const lblCont=document.getElementById(lblId);
+  if(!chart) return;
+  chart.innerHTML='';lblCont.innerHTML='';
+  data.forEach((v,i)=>{
+    const col=document.createElement('div');col.className='b-col';
+    const bar=document.createElement('div');bar.className='b-bar';
+    bar.style.height=v!==null?Math.round((v/maxVal)*72)+'px':'3px';
+    bar.style.background=v!==null?(v>=targetVal?color:'#F0997B'):'#f1efe8';
     col.appendChild(bar);
-    if (v !== null) { const vl=document.createElement('div');vl.className='bc-val';vl.textContent=v;col.appendChild(vl); }
+    if(v!==null){const vl=document.createElement('div');vl.style.cssText='font-size:9px;color:#888780;text-align:center';vl.textContent=v;col.appendChild(vl);}
     chart.appendChild(col);
-    const l = document.createElement('div'); l.className = 'bc-lbl'; l.textContent = lbls[i];
-    lblCont.appendChild(l);
+    const l=document.createElement('div');l.className='b-lbl';l.textContent=lbls[i];lblCont.appendChild(l);
   });
 }
 
-function renderEnergyChart() {
-  const chart = document.getElementById('energy-chart');
-  const lblCont = document.getElementById('energy-chart-lbls');
-  if (!chart) return;
-  chart.innerHTML = ''; lblCont.innerHTML = '';
-  ENERGY_DATA.forEach((v, i) => {
-    const col = document.createElement('div'); col.className = 'bc-col';
-    const bar = document.createElement('div'); bar.className = 'bc-bar';
-    const h = v !== null ? Math.round((v / 5) * 80) : 3;
-    bar.style.height = h + 'px';
-    bar.style.background = v !== null ? (v >= 3 ? '#1D9E75' : '#F0997B') : '#f1efe8';
-    col.appendChild(bar);
-    chart.appendChild(col);
-    const l = document.createElement('div'); l.className = 'bc-lbl'; l.textContent = SLEEP_LBLS[i];
-    lblCont.appendChild(l);
-  });
+// ── LOG ───────────────────────────────────────────────────────────────────
+function toggleSmChk(id){
+  const el=document.getElementById(id);
+  el.classList.toggle('on');
+  el.textContent=el.classList.contains('on')?'✓':'';
 }
+function saveLog(){alert('Logged! Upload a new index.html to GitHub to see persistent history in the next version.');}
 
-function renderCleanDots() {
-  const cont = document.getElementById('clean-dots');
-  if (!cont) return; cont.innerHTML = '';
-  let streak = 0; let maxStreak = 0; let cur = 0;
-  CLEAN_DATA.forEach((v, i) => {
-    const d = document.createElement('div');
-    d.style.cssText = `width:22px;height:22px;border-radius:50%;background:${v===1?'#639922':v===0?'#F0997B':'#f1efe8'};display:inline-flex;align-items:center;justify-content:center;font-size:9px;color:#fff;margin:1px`;
-    d.textContent = SLEEP_LBLS[i];
-    cont.appendChild(d);
-    if (v === 1) { cur++; if (cur > maxStreak) maxStreak = cur; }
-    else if (v === 0) cur = 0;
-  });
-  const sumEl = document.getElementById('clean-summary');
-  if (sumEl) sumEl.textContent = `Current streak: ${cur} day${cur!==1?'s':''}. Best this period: ${maxStreak} days. Green = clean, red = free day.`;
-}
-
-function renderWoTrend() {
-  const chart = document.getElementById('wo-trend-chart');
-  const sum = document.getElementById('wo-trend-summary');
-  if (!chart) return;
-  const days = [
-    {n:'M',wo:'rest'},{n:'T',wo:'cardio'},{n:'W',wo:'travel'},{n:'T',wo:'pilates'},{n:'F',wo:'travel'},{n:'S',wo:'pilates'},{n:'S',wo:'rest'},
-    {n:'M',wo:'rest'},{n:'T',wo:'cardio'},{n:'W',wo:'lift'},{n:'T',wo:'cardio'},{n:'F',wo:'lift'},{n:'S',wo:'rest'},{n:'S',wo:'rest'}
-  ];
-  const colors = {lift:'#7F77DD',cardio:'#1D9E75',pilates:'#D4537E',rest:'#e0dfd8',travel:'#FAC775'};
-  days.forEach(d => {
-    const dot = document.createElement('div');
-    dot.style.cssText = `width:32px;height:32px;border-radius:8px;background:${colors[d.wo]||'#e0dfd8'};display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;margin:1px;flex-shrink:0`;
-    dot.textContent = d.n;
-    chart.appendChild(dot);
-  });
-  const lifts = days.filter(d=>d.wo==='lift').length;
-  const cardio = days.filter(d=>d.wo==='cardio').length;
-  const pilates = days.filter(d=>d.wo==='pilates').length;
-  if (sum) sum.innerHTML = `<span style="color:#7F77DD">■</span> ${lifts} lifts &nbsp;<span style="color:#1D9E75">■</span> ${cardio} cardio &nbsp;<span style="color:#D4537E">■</span> ${pilates} pilates &nbsp;<span style="color:#b4b2a9">■</span> rest/travel`;
-}
-
-// ── FOOD LIB ─────────────────────────────────────────────────────────────
-
+// ── LIBRARY ───────────────────────────────────────────────────────────────
 function renderLib() {
-  ['p','c','s'].forEach(k => {
-    const cont = document.getElementById('lib-'+k);
-    if (!cont) return; cont.innerHTML = '';
-    FOOD[k].forEach(f => {
-      const chip = document.createElement('span'); chip.className = 'lchip'; chip.textContent = f;
-      cont.appendChild(chip);
-    });
-  });
+  const render=(id,arr)=>{const c=document.getElementById(id);if(!c)return;c.innerHTML='';arr.forEach(f=>{const ch=document.createElement('span');ch.className='lib-chip';ch.textContent=f;c.appendChild(ch);});};
+  render('lib-p',FOOD.p);render('lib-c',FOOD.c);render('lib-s',FOOD.s);render('lib-wo',FOOD.wo);
 }
-
-function addFood() {
-  const cat = document.getElementById('new-cat').value;
-  const val = document.getElementById('new-food').value.trim();
-  if (!val) return;
-  FOOD[cat].push(val);
-  document.getElementById('new-food').value = '';
+function addLibItem(){
+  const cat=document.getElementById('new-cat').value;
+  const val=document.getElementById('new-item').value.trim();
+  if(!val)return;
+  (cat==='wo'?FOOD.wo:FOOD[cat]).push(val);
+  document.getElementById('new-item').value='';
   renderLib();
 }
 
-// ── TABS ─────────────────────────────────────────────────────────────────
-
-function showTab(id, el) {
-  document.querySelectorAll('.pg').forEach(p => p.classList.remove('on'));
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+// ── TABS ──────────────────────────────────────────────────────────────────
+function showTab(id,el){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
   document.getElementById('pg-'+id).classList.add('on');
-  if (el) el.classList.add('on');
-  if (id === 'history') renderHist();
-  if (id === 'ahead') renderAhead();
-  if (id === 'meals') renderLib();
-  if (id === 'week') renderWeekGrid();
-  if (id === 'trends') renderTrends();
+  if(el)el.classList.add('on');
+  if(id==='history')renderHist();
+  if(id==='ahead')renderAhead();
+  if(id==='library')renderLib();
+  if(id==='week')renderWeekCards();
+  if(id==='trends')renderTrends();
 }
 
-function saveLog() {
-  alert('Logged! In the live version this saves to your history and updates your trends.');
-}
-
-// ── START ─────────────────────────────────────────────────────────────────
-init();
+// ── INIT ──────────────────────────────────────────────────────────────────
+buildCheckin();
+renderHist();
 </script>
+
 </body>
 </html>

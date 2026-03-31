@@ -9,274 +9,238 @@
 <meta name="apple-mobile-web-app-title" content="Optimized">
 <title>Optimized</title>
 <style>
+:root{
+  --cream:#FAF8F4;--cream2:#F3EFE8;--cream3:#EDE8DF;
+  --terra:#C17A56;--tl:#F7EDE5;--td:#7A3E1E;
+  --stone:#8A8278;--sl:#C0BAB2;
+  --ink:#1C1A17;--ink2:#4A4640;
+  --b1:rgba(175,162,142,0.22);--b2:rgba(175,162,142,0.45);
+  --green:#5C7A5A;--gl:#EDF2EB;
+  --amber:#A87830;--al:#F8F0DF;
+  --rose:#A05050;--rl:#F7ECEC;
+  --shad:0 2px 18px rgba(90,70,45,0.07);
+  --r:16px;--rs:10px;
+}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8f7f4;color:#1a1a18;max-width:480px;margin:0 auto;padding-bottom:70px}
-.hdr{padding:20px 16px 0;display:flex;align-items:flex-start;justify-content:space-between}
-.tabs{display:flex;border-bottom:1px solid #e0dfd8;margin:14px 0 0;padding:0 12px;overflow-x:auto;scrollbar-width:none}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--cream);color:var(--ink);max-width:430px;margin:0 auto;padding-bottom:90px;min-height:100vh}
+.hdr{padding:52px 20px 14px}
+.hdr-date{font-size:11px;font-weight:600;color:var(--sl);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+.hdr-row{display:flex;align-items:flex-start;justify-content:space-between}
+.hdr-t{font-size:26px;font-weight:700;color:var(--ink);letter-spacing:-.03em;line-height:1.15}
+.hdr-s{font-size:12px;color:var(--stone);margin-top:4px}
+.g-lbl{font-size:9px;font-weight:700;color:var(--sl);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px;text-align:center}
+.g-box{font-size:24px;font-weight:800;width:50px;height:50px;border-radius:13px;display:flex;align-items:center;justify-content:center}
+.tab-wrap{background:rgba(250,248,244,.94);border-bottom:1px solid var(--b1);position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:0 16px}
+.tabs{display:flex;overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
-.tab{padding:8px 11px;font-size:12px;cursor:pointer;border:none;background:none;color:#888780;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;flex-shrink:0}
-.tab.on{color:#1a1a18;font-weight:500;border-bottom:2px solid #7F77DD}
-.pg{padding:16px;display:none}
-.pg.on{display:block}
-.sl{font-size:10px;font-weight:600;color:#888780;text-transform:uppercase;letter-spacing:.08em;margin:18px 0 8px}
+.tab{padding:11px 12px;font-size:12px;font-weight:500;cursor:pointer;border:none;background:none;color:var(--stone);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;flex-shrink:0;transition:color .15s}
+.tab.on{color:var(--terra);border-bottom-color:var(--terra);font-weight:600}
+.pg{padding:20px;display:none}
+.pg.on{display:block;animation:fu .2s ease}
+@keyframes fu{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.sl{font-size:10px;font-weight:700;color:var(--stone);text-transform:uppercase;letter-spacing:.1em;margin:22px 0 10px}
 .sl:first-child{margin-top:0}
-.card{background:#fff;border:0.5px solid #e0dfd8;border-radius:14px;padding:14px 16px;margin-bottom:10px}
-.grade{font-size:21px;font-weight:500;padding:4px 10px;border-radius:8px}
-
-/* AI SPARKLE — anything with class .ai gets sparkle treatment */
-.ai-block{background:#FDFCFF;border:1px solid #AFA9EC;border-radius:12px;padding:12px 14px;margin-bottom:8px;position:relative}
-.ai-block::before{content:‘✦’;position:absolute;top:10px;right:12px;font-size:11px;color:#7F77DD;opacity:.8}
-.ai-inline{color:#7F77DD;font-size:10px;margin-right:4px}
-.ai-tag{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:600;color:#7F77DD;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
-.ai-text{font-size:13px;color:#1a1a18;line-height:1.55;margin-bottom:4px}
-.ai-goal{font-size:11px;color:#534AB7;opacity:.85;line-height:1.4;margin-bottom:8px}
-.ai-btns{display:flex;gap:6px;flex-wrap:wrap}
-.ai-btn{font-size:11px;padding:5px 12px;border-radius:20px;border:1.5px solid;cursor:pointer;background:transparent}
-.ai-btn.acc{background:#7F77DD;border-color:#7F77DD;color:#fff}
-.ai-btn.rej{border-color:#c5c4bc;color:#888780}
-
-/* BASELINE blocks — plain logged data */
-.base-block{background:#fff;border:0.5px solid #e0dfd8;border-radius:12px;padding:12px 14px;margin-bottom:8px}
-
-/* CHECK-IN */
-.ci-card{background:#fff;border:0.5px solid #e0dfd8;border-radius:16px;padding:18px;margin-bottom:12px}
-.ci-q{font-size:15px;font-weight:500;color:#1a1a18;margin-bottom:10px}
-.ci-opts{display:flex;gap:6px;flex-wrap:wrap}
-.ci-opt{padding:7px 14px;border-radius:20px;border:1px solid #e0dfd8;background:#f8f7f4;font-size:13px;color:#888780;cursor:pointer;user-select:none}
-.ci-opt.on{background:#7F77DD;border-color:#7F77DD;color:#fff;font-weight:500}
-.ci-opt.multi.on{background:#EEEDFE;border-color:#AFA9EC;color:#3C3489;font-weight:500}
-.ci-divider{border:none;border-top:0.5px solid #f1efe8;margin:14px 0}
-.ci-start{width:100%;padding:11px;border-radius:10px;background:#7F77DD;border:none;color:#fff;font-size:14px;font-weight:500;cursor:pointer;margin-top:4px}
-
-/* SUMMARY BAR */
-.sbar{display:flex;gap:0;background:#fff;border:0.5px solid #e0dfd8;border-radius:12px;margin-bottom:12px;overflow:hidden}
-.sbar-item{flex:1;padding:10px 12px;border-right:0.5px solid #f1efe8;text-align:center}
-.sbar-item:last-child{border-right:none}
-.sbar-l{font-size:10px;color:#b4b2a9;margin-bottom:2px}
-.sbar-v{font-size:13px;font-weight:500;color:#1a1a18}
-.sbar-edit{text-align:center;padding:10px 12px;cursor:pointer}
-
-/* EATING LOG */
-.meal-slot{padding:10px 0;border-bottom:0.5px solid #f1efe8}
-.meal-slot:last-child{border-bottom:none}
-.ms-time{font-size:10px;font-weight:600;color:#b4b2a9;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
-.ms-bubbles{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin-bottom:4px}
-.bub{display:inline-flex;align-items:center;gap:4px;border-radius:20px;padding:5px 10px 5px 12px;font-size:12px;font-weight:500;cursor:pointer}
-.bub:active{opacity:.75}
-.bx{font-size:11px;opacity:.4;margin-left:1px}
-.badd{width:26px;height:26px;border-radius:50%;background:#f1efe8;border:1.5px dashed #c5c4bc;display:inline-flex;align-items:center;justify-content:center;font-size:17px;color:#888780;cursor:pointer;flex-shrink:0}
-
-/* MACROS */
-.macro-bar-wrap{margin:8px 0 4px}
-.macro-bar-bg{background:#f1efe8;border-radius:4px;height:6px;margin-bottom:3px;overflow:hidden}
-.macro-bar-fill{height:100%;border-radius:4px;transition:width .4s}
-
-/* WORKOUT */
-.wo-row{display:flex;align-items:center;justify-content:space-between}
-.wo-acts{display:flex;gap:7px;align-items:center;margin-left:12px;flex-shrink:0}
-.xbtn{width:26px;height:26px;border-radius:7px;border:0.5px solid #e0dfd8;background:#f1efe8;display:flex;align-items:center;justify-content:center;font-size:13px;color:#888780;cursor:pointer}
-.chk{width:26px;height:26px;border-radius:7px;border:0.5px solid #c5c4bc;background:#f1efe8;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;user-select:none}
-.chk.on{background:#7F77DD;border-color:#7F77DD;color:#fff}
-.chk.gr{background:#1D9E75;border-color:#1D9E75;color:#fff}
-.tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;margin:2px 3px 0 0}
-.pill{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;margin:2px 3px 2px 0}
-
-/* SKINCARE */
-.skin-item{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:0.5px solid #f1efe8}
-.skin-item:last-child{border-bottom:none}
-.skin-name{font-size:13px;color:#1a1a18;flex:1}
-.skin-note{font-size:10px;color:#b4b2a9;margin-top:1px}
-.sm-chk{width:22px;height:22px;border-radius:5px;border:0.5px solid #c5c4bc;background:#f1efe8;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;user-select:none}
-.sm-chk.on{background:#7F77DD;border-color:#7F77DD;color:#fff}
-
-/* WEEK CARDS */
-.wday-card{background:#fff;border:0.5px solid #e0dfd8;border-radius:14px;padding:13px 15px;margin-bottom:8px;cursor:pointer}
-.wday-card.today{border:1.5px solid #AFA9EC;background:#FDFCFF}
-.wday-card.expanded .wdc-body{display:block}
-.wdc-row{display:flex;align-items:center;gap:10px}
-.wdc-day{min-width:34px}
-.wdc-name{font-size:12px;font-weight:500;color:#888780}
-.wdc-date{font-size:10px;color:#b4b2a9;margin-top:1px}
-.wdc-info{flex:1}
-.wdc-title{font-size:13px;font-weight:500;color:#1a1a18}
-.wdc-sub{font-size:11px;color:#888780;margin-top:2px}
-.wdc-score{font-size:13px;font-weight:500;padding:3px 9px;border-radius:8px;flex-shrink:0}
-.wdc-body{display:none;margin-top:10px;padding-top:10px;border-top:0.5px solid #f1efe8}
-.wdc-sowhat{font-size:12px;line-height:1.6;padding:9px 12px;border-radius:8px;margin-top:6px}
-
-/* AHEAD */
-.ahead-item{padding:11px 0;border-bottom:0.5px solid #f1efe8;display:flex;gap:10px}
-.ahead-item:last-child{border-bottom:none}
-.ai-day{min-width:30px}
-.ai-dayname{font-size:11px;font-weight:500;color:#888780}
-.ai-daydate{font-size:9px;color:#b4b2a9;margin-top:1px}
-
-/* HISTORY */
-.hdrow{display:grid;grid-template-columns:34px 1fr repeat(5,20px);gap:4px;align-items:center;padding:6px 0;border-bottom:0.5px solid #f1efe8}
-.hdrow:last-child{border-bottom:none}
-.hd{width:18px;height:18px;border-radius:50%;border:0.5px solid #e0dfd8;background:#f1efe8;display:flex;align-items:center;justify-content:center;font-size:8px}
+.card{background:#fff;border:1px solid var(--b1);border-radius:var(--r);padding:16px 18px;margin-bottom:12px;box-shadow:var(--shad)}
+.ct{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:12px}
+.aic{background:var(--tl);border:1px solid rgba(193,122,86,.28);border-radius:var(--r);padding:14px 16px;margin-bottom:10px}
+.aisp{font-size:10px;font-weight:700;color:var(--terra);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
+.aibd{font-size:13px;line-height:1.6;color:var(--ink2);margin-bottom:4px}
+.aigl{font-size:11px;color:var(--td);line-height:1.4;margin-bottom:10px;opacity:.9}
+.aibr{display:flex;gap:6px;flex-wrap:wrap}
+.aib{font-size:12px;padding:6px 14px;border-radius:20px;border:1.5px solid;cursor:pointer;background:transparent;font-weight:500}
+.aib.a{background:var(--terra);border-color:var(--terra);color:#fff}
+.aib.r{border-color:var(--b2);color:var(--stone)}
+.sbar{display:flex;background:#fff;border:1px solid var(--b1);border-radius:var(--r);margin-bottom:16px;overflow:hidden;box-shadow:var(--shad)}
+.sbi{flex:1;padding:12px 8px;border-right:1px solid var(--b1);text-align:center}
+.sbi:last-child{border-right:none;flex:0 0 auto;display:flex;align-items:center;padding:12px 14px}
+.sbl{font-size:9px;font-weight:600;color:var(--sl);text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px}
+.sbv{font-size:13px;font-weight:600;color:var(--ink)}
+.ci{background:#fff;border:1px solid var(--b1);border-radius:var(--r);padding:20px;margin-bottom:16px;box-shadow:var(--shad)}
+.ciq{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:14px}
+.cios{display:flex;gap:7px;flex-wrap:wrap}
+.cio{padding:8px 16px;border-radius:20px;border:1.5px solid var(--b2);background:var(--cream2);font-size:13px;color:var(--stone);cursor:pointer;user-select:none;font-weight:500;transition:all .15s}
+.cio.on{background:var(--terra);border-color:var(--terra);color:#fff}
+.cio.m.on{background:var(--tl);border-color:var(--terra);color:var(--td);font-weight:600}
+.cidiv{border:none;border-top:1px solid var(--b1);margin:16px 0}
+.cisub{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:10px}
+.cistrt{width:100%;padding:14px;border-radius:var(--rs);background:var(--terra);border:none;color:#fff;font-size:15px;font-weight:600;cursor:pointer;margin-top:6px}
+.cistrt:active{opacity:.85}
+.mslot{padding:12px 0;border-bottom:1px solid var(--b1)}
+.mslot:last-child{border-bottom:none}
+.mtime{font-size:10px;font-weight:700;color:var(--sl);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px}
+.mbubs{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin-bottom:5px}
+.bub{display:inline-flex;align-items:center;gap:4px;border-radius:20px;padding:6px 12px 6px 13px;font-size:12px;font-weight:600;cursor:pointer;user-select:none}
+.bub:active{opacity:.7}
+.bx{font-size:11px;opacity:.4}
+.badd{width:28px;height:28px;border-radius:50%;background:var(--cream2);border:1.5px dashed var(--b2);display:inline-flex;align-items:center;justify-content:center;font-size:18px;color:var(--stone);cursor:pointer;flex-shrink:0}
+.mmac{font-size:11px;color:var(--stone)}
+.mbg{background:var(--cream3);border-radius:4px;height:5px;overflow:hidden;margin:6px 0 2px}
+.mfil{height:100%;border-radius:4px;transition:width .5s}
+.mlbl{font-size:10px;color:var(--stone);display:flex;justify-content:space-between}
+.wor{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.woi{flex:1}
+.won{font-size:16px;font-weight:600;color:var(--ink)}
+.wod{font-size:12px;color:var(--stone);margin-top:3px}
+.woa{display:flex;gap:8px;align-items:center;flex-shrink:0}
+.xb{width:30px;height:30px;border-radius:8px;border:1px solid var(--b2);background:var(--cream2);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--stone);cursor:pointer}
+.chk{width:30px;height:30px;border-radius:8px;border:1.5px solid var(--b2);background:var(--cream2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;user-select:none;transition:all .15s}
+.chk.on{background:var(--terra);border-color:var(--terra);color:#fff}
+.chk.gr{background:var(--green);border-color:var(--green);color:#fff}
+.wtags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.tag{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px}
+.skit{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--b1)}
+.skit:last-child{border-bottom:none}
+.skin{font-size:13px;font-weight:500;color:var(--ink)}
+.sknt{font-size:11px;color:var(--stone);margin-top:1px}
+.sc{width:24px;height:24px;border-radius:6px;border:1.5px solid var(--b2);background:var(--cream2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;user-select:none;transition:all .15s;flex-shrink:0}
+.sc.on{background:var(--terra);border-color:var(--terra);color:#fff}
+.wdc{background:#fff;border:1px solid var(--b1);border-radius:var(--r);padding:15px 17px;margin-bottom:10px;cursor:pointer;box-shadow:var(--shad)}
+.wdc.today{border:1.5px solid var(--terra);background:#FFFCFA}
+.wdc.exp .wdb{display:block}
+.wdt{display:flex;align-items:center;gap:12px}
+.wdn{font-size:13px;font-weight:700;color:var(--stone)}
+.wdd{font-size:10px;color:var(--sl);margin-top:1px}
+.wdti{font-size:14px;font-weight:600;color:var(--ink)}
+.wdsu{font-size:11px;color:var(--stone);margin-top:2px}
+.wdsc{font-size:14px;font-weight:700;padding:4px 10px;border-radius:8px;flex-shrink:0}
+.wdb{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--b1)}
+.wdins{font-size:13px;color:var(--ink2);line-height:1.65;margin-bottom:8px}
+.wdsw{font-size:12px;padding:9px 12px;border-radius:var(--rs);line-height:1.55}
+.ahrw{padding:13px 0;border-bottom:1px solid var(--b1);display:flex;gap:12px}
+.ahrw:last-child{border-bottom:none}
+.ahdn{font-size:12px;font-weight:700;color:var(--stone)}
+.ahdd{font-size:10px;color:var(--sl);margin-top:1px}
+.ahti{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.ahde{font-size:12px;color:var(--stone);line-height:1.55;margin-bottom:5px}
+.hrow{display:grid;grid-template-columns:36px 1fr repeat(5,22px);gap:5px;align-items:center;padding:7px 0;border-bottom:1px solid var(--b1)}
+.hrow:last-child{border-bottom:none}
+.hd{width:20px;height:20px;border-radius:50%;border:1px solid var(--b2);background:var(--cream2);display:flex;align-items:center;justify-content:center;font-size:9px}
 .hd.on{border:none;color:#fff}
-.wnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.wbtn{background:none;border:0.5px solid #e0dfd8;border-radius:8px;padding:5px 12px;font-size:12px;color:#888780;cursor:pointer}
-
-/* TRENDS */
-.trend-block{background:#fff;border:0.5px solid #e0dfd8;border-radius:14px;padding:14px 16px;margin-bottom:10px}
-.trend-title{font-size:13px;font-weight:500;margin-bottom:3px}
-.trend-sowhat{font-size:12px;color:#534AB7;line-height:1.5;margin-bottom:10px;padding:8px 10px;background:#EEEDFE;border-radius:8px}
-.bars{display:flex;gap:4px;align-items:flex-end;height:72px;margin-bottom:4px}
-.b-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px}
-.b-bar{width:100%;border-radius:3px 3px 0 0;min-height:3px}
-.b-lbl{font-size:9px;color:#b4b2a9;text-align:center}
-.wo-dots{display:flex;gap:3px;flex-wrap:wrap;margin-bottom:8px}
-.wo-dot{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;flex-shrink:0}
-.clean-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff}
-.t-stat{display:inline-block;font-size:11px;padding:3px 9px;border-radius:20px;margin:2px 3px 2px 0}
-
-/* LOG */
-.lrow{display:flex;gap:8px;align-items:center;padding:8px 0;border-bottom:0.5px solid #f1efe8}
+.wnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.wbtn{background:#fff;border:1px solid var(--b2);border-radius:var(--rs);padding:6px 14px;font-size:12px;color:var(--stone);cursor:pointer;font-weight:500;box-shadow:var(--shad)}
+.tblk{background:#fff;border:1px solid var(--b1);border-radius:var(--r);padding:16px 18px;margin-bottom:12px;box-shadow:var(--shad)}
+.ttt{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.tsw{font-size:12px;color:var(--td);line-height:1.55;margin-bottom:12px;padding:9px 12px;background:var(--tl);border-radius:var(--rs)}
+.bars{display:flex;gap:5px;align-items:flex-end;height:80px;margin-bottom:6px}
+.bc{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
+.bb{width:100%;border-radius:4px 4px 0 0;min-height:3px;transition:height .4s}
+.bl{font-size:9px;color:var(--sl);text-align:center}
+.bv{font-size:9px;color:var(--stone);text-align:center}
+.wdot{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff}
+.cdot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600}
+.lrow{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--b1)}
 .lrow:last-child{border-bottom:none}
-.ll{font-size:13px;color:#1a1a18;flex:1}
-.li{font-size:12px;padding:4px 8px;border-radius:8px;border:0.5px solid #e0dfd8;background:#f1efe8;color:#1a1a18}
-
-/* LIBRARY */
-.lib-chip{display:inline-flex;background:#f1efe8;border:0.5px solid #e0dfd8;border-radius:20px;padding:5px 12px;font-size:12px;color:#1a1a18;margin:3px;cursor:pointer}
-.lib-chip:active{background:#EEEDFE;color:#3C3489}
-
-/* MODALS */
-.mbk{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:flex;align-items:flex-end;justify-content:center}
-.mod{background:#fff;border-radius:20px 20px 0 0;padding:20px 16px 48px;width:100%;max-width:480px;max-height:74vh;overflow-y:auto}
-.mclose{float:right;font-size:22px;color:#888780;cursor:pointer;line-height:1}
-.lchip{display:inline-flex;background:#f1efe8;border:0.5px solid #e0dfd8;border-radius:20px;padding:7px 13px;font-size:13px;color:#1a1a18;margin:3px;cursor:pointer}
-.lchip:active{background:#EEEDFE;color:#3C3489}
-.minp{width:100%;font-size:13px;padding:10px 12px;border-radius:10px;border:0.5px solid #e0dfd8;background:#f1efe8;color:#1a1a18;margin-top:12px}
-.mbtn2{width:100%;margin-top:8px;font-size:13px;padding:10px;border-radius:10px;border:0.5px solid #c5c4bc;background:transparent;color:#1a1a18;cursor:pointer}
-.abtn{font-size:12px;padding:7px 14px;border-radius:10px;border:0.5px solid #c5c4bc;background:transparent;color:#888780;cursor:pointer;display:block;width:100%;text-align:left;margin-top:7px}
-.abtn:active{background:#f1efe8}
+.ll{font-size:13px;color:var(--ink);flex:1;font-weight:500}
+.li{font-size:12px;padding:5px 10px;border-radius:var(--rs);border:1px solid var(--b2);background:var(--cream2);color:var(--ink);font-family:inherit}
+.li:focus{outline:none;border-color:var(--terra)}
+.lch{display:inline-flex;background:var(--cream2);border:1px solid var(--b2);border-radius:20px;padding:6px 13px;font-size:12px;font-weight:500;color:var(--ink2);margin:3px;cursor:pointer}
+.lch:active{background:var(--tl);border-color:var(--terra);color:var(--td)}
+.lsec{font-size:11px;font-weight:600;color:var(--stone);margin:12px 0 7px}
+.lsec:first-child{margin-top:0}
+.mbk{position:fixed;inset:0;background:rgba(28,26,23,.5);z-index:200;display:flex;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px)}
+.mod{background:#fff;border-radius:22px 22px 0 0;padding:22px 20px 52px;width:100%;max-width:430px;max-height:75vh;overflow-y:auto;box-shadow:0 -4px 32px rgba(0,0,0,.12)}
+.mh{font-size:17px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.ms{font-size:13px;color:var(--stone);margin-bottom:14px}
+.mc{float:right;font-size:24px;color:var(--sl);cursor:pointer;line-height:1;margin-top:-3px}
+.mlch{display:inline-flex;background:var(--cream2);border:1px solid var(--b2);border-radius:20px;padding:8px 15px;font-size:13px;color:var(--ink);margin:3px;cursor:pointer;font-weight:500}
+.mlch:active{background:var(--tl);color:var(--td)}
+.minp{width:100%;font-size:14px;padding:12px 14px;border-radius:var(--rs);border:1.5px solid var(--b2);background:var(--cream2);color:var(--ink);margin-top:14px;font-family:inherit}
+.minp:focus{outline:none;border-color:var(--terra)}
+.mbtn{width:100%;margin-top:10px;font-size:14px;padding:13px;border-radius:var(--rs);border:1.5px solid var(--b2);background:transparent;color:var(--ink);cursor:pointer;font-family:inherit;font-weight:500}
+.mbtn.p{background:var(--terra);border-color:var(--terra);color:#fff}
+.abtn{font-size:13px;padding:8px 16px;border-radius:var(--rs);border:1px solid var(--b2);background:transparent;color:var(--stone);cursor:pointer;display:block;width:100%;text-align:left;margin-top:8px;font-family:inherit;font-weight:500}
+.abtn:active{background:var(--cream2)}
+.pill{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;margin:2px 3px}
 .hidden{display:none}
 </style>
-
 </head>
 <body>
 
-<!-- HEADER — dynamic date -->
-
 <div class="hdr">
-  <div>
-    <div style="font-size:18px;font-weight:500" id="hdr-date"></div>
-    <div style="font-size:11px;color:#888780;margin-top:2px" id="hdr-sub"></div>
-  </div>
-  <div style="text-align:right">
-    <div style="font-size:10px;color:#b4b2a9;margin-bottom:2px">week</div>
-    <div class="grade" style="background:#EEEDFE;color:#3C3489" id="grade-el">B</div>
+  <div class="hdr-date" id="hdr-date"></div>
+  <div class="hdr-row">
+    <div><div class="hdr-t" id="hdr-t">Hey</div><div class="hdr-s">10-day recenter · day 1</div></div>
+    <div><div class="g-lbl">week</div><div class="g-box" id="grade" style="background:var(--tl);color:var(--td)">B</div></div>
   </div>
 </div>
 
-<div class="tabs">
-  <button class="tab on" onclick="showTab('today',this)">Today</button>
-  <button class="tab" onclick="showTab('log',this)">Log</button>
-  <button class="tab" onclick="showTab('week',this)">Week</button>
-  <button class="tab" onclick="showTab('ahead',this)">Ahead</button>
-  <button class="tab" onclick="showTab('history',this)">History</button>
-  <button class="tab" onclick="showTab('trends',this)">Trends</button>
-  <button class="tab" onclick="showTab('library',this)">Library</button>
+<div class="tab-wrap">
+  <div class="tabs">
+    <button class="tab on" onclick="showTab('today',this)">Today</button>
+    <button class="tab" onclick="showTab('log',this)">Log</button>
+    <button class="tab" onclick="showTab('week',this)">Week</button>
+    <button class="tab" onclick="showTab('ahead',this)">Ahead</button>
+    <button class="tab" onclick="showTab('history',this)">History</button>
+    <button class="tab" onclick="showTab('trends',this)">Trends</button>
+    <button class="tab" onclick="showTab('library',this)">Library</button>
+  </div>
 </div>
 
-<!-- ══ TODAY ══════════════════════════════════════════════════════════════ -->
+<!-- TODAY -->
 
 <div id="pg-today" class="pg on">
-
-  <!-- CHECK-IN (shown until completed) -->
-
   <div id="ci-wrap">
-    <div class="ci-card">
-      <div class="ci-q" id="ci-greeting">Hey — how'd you sleep last night?</div>
-      <div class="ci-opts" id="ci-sleep-opts"></div>
-      <hr class="ci-divider">
-      <div class="ci-q" style="font-size:13px">Where are you working from today?</div>
-      <div class="ci-opts" style="margin-top:8px" id="ci-location-opts"></div>
-      <hr class="ci-divider">
-      <div class="ci-q" style="font-size:13px">What's happening tonight? <span style="font-size:11px;color:#b4b2a9;font-weight:400">select all that apply</span></div>
-      <div class="ci-opts" style="margin-top:8px" id="ci-tonight-opts"></div>
-      <button class="ci-start" style="margin-top:16px" onclick="completeCheckin()">Start my day →</button>
+    <div class="ci">
+      <div class="ciq" id="ci-q">Hey — how'd you sleep last night?</div>
+      <div class="cios" id="ci-sleep"></div>
+      <hr class="cidiv">
+      <div class="cisub">Where are you today?</div>
+      <div class="cios" id="ci-loc" style="margin-bottom:0"></div>
+      <hr class="cidiv">
+      <div class="cisub">What's tonight? <span style="font-size:11px;color:var(--sl);font-weight:400">select all that apply</span></div>
+      <div class="cios" id="ci-tonight" style="margin-bottom:0"></div>
+      <button class="cistrt" onclick="completeCheckin()">Start my day →</button>
     </div>
   </div>
-
-  <!-- DAY VIEW (shown after check-in) -->
 
   <div id="day-view" class="hidden">
-
-```
-<!-- SUMMARY BAR -->
-<div class="sbar" id="sbar">
-  <div class="sbar-item">
-    <div class="sbar-l">slept</div>
-    <div class="sbar-v" id="sb-sleep">—</div>
-  </div>
-  <div class="sbar-item">
-    <div class="sbar-l">location</div>
-    <div class="sbar-v" id="sb-loc">—</div>
-  </div>
-  <div class="sbar-item">
-    <div class="sbar-l">tonight</div>
-    <div class="sbar-v" id="sb-tonight">—</div>
-  </div>
-  <div class="sbar-edit" onclick="resetCheckin()" style="font-size:11px;color:#7F77DD;padding:10px 10px;display:flex;align-items:center">edit</div>
-</div>
-
-<!-- AI INSIGHTS (sparkle) -->
-<div id="ai-zone"></div>
-
-<!-- EATING LOG -->
-<div class="sl">clean eating today</div>
-<div style="display:flex;gap:10px;align-items:flex-start">
-  <div class="card" style="flex:1;margin-bottom:10px" id="meal-card"></div>
-</div>
-<!-- MACRO SUMMARY -->
-<div class="card" id="macro-card" style="margin-top:-4px;margin-bottom:10px"></div>
-
-<!-- MOVEMENT -->
-<div class="sl">movement</div>
-<div class="card">
-  <div class="wo-row">
-    <div style="flex:1">
-      <div style="font-size:15px;font-weight:500" id="wo-name">Incline walk</div>
-      <div style="font-size:11px;color:#888780;margin-top:2px" id="wo-det">30 min · treadmill · flex day</div>
-      <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px" id="wo-tags"></div>
+    <div class="sbar" id="sbar">
+      <div class="sbi"><div class="sbl">slept</div><div class="sbv" id="sb-sleep">—</div></div>
+      <div class="sbi"><div class="sbl">today</div><div class="sbv" id="sb-loc">—</div></div>
+      <div class="sbi"><div class="sbl">tonight</div><div class="sbv" id="sb-tonight">—</div></div>
+      <div class="sbi"><span style="font-size:12px;color:var(--terra);cursor:pointer;font-weight:500" onclick="resetCheckin()">edit</span></div>
     </div>
-    <div class="wo-acts">
-      <div class="xbtn" onclick="openWoModal()">✕</div>
-      <div class="chk" id="wo-chk" onclick="toggleWo()"></div>
+    <div id="ai-zone"></div>
+    <div class="sl">today's eating</div>
+    <div class="card" id="meal-card"></div>
+    <div class="card" id="macro-card" style="margin-top:-6px"></div>
+    <div class="sl">movement</div>
+    <div class="card">
+      <div class="wor">
+        <div class="woi">
+          <div class="won" id="wo-n">Incline walk</div>
+          <div class="wod" id="wo-d">30 min · treadmill · flex day</div>
+          <div class="wtags" id="wo-tags"></div>
+        </div>
+        <div class="woa">
+          <div class="xb" onclick="openWoModal()">✕</div>
+          <div class="chk" id="wo-chk" onclick="toggleWo()"></div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-<!-- AI workout insight -->
-<div id="wo-ai-wrap"></div>
-
-<!-- SKINCARE -->
-<div class="sl">skincare</div>
-<div class="card" id="skin-card"></div>
-<div id="skin-ai-wrap"></div>
-```
-
+    <div id="wo-ai"></div>
+    <div class="sl">skincare</div>
+    <div class="card" id="skin-card"></div>
+    <div id="skin-ai"></div>
   </div>
 </div>
 
-<!-- ══ LOG ════════════════════════════════════════════════════════════════ -->
+<!-- LOG -->
 
 <div id="pg-log" class="pg">
-  <div class="sl">today's quick log</div>
+  <div class="sl">quick log — today</div>
   <div class="card">
-    <div style="font-size:13px;font-weight:500;margin-bottom:10px">Eating</div>
-    <div class="lrow"><span class="ll">Ate clean today</span><div class="sm-chk" id="lc-clean" onclick="toggleSmChk('lc-clean')"></div></div>
-    <div class="lrow"><span class="ll">No added sugar</span><div class="sm-chk" id="lc-sugar" onclick="toggleSmChk('lc-sugar')"></div></div>
-    <div class="lrow"><span class="ll">Protein (g)</span><input class="li" id="log-prot" type="number" min="0" max="200" step="1" value="18" style="width:60px;text-align:center" oninput="updateMacros()"></div>
-    <div class="lrow"><span class="ll">Water (oz)</span><input class="li" id="log-water" type="number" min="0" max="100" step="8" value="16" style="width:60px;text-align:center"></div>
+    <div class="ct">Eating</div>
+    <div class="lrow"><span class="ll">Ate clean today</span><div class="sc" id="lc-clean" onclick="toggleSC('lc-clean')"></div></div>
+    <div class="lrow"><span class="ll">No added sugar</span><div class="sc" id="lc-sugar" onclick="toggleSC('lc-sugar')"></div></div>
+    <div class="lrow"><span class="ll">Protein (g)</span><input class="li" id="log-prot" type="number" min="0" max="200" step="1" value="18" style="width:65px;text-align:center" oninput="syncProtein()"></div>
+    <div class="lrow"><span class="ll">Water (oz)</span><input class="li" id="log-water" type="number" min="0" max="120" step="8" value="16" style="width:65px;text-align:center"></div>
   </div>
   <div class="card">
-    <div style="font-size:13px;font-weight:500;margin-bottom:10px">Movement</div>
-    <div class="lrow"><span class="ll">Workout done</span><div class="sm-chk" id="lc-wo" onclick="toggleSmChk('lc-wo');syncWo()"></div></div>
+    <div class="ct">Movement</div>
+    <div class="lrow"><span class="ll">Workout done</span><div class="sc" id="lc-wo" onclick="toggleSC('lc-wo');syncWoDone()"></div></div>
     <div class="lrow"><span class="ll">Type</span>
-      <select class="li" id="log-wo-type" style="width:170px;font-size:11px">
+      <select class="li" id="log-wo-type" style="width:175px;font-size:11px" onchange="syncWoType()">
         <option>incline walk 30m</option>
         <option>stairmaster 30m · 6/7/8</option>
         <option>own lift — chest/back/abs</option>
@@ -287,758 +251,621 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <option>rest</option>
       </select>
     </div>
-    <div class="lrow"><span class="ll">Duration (min)</span><input class="li" type="number" value="30" style="width:60px;text-align:center"></div>
+    <div class="lrow"><span class="ll">Duration (min)</span><input class="li" type="number" value="30" style="width:65px;text-align:center"></div>
   </div>
   <div class="card">
-    <div style="font-size:13px;font-weight:500;margin-bottom:10px">Sleep & recovery</div>
-    <div class="lrow"><span class="ll">Hours slept</span><input class="li" type="number" min="3" max="12" step="0.5" value="6" style="width:60px;text-align:center"></div>
-    <div class="lrow"><span class="ll">In bed by target</span><div class="sm-chk" id="lc-bed" onclick="toggleSmChk('lc-bed')"></div></div>
+    <div class="ct">Sleep & recovery</div>
+    <div class="lrow"><span class="ll">Hours slept</span><input class="li" type="number" min="3" max="12" step="0.5" value="6" style="width:65px;text-align:center"></div>
+    <div class="lrow"><span class="ll">In bed by target</span><div class="sc" id="lc-bed" onclick="toggleSC('lc-bed')"></div></div>
     <div class="lrow"><span class="ll">Energy today</span>
-      <select class="li" style="width:100px;font-size:11px"><option>great</option><option>good</option><option selected>okay</option><option>low</option><option>exhausted</option></select>
+      <select class="li" style="width:105px;font-size:11px"><option>great</option><option>good</option><option selected>okay</option><option>low</option><option>exhausted</option></select>
     </div>
     <div class="lrow"><span class="ll">Mood</span>
-      <select class="li" style="width:100px;font-size:11px"><option>great</option><option>good</option><option selected>okay</option><option>tired</option><option>off</option></select>
+      <select class="li" style="width:105px;font-size:11px"><option>great</option><option>good</option><option selected>okay</option><option>tired</option><option>off</option></select>
     </div>
   </div>
   <div class="card">
-    <div style="font-size:13px;font-weight:500;margin-bottom:10px">Social & drinks</div>
-    <div class="lrow"><span class="ll">Drinks tonight</span><input class="li" type="number" min="0" max="10" value="0" style="width:60px;text-align:center"></div>
-    <div class="lrow"><span class="ll">Notes</span><input class="li" type="text" style="width:170px;font-size:11px" placeholder="e.g. Drew dinner, feel off..."></div>
+    <div class="ct">Social & drinks</div>
+    <div class="lrow"><span class="ll">Drinks tonight</span><input class="li" type="number" min="0" max="10" value="0" style="width:65px;text-align:center"></div>
+    <div class="lrow"><span class="ll">Notes</span><input class="li" type="text" style="width:175px;font-size:11px" placeholder="anything off, how you felt..."></div>
   </div>
-  <button class="abtn" onclick="saveLog()">Save today ↗</button>
+  <button class="abtn" style="color:var(--terra);border-color:var(--terra)" onclick="saveLog()">Save today →</button>
 </div>
 
-<!-- ══ WEEK ════════════════════════════════════════════════════════════════ -->
+<!-- WEEK -->
 
 <div id="pg-week" class="pg">
-  <div class="sl">this week · tap any day</div>
+  <div class="sl">this week — tap any day</div>
   <div id="week-cards"></div>
 </div>
 
-<!-- ══ AHEAD ══════════════════════════════════════════════════════════════ -->
+<!-- AHEAD -->
 
 <div id="pg-ahead" class="pg">
-  <div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px">
-    <div>
-      <div style="font-size:12px;font-weight:500;margin-bottom:2px">Google Calendar</div>
-      <div style="font-size:11px;color:#888780">Sync to auto-detect what's happening each night</div>
-    </div>
-    <button class="abtn" style="width:auto;margin:0;padding:5px 12px" onclick="alert('Coming soon!')">Connect ↗</button>
+  <div class="aic" style="margin-bottom:14px">
+    <div class="aisp">✦ from your calendar</div>
+    <div class="aibd">Startup meetings + dinner Tuesday · friend dinners Thu/Fri/Sat · startup activities Sat · brunch Sunday · social Monday.</div>
+    <div class="aigl">→ Busiest social week in a while. Wednesday is your only protected night — early to bed, 5am lift Thursday.</div>
   </div>
   <div class="sl">week ahead</div>
   <div class="card" id="ahead-card"></div>
 </div>
 
-<!-- ══ HISTORY ════════════════════════════════════════════════════════════ -->
+<!-- HISTORY -->
 
 <div id="pg-history" class="pg">
   <div class="wnav">
-    <button class="wbtn" onclick="changeWeek(-1)">← prev</button>
-    <div style="font-size:13px;font-weight:500" id="wk-label"></div>
-    <button class="wbtn" onclick="changeWeek(1)">next →</button>
+    <button class="wbtn" onclick="chWk(-1)">← prev</button>
+    <div style="font-size:14px;font-weight:600;color:var(--ink)" id="wk-label"></div>
+    <button class="wbtn" onclick="chWk(1)">next →</button>
   </div>
   <div class="card">
-    <div style="display:grid;grid-template-columns:34px 1fr repeat(5,20px);gap:4px;align-items:center;padding-bottom:5px;border-bottom:0.5px solid #f1efe8;margin-bottom:2px">
-      <div></div><div style="font-size:10px;color:#b4b2a9">notes</div>
-      <div style="font-size:9px;color:#b4b2a9;text-align:center">eat</div>
-      <div style="font-size:9px;color:#b4b2a9;text-align:center">wo</div>
-      <div style="font-size:9px;color:#b4b2a9;text-align:center">slp</div>
-      <div style="font-size:9px;color:#b4b2a9;text-align:center">drk</div>
-      <div style="font-size:9px;color:#b4b2a9;text-align:center">sk</div>
+    <div style="display:grid;grid-template-columns:36px 1fr repeat(5,22px);gap:5px;align-items:center;padding-bottom:7px;border-bottom:1px solid var(--b1);margin-bottom:3px">
+      <div></div>
+      <div style="font-size:10px;color:var(--sl);font-weight:600;text-transform:uppercase;letter-spacing:.06em">notes</div>
+      <div style="font-size:9px;color:var(--sl);text-align:center;font-weight:600">eat</div>
+      <div style="font-size:9px;color:var(--sl);text-align:center;font-weight:600">wo</div>
+      <div style="font-size:9px;color:var(--sl);text-align:center;font-weight:600">slp</div>
+      <div style="font-size:9px;color:var(--sl);text-align:center;font-weight:600">drk</div>
+      <div style="font-size:9px;color:var(--sl);text-align:center;font-weight:600">sk</div>
     </div>
     <div id="hist-rows"></div>
   </div>
   <div class="sl">week summary</div>
   <div class="card">
-    <div id="hist-sum" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:12px"></div>
-    <!-- SO WHAT -->
-    <div class="ai-block" id="hist-sowhat"></div>
+    <div id="hist-sum" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px"></div>
+    <div class="aic" style="margin:0" id="hist-sw"></div>
   </div>
 </div>
 
-<!-- ══ TRENDS ══════════════════════════════════════════════════════════════ -->
+<!-- TRENDS -->
 
 <div id="pg-trends" class="pg">
-
-  <div class="trend-block">
-    <div class="trend-title">Sleep · last 2 weeks</div>
-    <div class="trend-sowhat" id="sleep-sowhat"></div>
-    <div class="bars" id="sleep-bars"></div>
-    <div style="display:flex;gap:4px" id="sleep-lbls"></div>
+  <div class="tblk">
+    <div class="ttt">Sleep · last 2 weeks</div>
+    <div class="tsw" id="slp-sw"></div>
+    <div class="bars" id="slp-bars"></div>
+    <div style="display:flex;gap:5px" id="slp-lbls"></div>
   </div>
-
-  <div class="trend-block">
-    <div class="trend-title">Workouts · last 2 weeks</div>
-    <div class="trend-sowhat" id="wo-sowhat"></div>
-    <div class="wo-dots" id="wo-dots"></div>
-    <div style="font-size:11px;color:#888780" id="wo-legend"></div>
+  <div class="tblk">
+    <div class="ttt">Workouts · last 2 weeks</div>
+    <div class="tsw" id="wo-sw"></div>
+    <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px" id="wo-dots"></div>
+    <div style="font-size:11px;color:var(--stone)" id="wo-leg"></div>
   </div>
-
-  <div class="trend-block">
-    <div class="trend-title">Clean eating streak</div>
-    <div class="trend-sowhat" id="clean-sowhat"></div>
-    <div style="display:flex;gap:3px;flex-wrap:wrap;margin-bottom:8px" id="clean-dots"></div>
+  <div class="tblk">
+    <div class="ttt">Clean eating streak</div>
+    <div class="tsw" id="cl-sw"></div>
+    <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px" id="cl-dots"></div>
   </div>
-
-  <div class="trend-block" style="margin-bottom:0">
-    <div class="trend-title">Energy & mood · last 2 weeks</div>
-    <div class="trend-sowhat" id="energy-sowhat"></div>
-    <div class="bars" id="energy-bars"></div>
-    <div style="display:flex;gap:4px" id="energy-lbls"></div>
+  <div class="tblk" style="margin-bottom:0">
+    <div class="ttt">Energy · last 2 weeks</div>
+    <div class="tsw" id="en-sw"></div>
+    <div class="bars" id="en-bars"></div>
+    <div style="display:flex;gap:5px" id="en-lbls"></div>
   </div>
 </div>
 
-<!-- ══ LIBRARY ════════════════════════════════════════════════════════════ -->
+<!-- LIBRARY -->
 
 <div id="pg-library" class="pg">
-  <div style="font-size:12px;color:#888780;margin-bottom:14px;line-height:1.6">Add once, always available. Used to pre-fill your daily log and swap in meals, workouts, and activities.</div>
-
-  <div class="sl">foods & meals</div>
-  <div class="card">
-    <div style="font-size:12px;color:#b4b2a9;margin-bottom:6px">proteins</div>
-    <div id="lib-p" style="margin-bottom:10px"></div>
-    <div style="font-size:12px;color:#b4b2a9;margin-bottom:6px">combos</div>
-    <div id="lib-c" style="margin-bottom:10px"></div>
-    <div style="font-size:12px;color:#b4b2a9;margin-bottom:6px">snacks & drinks</div>
-    <div id="lib-s"></div>
-  </div>
-
-  <div class="sl">workouts & activities</div>
+  <div style="font-size:13px;color:var(--stone);margin-bottom:16px;line-height:1.6">Everything saved to your device. Add once, always available.</div>
+  <div class="sl">proteins</div>
+  <div class="card" id="lib-p"></div>
+  <div class="sl">vegetables</div>
+  <div class="card" id="lib-v"></div>
+  <div class="sl">grains & carbs</div>
+  <div class="card" id="lib-g"></div>
+  <div class="sl">fruits</div>
+  <div class="card" id="lib-fr"></div>
+  <div class="sl">snacks & drinks</div>
+  <div class="card" id="lib-s"></div>
+  <div class="sl">workouts</div>
   <div class="card" id="lib-wo"></div>
-
+  <div class="sl">skincare — AM</div>
+  <div class="card" id="lib-am"></div>
+  <div class="sl">skincare — PM</div>
+  <div class="card" id="lib-pm"></div>
   <div class="sl">add new item</div>
   <div class="card" style="margin-bottom:0">
-    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap">
-      <select class="li" id="new-cat" style="width:100px;font-size:12px">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
+      <select class="li" id="new-cat" style="font-size:12px">
         <option value="p">protein</option>
-        <option value="c">combo</option>
+        <option value="v">vegetable</option>
+        <option value="g">grain/carb</option>
+        <option value="fr">fruit</option>
         <option value="s">snack/drink</option>
         <option value="wo">workout</option>
+        <option value="am">skincare AM</option>
+        <option value="pm">skincare PM</option>
       </select>
-      <input type="text" id="new-item" class="li" style="flex:1;min-width:140px;font-size:12px" placeholder="e.g. turkey taco bowl">
+      <input type="text" id="new-item" class="li" style="flex:1;min-width:130px;font-size:13px" placeholder="e.g. quinoa">
     </div>
-    <button class="abtn" style="margin-top:0" onclick="addLibItem()">Add to library ↗</button>
+    <button class="abtn" style="color:var(--terra);border-color:var(--terra);margin-top:0" onclick="addLibItem()">Add to library →</button>
   </div>
 </div>
 
-<!-- ══ MODALS ═════════════════════════════════════════════════════════════ -->
+<!-- MODALS -->
 
 <div id="meal-modal" class="mbk" style="display:none" onclick="if(event.target===this)this.style.display='none'">
   <div class="mod">
-    <span class="mclose" onclick="document.getElementById('meal-modal').style.display='none'">×</span>
-    <h3 style="font-size:15px;font-weight:500;margin-bottom:3px">Add item</h3>
-    <div style="font-size:12px;color:#888780;margin-bottom:12px" id="mm-sub">Choose or type something new</div>
-    <div id="mm-lib"></div>
+    <span class="mc" onclick="document.getElementById('meal-modal').style.display='none'">×</span>
+    <div class="mh">Add to meal</div>
+    <div class="ms" id="mm-sub">Choose from library</div>
+    <div id="mm-cats"></div>
     <input type="text" class="minp" id="mm-new" placeholder="Type something new...">
-    <button class="mbtn2" onclick="addAndSwap()">Add & use this</button>
+    <button class="mbtn p" onclick="addAndSwap()">Add & use this</button>
   </div>
 </div>
 
 <div id="wo-modal" class="mbk" style="display:none" onclick="if(event.target===this)this.style.display='none'">
   <div class="mod">
-    <span class="mclose" onclick="document.getElementById('wo-modal').style.display='none'">×</span>
-    <h3 style="font-size:15px;font-weight:500;margin-bottom:3px">Change workout</h3>
-    <div style="font-size:12px;color:#888780;margin-bottom:12px">What did you actually do?</div>
+    <span class="mc" onclick="document.getElementById('wo-modal').style.display='none'">×</span>
+    <div class="mh">Change workout</div>
+    <div class="ms">What did you actually do?</div>
     <div id="wm-opts"></div>
     <input type="text" class="minp" id="wm-new" placeholder="Something else...">
-    <button class="mbtn2" onclick="setCustomWo()">Set this</button>
+    <button class="mbtn p" onclick="setCustomWo()">Set this</button>
   </div>
 </div>
 
 <script>
-// ── DYNAMIC DATE ──────────────────────────────────────────────────────────
-const NOW = new Date();
-const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-const DOW = DAYS[NOW.getDay()];
-const DATESTR = DOW + ', ' + MONTHS[NOW.getMonth()] + ' ' + NOW.getDate();
-const HOUR = NOW.getHours();
-const GREETING = HOUR < 12 ? 'Good morning' : HOUR < 17 ? 'Good afternoon' : 'Hey';
-document.getElementById('hdr-date').textContent = DATESTR;
-document.getElementById('hdr-sub').textContent = '10-day recenter · day 1';
+// ── DATE ──────────────────────────────────────────────────────────────────
+const NOW=new Date();
+const DAYS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const MONS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const HOUR=NOW.getHours();
+document.getElementById('hdr-date').textContent=DAYS[NOW.getDay()]+', '+MONS[NOW.getMonth()]+' '+NOW.getDate();
+document.getElementById('hdr-t').textContent=HOUR<12?'Good morning':HOUR<17?'Good afternoon':'Hey';
 
-// ── GOALS ─────────────────────────────────────────────────────────────────
-const GOALS = {
-  muscle: 'muscle building & tone',
-  lean: 'stay lean',
-  startup: 'startup energy & focus',
-  sharp: 'show up sharp',
-  skin: 'skin clarity & glow',
-  sleep: 'sleep quality'
+// ── LOCALSTORAGE ──────────────────────────────────────────────────────────
+function ls(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
+function ss(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+
+// ── FOOD LIBRARY — persisted ──────────────────────────────────────────────
+const DEFAULT_LIB={
+  p:['top sirloin','salmon','ground turkey','chicken breast','egg whites','scrambled eggs','hard boiled eggs','turkey sausage'],
+  v:['kale','broccoli','sweet potato','zucchini noodles','caesar salad','mixed greens'],
+  g:['brown rice','quinoa','protein pasta','low carb wrap','regular wrap','catalina crunch cereal','low carb bread'],
+  fr:['blueberries'],
+  s:['oikos protein drink 10g','string cheese','slate latte 20g','whole fat peanut butter'],
+  wo:['stairmaster 30m · 6/7/8','incline walk 30m','own lift — chest/back/abs','own lift — total body',"Barry's double floor",'hot yoga','heated mat pilates','rest day'],
+  am:['belif water bomb','shiseido SPF'],
+  pm:["kiehl's retinol","paula's choice BHA",'belif water bomb']
 };
+let LIB=ls('lib',DEFAULT_LIB);
+// merge in any missing keys from defaults
+Object.keys(DEFAULT_LIB).forEach(k=>{if(!LIB[k])LIB[k]=DEFAULT_LIB[k];});
 
 // ── STATE ─────────────────────────────────────────────────────────────────
-let state = {
-  checkinDone: false,
-  sleep: 6,
-  location: 'office',
-  tonightModes: [],
-  woDone: false,
-  swapSlot: null,
-  histOffset: -1
+let S={
+  checkinDone:false,sleep:6,loc:'office',tonight:[],
+  woDone:false,woName:'Incline walk',woDet:'30 min · treadmill · flex day',
+  protein:18,swapSlot:null,histOff:-1
 };
 
-let meals = [
-  {time:'morning',items:['incline walk prep — light'],bg:'#EEEDFE',tc:'#3C3489',protein:18,carbs:20},
-  {time:'lunch',items:['salmon','kale salad','brown rice'],bg:'#EAF3DE',tc:'#27500A',protein:35,carbs:45},
-  {time:'dinner',items:['top sirloin','sweet potato','broccoli'],bg:'#EAF3DE',tc:'#27500A',protein:45,carbs:40}
+// Skincare alternates by day of month
+const isRetinol=NOW.getDate()%2===1;
+let SKIN_AM=LIB.am.map(n=>({name:n,done:false}));
+let SKIN_PM=LIB.pm.map(n=>({name:n,done:false}));
+
+// ── MEALS — per food group ────────────────────────────────────────────────
+let MEALS=[
+  {time:'morning',items:['slate latte 20g','oikos protein drink 10g'],protein:20,carbs:8,cal:180,colors:{bg:'#F7EDE5',tc:'#7A3E1E'}},
+  {time:'lunch',items:['salmon','kale','brown rice'],protein:38,carbs:42,cal:420,colors:{bg:'#EDF2EB',tc:'#3A5C38'}},
+  {time:'dinner',items:['top sirloin','sweet potato','broccoli'],protein:48,carbs:38,cal:480,colors:{bg:'#EDF2EB',tc:'#3A5C38'}}
 ];
 
-let wo = {name:'Incline walk',det:'30 min · treadmill · flex day',done:false,
-  tags:[{t:'flex day',c:'#EEEDFE',tc:'#3C3489'},{t:'travel recovery',c:'#f1efe8',tc:'#888780'}]};
-
-// SKINCARE STATE — per product
-let skinAM = [
-  {name:'Belif water bomb',done:false,note:'moisturizer'},
-  {name:'Shiseido SPF',done:false,note:'sunscreen — non-negotiable'}
-];
-// Alternates: even days = BHA, odd = retinol (based on day of month)
-const isRetinolDay = NOW.getDate() % 2 === 1;
-let skinPM = [
-  {name: isRetinolDay ? 'Kiehl\'s retinol' : 'Paula\'s Choice BHA', done:false, note: isRetinolDay ? 'retinol night' : 'BHA night — pore minimizing'},
-  {name:'Belif water bomb',done:false,note:'lock in moisture'}
-];
-
-// FOOD LIBRARY
-const FOOD = {
-  p:['top sirloin','rotisserie chicken','salmon','egg whites','ground turkey'],
-  c:['chicken + kale + brown rice','sirloin + sweet potato + broccoli','salmon + kale + brown rice','egg white wrap (strength)','egg white wrap (low carb)','ground turkey + red sauce + zucchini noodles'],
-  s:['Oikos protein drink 10g','string cheese','slate latte 20g','Catalina Crunch 18g','hard boiled eggs'],
-  wo:['stairmaster 30m · 6/7/8','incline walk 30m','own lift — chest/back/abs','own lift — total body','Barry\'s double floor','hot yoga','heated mat pilates','rest day']
+// ── GOALS ─────────────────────────────────────────────────────────────────
+const GOALS={
+  muscle:'muscle building & tone',lean:'stay lean',
+  startup:'startup energy & focus',sharp:'show up sharp',
+  skin:'skin clarity & glow',sleep:'sleep quality'
 };
 
-// HISTORY DATA
-const HIST = {
+// ── HISTORY DATA ──────────────────────────────────────────────────────────
+const HIST={
   '-1':{label:'Last week — Mar 23–29',days:[
     {n:'Mon',note:'clean · no workout',eat:true,wo:'rest',slp:7,drk:0,sk:true,free:false},
-    {n:'Tue',note:'stairmaster 30m · clean',eat:true,wo:'cardio',slp:7,drk:1,sk:true,free:false},
-    {n:'Wed',note:'travel to LA · clean',eat:true,wo:'rest',slp:6.5,drk:0,sk:true,free:false},
-    {n:'Thu',note:'LA · heated mat pilates · clean',eat:true,wo:'pilates',slp:7,drk:1,sk:true,free:false},
+    {n:'Tue',note:'stairmaster · clean',eat:true,wo:'cardio',slp:7,drk:1,sk:true,free:false},
+    {n:'Wed',note:'travel LA · clean',eat:true,wo:'rest',slp:6.5,drk:0,sk:true,free:false},
+    {n:'Thu',note:'LA · heated mat pilates',eat:true,wo:'pilates',slp:7,drk:1,sk:true,free:false},
     {n:'Fri',note:'travel back',eat:false,wo:'rest',slp:6,drk:1,sk:false,free:true},
     {n:'Sat',note:'heated mat pilates',eat:false,wo:'pilates',slp:7,drk:2,sk:false,free:true},
     {n:'Sun',note:'rest',eat:false,wo:'rest',slp:7.5,drk:0,sk:true,free:false}
-  ],
-  sowhat:'You hit 4/7 workouts despite LA travel — that\'s a win. Clean eating Mon–Thu was solid. The two 5am lifts that got missed are what you\'re making up for this week. → Supports: muscle building, stay lean.'},
+  ],sw:'You hit 4 workouts despite LA travel — solid. Clean eating Mon–Thu. The two missed 5am lifts are what this week fixes. → '+GOALS.muscle+' · '+GOALS.lean},
   '0':{label:'This week — Mar 30+',days:[
     {n:'Mon',note:'flex walk · clean start',eat:true,wo:'flex',slp:6,drk:0,sk:true,free:false},
-    {n:'Tue',note:'planned',eat:false,wo:'cardio',slp:null,drk:0,sk:false,free:false},
-    {n:'Wed',note:'5am own lift planned',eat:false,wo:'lift',slp:null,drk:0,sk:false,free:false},
+    {n:'Tue',note:'stairmaster planned',eat:false,wo:'cardio',slp:null,drk:0,sk:false,free:false},
+    {n:'Wed',note:'own lift planned',eat:false,wo:'lift',slp:null,drk:0,sk:false,free:false},
     {n:'Thu',note:'stairmaster planned',eat:false,wo:'cardio',slp:null,drk:0,sk:false,free:false},
-    {n:'Fri',note:'5am own lift planned',eat:false,wo:'lift',slp:null,drk:0,sk:false,free:true},
-    {n:'Sat',note:'free day',eat:false,wo:'rest',slp:null,drk:0,sk:false,free:true},
-    {n:'Sun',note:'optional yoga',eat:false,wo:'rest',slp:null,drk:0,sk:false,free:false}
-  ],
-  sowhat:'Week just started. Last week\'s travel disrupted both 5am lifts. This week: protect Wednesday and Friday no matter what. Those are the sessions building the arm and inner thigh tone you\'re after.'}
+    {n:'Fri',note:'own lift planned',eat:false,wo:'lift',slp:null,drk:0,sk:false,free:true},
+    {n:'Sat',note:'free · startup activities',eat:false,wo:'rest',slp:null,drk:0,sk:false,free:true},
+    {n:'Sun',note:'friend brunch',eat:false,wo:'rest',slp:null,drk:0,sk:false,free:false}
+  ],sw:'Week just started. Protect Wednesday and Friday 5am lifts — those are the sessions building the arm and inner thigh tone. Full social week so sleep is your biggest risk. → '+GOALS.muscle}
 };
 
-// AHEAD DATA
-const AHEAD = [
-  {day:'Mon',date:'Mar 30',title:'Flex walk · startup work block',
-   detail:'Travel recovery. Incline walk, heads down evening. Carb load at dinner for tomorrow\'s stairmaster.',
-   tags:[{t:'flex',c:'#EEEDFE',tc:'#3C3489'},{t:'work block',c:'#f1efe8',tc:'#888780'}]},
-  {day:'Tue',date:'Mar 31',title:'Stairmaster 30m · social out',
-   detail:'Cardio day. Lighter lunch, full protein dinner. 1 drink max — you lift Wednesday.',
-   tags:[{t:'cardio',c:'#EAF3DE',tc:'#27500A'},{t:'social',c:'#FBEAF0',tc:'#72243E'}]},
-  {day:'Wed',date:'Apr 1',title:'Own lift — chest/back/abs · family office call',
-   detail:'First solo Wednesday lift. High-alert evening — stay sharp for the call. Protein-forward all day.',
-   tags:[{t:'strength · 5am',c:'#EAF3DE',tc:'#27500A'},{t:'startup',c:'#E1F5EE',tc:'#085041'}]},
-  {day:'Thu',date:'Apr 2',title:'Stairmaster 30m · Drew dinner',
-   detail:'Cardio + social evening. Explore event partnership. Relaxed, conversational.',
-   tags:[{t:'cardio',c:'#EEEDFE',tc:'#3C3489'},{t:'social',c:'#FBEAF0',tc:'#72243E'}]},
-  {day:'Fri',date:'Apr 3',title:'Own lift — total body · work block',
-   detail:'Second solo lift. Strong close to the week. Heads down evening.',
-   tags:[{t:'strength · 5am',c:'#EAF3DE',tc:'#27500A'},{t:'work block',c:'#EEEDFE',tc:'#3C3489'}]},
-  {day:'Sat',date:'Apr 4',title:'Free day · brunch',
-   detail:'Your one bigger social night. Tequila soda or dry white wine.',
-   tags:[{t:'free day',c:'#FAEEDA',tc:'#633806'}]},
-  {day:'Sun',date:'Apr 5',title:'Recovery · optional hot yoga',
-   detail:'Clean eating. Early night. Reset for the week.',
-   tags:[{t:'early night',c:'#FAEEDA',tc:'#633806'}]}
+// ── AHEAD DATA — real calendar ────────────────────────────────────────────
+const AHEAD=[
+  {day:'Mon',date:'Mar 30',title:'Flex walk · work block',detail:'Travel recovery. Incline walk, heads down evening. Carb load at dinner.',tags:[{t:'flex',c:'#F0EDF9',tc:'#6B5B9E'},{t:'work block',c:DEFAULT_LIB,tc:''}]},
+  {day:'Tue',date:'Mar 31',title:'Stairmaster · startup meetings + dinner',detail:'High alert day. Startup meetings all day, startup dinner tonight. Protein-forward, sharp. 1 drink max.',tags:[{t:'cardio',bg:'#EDF2EB',tc:'#3A5C38'},{t:'startup dinner',bg:'#F7EDE5',tc:'#7A3E1E'}]},
+  {day:'Wed',date:'Apr 1',title:'Own lift — chest/back/abs · protected night',detail:'5am. Most important session of the week. Early night — no plans. Protect this.',tags:[{t:'strength · 5am',bg:'#EDF2EB',tc:'#3A5C38'},{t:'early night',bg:'#F8F0DF',tc:'#7A5020'}]},
+  {day:'Thu',date:'Apr 2',title:'Stairmaster · friend dinner',detail:'Cardio + social evening. Relaxed, enjoy it. Lighter lunch, full dinner.',tags:[{t:'cardio',bg:'#EDF2EB',tc:'#3A5C38'},{t:'friend dinner',bg:'#F7EDE5',tc:'#7A3E1E'}]},
+  {day:'Fri',date:'Apr 3',title:'Own lift — total body · friend dinner',detail:'5am lift then social evening. You can have drinks tonight — it\'s your free night. Tequila soda or dry wine.',tags:[{t:'strength · 5am',bg:'#EDF2EB',tc:'#3A5C38'},{t:'social',bg:'#F7ECEC',tc:'#7A3030'}]},
+  {day:'Sat',date:'Apr 4',title:'Startup activities · friend dinner',detail:'Split day — startup in the morning, dinner at night. Manage your energy. Eat well between.',tags:[{t:'startup',bg:'#F7EDE5',tc:'#7A3E1E'},{t:'social',bg:'#F7ECEC',tc:'#7A3030'}]},
+  {day:'Sun',date:'Apr 5',title:'Friend brunch · recovery',detail:'Easy morning. Optional hot yoga. Clean eating rest of day. Early night to reset.',tags:[{t:'brunch',bg:'#F8F0DF',tc:'#7A5020'},{t:'recovery',bg:'#EDF2EB',tc:'#3A5C38'}]},
+  {day:'Mon',date:'Apr 6',title:'Friend social · week reset',detail:'Social evening. Keep it light — new week starts tomorrow.',tags:[{t:'social',bg:'#F7ECEC',tc:'#7A3030'}]}
 ];
 
-// WEEK CARDS DATA
-const WEEK = [
-  {n:'Mon',date:'Mar 30',title:'Flex walk · work block',sub:'clean eating · 6h sleep',score:'B',past:true,today:true,
-   insight:'You got 6h — slightly under your 7h target. Flex walk was the right call for travel recovery. Clean eating held. The work block tonight is where you make progress on the dashboard.',
-   sowhat:'One notch under on sleep. Everything else on track. Tomorrow: stairmaster + 1 drink max to protect Wednesday\'s 5am lift.',sowhatColor:'#EAF3DE',sowhatTC:'#27500A'},
-  {n:'Tue',date:'Mar 31',title:'Stairmaster 30m · social out',sub:'cardio day · plans tonight',score:null,past:false,today:false,
-   insight:'Stairmaster 30 min at 6/7/8. Cardio day = lighter lunch, full dinner with carbs. 1 drink max tonight — tomorrow is your first solo 5am lift.',
-   sowhat:'This day sets up Wednesday. Protect your sleep.',sowhatColor:'#EEEDFE',sowhatTC:'#3C3489'},
-  {n:'Wed',date:'Apr 1',title:'Own lift — chest/back/abs',sub:'5am · first solo Wednesday',score:null,past:false,today:false,
-   insight:'This is the most important session of the week for the arm tone you\'re building. Your first fully self-programmed Wednesday. Treat it like an appointment.',
-   sowhat:'This lift is directly connected to your arm + inner thigh goal. Don\'t skip.',sowhatColor:'#EAF3DE',sowhatTC:'#27500A'},
-  {n:'Thu',date:'Apr 2',title:'Stairmaster 30m · Drew dinner',sub:'cardio · Resy connection',score:null,past:false,today:false,
-   insight:'Cardio + social evening. Drew is your event partnership opportunity. Stay energized — eat well at lunch.',
-   sowhat:'Key relationship dinner. Be present and conversational.',sowhatColor:'#FBEAF0',sowhatTC:'#72243E'},
-  {n:'Fri',date:'Apr 3',title:'Own lift — total body',sub:'5am · work block evening',score:null,past:false,today:false,
-   insight:'Second strength session of the week. Total body — glutes, arms, core. Strong finish.',
-   sowhat:'Two lifts this week = reset complete. You\'re back on track.',sowhatColor:'#EAF3DE',sowhatTC:'#27500A'},
-  {n:'Sat',date:'Apr 4',title:'Free day · brunch',sub:'social · enjoy it',score:null,past:false,today:false,
-   insight:'Your one bigger night. Tequila soda or dry white wine if drinking. Pilates if you want movement.',
-   sowhat:'Free days are part of the plan. Enjoy it.',sowhatColor:'#FAEEDA',sowhatTC:'#633806'},
-  {n:'Sun',date:'Apr 5',title:'Recovery · optional hot yoga',sub:'reset for next week',score:null,past:false,today:false,
-   insight:'Clean eating, optional yoga stretch, early night. Sets up Monday\'s fresh start.',
-   sowhat:'Recovery is productive. Don\'t skip the early night.',sowhatColor:'#FAEEDA',sowhatTC:'#633806'}
+// ── WEEK CARDS ────────────────────────────────────────────────────────────
+const WEEK=[
+  {n:'Mon',date:'Mar 30',title:'Flex walk · work block',sub:'clean eating · 6h sleep',score:'B',today:true,past:true,
+   ins:'You got 6h — under your 7h target but flex walk was the right call post-travel. Clean eating held. This work block is where the dashboard gets built.',
+   sw:'One notch under on sleep. Everything else on track. Tomorrow: stairmaster + max 1 drink — you lift 5am Wednesday.',swbg:'#EDF2EB',swtc:'#3A5C38'},
+  {n:'Tue',date:'Mar 31',title:'Stairmaster + startup dinner',sub:'cardio · high alert evening',score:null,today:false,past:false,
+   ins:'Cardio day — lighter lunch, full protein dinner before the startup dinner. Stay sharp all day. Startup dinner = networking mode. 1 drink max, you lift 5am Wednesday.',
+   sw:'This day sets up Wednesday. Protect your sleep after the dinner.',swbg:'#F7EDE5',swtc:'#7A3E1E'},
+  {n:'Wed',date:'Apr 1',title:'Own lift — chest/back/abs',sub:'5am · first solo Wednesday',score:null,today:false,past:false,
+   ins:'Most important session of the week for arm and inner thigh tone. First fully self-programmed Wednesday. Treat it like an unmovable appointment.',
+   sw:'This lift directly connects to your muscle building goal. No skipping.',swbg:'#EDF2EB',swtc:'#3A5C38'},
+  {n:'Thu',date:'Apr 2',title:'Stairmaster + friend dinner',sub:'cardio · social evening',score:null,today:false,past:false,
+   ins:'Cardio day + relaxed social night. Be present. Enjoy it. No startup mode needed.',
+   sw:'Good balance day. Keep drinks light — you lift Friday 5am.',swbg:'#F7EDE5',swtc:'#7A3E1E'},
+  {n:'Fri',date:'Apr 3',title:'Own lift — total body + friend dinner',sub:'5am · free evening',score:null,today:false,past:false,
+   ins:'Second strength session. Total body — glutes, arms, core. Friday is your one bigger social night. Tequila soda or dry white wine.',
+   sw:'Two lifts this week = reset complete. Enjoy your night.',swbg:'#EDF2EB',swtc:'#3A5C38'},
+  {n:'Sat',date:'Apr 4',title:'Startup activities + friend dinner',sub:'split day · manage energy',score:null,today:false,past:false,
+   ins:'Morning is startup, evening is social. Eat a solid meal between the two. Don\'t burn out by 7pm.',
+   sw:'Energy management day. Don\'t skip lunch.',swbg:'#F8F0DF',swtc:'#7A5020'},
+  {n:'Sun',date:'Apr 5',title:'Friend brunch · recovery',sub:'easy morning · reset',score:null,today:false,past:false,
+   ins:'Brunch, then clean eating rest of day. Optional hot yoga. Early night — new week starts Monday.',
+   sw:'Recovery is productive. Early night = strong Monday.',swbg:'#EDF2EB',swtc:'#3A5C38'}
 ];
 
-// TREND DATA
-const SLEEP_DATA  = [7,7,6.5,7,6,7,7.5,  6,null,null,null,null,null,null];
-const ENERGY_DATA = [3,4,3,4,2,3,4,  3,null,null,null,null,null,null];
-const CLEAN_DATA  = [1,1,1,1,0,0,0,  1,0,null,null,null,null,null];
-const WO_DATA     = ['rest','cardio','rest','pilates','rest','pilates','rest','flex',null,null,null,null,null,null];
-const TREND_LBLS  = ['M','T','W','T','F','S','S','M','T','W','T','F','S','S'];
+// ── TREND DATA ────────────────────────────────────────────────────────────
+const TLBLS=['M','T','W','T','F','S','S','M','T','W','T','F','S','S'];
+const SLP_D=[7,7,6.5,7,6,7,7.5,6,null,null,null,null,null,null];
+const EN_D=[3,4,3,4,2,3,4,3,null,null,null,null,null,null];
+const CL_D=[1,1,1,1,0,0,0,1,0,null,null,null,null,null];
+const WO_D=['rest','cardio','rest','pilates','rest','pilates','rest','flex',null,null,null,null,null,null];
 
 // ── CHECK-IN ──────────────────────────────────────────────────────────────
-function buildCheckin() {
-  document.getElementById('ci-greeting').textContent = HOUR < 12 ? 'Good morning — how much did you sleep?' : 'Hey — how\'d you sleep last night?';
-
-  const sleepOpts = document.getElementById('ci-sleep-opts');
-  ['4h','5h','6h','6.5h','7h','7.5h','8h','8.5h','9h+'].forEach(h => {
-    const b = document.createElement('button');
-    b.className = 'ci-opt' + (h==='6h'?' on':'');
-    b.textContent = h;
-    b.onclick = () => { sleepOpts.querySelectorAll('.ci-opt').forEach(x=>x.classList.remove('on')); b.classList.add('on'); state.sleep = parseFloat(h); };
-    sleepOpts.appendChild(b);
+function buildCheckin(){
+  document.getElementById('ci-q').textContent=HOUR<12?'Good morning — how much did you sleep?':'Hey — how\'d you sleep last night?';
+  const slpC=document.getElementById('ci-sleep');
+  ['4h','5h','6h','6.5h','7h','7.5h','8h','8.5h','9h+'].forEach(h=>{
+    const b=document.createElement('button');b.className='cio'+(h==='6h'?' on':'');b.textContent=h;
+    b.onclick=()=>{slpC.querySelectorAll('.cio').forEach(x=>x.classList.remove('on'));b.classList.add('on');S.sleep=parseFloat(h);};
+    slpC.appendChild(b);
   });
-
-  const locOpts = document.getElementById('ci-location-opts');
-  ['Office','WFH','Travel'].forEach(loc => {
-    const b = document.createElement('button');
-    b.className = 'ci-opt' + (loc==='Office'?' on':'');
-    b.textContent = loc;
-    b.onclick = () => { locOpts.querySelectorAll('.ci-opt').forEach(x=>x.classList.remove('on')); b.classList.add('on'); state.location = loc.toLowerCase(); };
-    locOpts.appendChild(b);
+  const locC=document.getElementById('ci-loc');
+  [{id:'office',label:'Office'},{id:'wfh',label:'WFH'},{id:'travel',label:'Travel'}].forEach(loc=>{
+    const b=document.createElement('button');b.className='cio'+(loc.id==='office'?' on':'');b.textContent=loc.label;
+    b.onclick=()=>{locC.querySelectorAll('.cio').forEach(x=>x.classList.remove('on'));b.classList.add('on');S.loc=loc.id;};
+    locC.appendChild(b);
   });
-
-  const tonightOpts = document.getElementById('ci-tonight-opts');
-  [{id:'work',label:'Startup work block'},{id:'networking',label:'Startup event / networking'},{id:'social',label:'Social out'},{id:'early',label:'Early night'}].forEach(m => {
-    const b = document.createElement('button');
-    b.className = 'ci-opt multi';
-    b.textContent = m.label;
-    b.onclick = () => {
+  const tonC=document.getElementById('ci-tonight');
+  [{id:'work',label:'Startup work block'},{id:'networking',label:'Startup event / networking'},{id:'social',label:'Social out'},{id:'early',label:'Early night'}].forEach(m=>{
+    const b=document.createElement('button');b.className='cio m';b.textContent=m.label;
+    b.onclick=()=>{
       b.classList.toggle('on');
-      if (b.classList.contains('on')) state.tonightModes.push(m.id);
-      else state.tonightModes.splice(state.tonightModes.indexOf(m.id),1);
+      if(b.classList.contains('on'))S.tonight.push(m.id);
+      else S.tonight.splice(S.tonight.indexOf(m.id),1);
     };
-    tonightOpts.appendChild(b);
+    tonC.appendChild(b);
   });
 }
 
-function completeCheckin() {
-  if (state.tonightModes.length===0) state.tonightModes=['work'];
-  state.checkinDone = true;
+function completeCheckin(){
+  if(!S.tonight.length)S.tonight=['work'];
+  S.checkinDone=true;
   document.getElementById('ci-wrap').classList.add('hidden');
   document.getElementById('day-view').classList.remove('hidden');
-
-  document.getElementById('sb-sleep').textContent = state.sleep + 'h';
-  document.getElementById('sb-loc').textContent = state.location === 'office' ? 'Office' : state.location === 'wfh' ? 'WFH' : 'Travel';
-  document.getElementById('sb-tonight').textContent = state.tonightModes.length === 1
-    ? [{work:'Work block',networking:'Networking',social:'Social out',early:'Early night'}[state.tonightModes[0]]]
-    : state.tonightModes.length + ' plans';
-
-  renderMeals();
-  renderMacros();
-  renderAIInsights();
-  renderWo();
-  renderSkincare();
-  renderWoAI();
-  renderSkinAI();
+  document.getElementById('sb-sleep').textContent=S.sleep+'h';
+  document.getElementById('sb-loc').textContent=S.loc==='office'?'Office':S.loc==='wfh'?'WFH':'Travel';
+  const modeLabels={work:'Work block',networking:'Networking',social:'Social',early:'Early night'};
+  document.getElementById('sb-tonight').textContent=S.tonight.length===1?modeLabels[S.tonight[0]]:S.tonight.length+' plans';
+  renderAI();renderMeals();renderMacros();renderWo();renderSkincare();renderWoAI();renderSkinAI();
 }
 
-function resetCheckin() {
-  state.checkinDone = false;
+function resetCheckin(){
+  S.checkinDone=false;S.tonight=[];
   document.getElementById('ci-wrap').classList.remove('hidden');
   document.getElementById('day-view').classList.add('hidden');
 }
 
 // ── AI INSIGHTS ───────────────────────────────────────────────────────────
-function renderAIInsights() {
-  const zone = document.getElementById('ai-zone');
-  zone.innerHTML = '';
-  const insights = [];
-
-  if (state.sleep < 7) {
-    insights.push({
-      type: state.sleep < 6 ? 'warn' : 'sug',
-      tag: 'sleep debt',
-      text: `You got ${state.sleep}h last night. Tomorrow is a stairmaster day — try to be in bed by 10pm tonight.`,
-      goal: '→ ' + GOALS.sleep + ' · ' + GOALS.startup,
-      acc: 'Setting 10pm reminder', rej: 'Noted'
-    });
-  }
-
-  if (state.tonightModes.includes('networking')) {
-    insights.push({
-      type: 'info',
-      tag: 'tonight · stay sharp',
-      text: 'Startup event tonight. You need to be on — conversational, present, energized.',
-      goal: '→ ' + GOALS.sharp + ' · keep dinner light before the event',
-      acc: 'Got it', rej: null
-    });
-  }
-
-  if (state.tonightModes.includes('work')) {
-    insights.push({
-      type: 'sug',
-      tag: 'work block',
-      text: 'Heads down tonight. Protect your focus window — check social only at 6pm, then phone down.',
-      goal: '→ ' + GOALS.startup,
-      acc: 'Focus mode on', rej: null
-    });
-  }
-
-  insights.push({
-    type: 'ok',
-    tag: 'flex day · right call',
-    text: 'Incline walk today after travel is exactly right. Don\'t compensate for last week — just reset.',
-    goal: '→ ' + GOALS.lean + ' · active recovery supports ' + GOALS.muscle,
-    acc: null, rej: null
-  });
-
-  insights.forEach(ins => {
-    const d = document.createElement('div');
-    const typeMap = {warn:'#FAECE7|#F0997B',sug:'#EEEDFE|#AFA9EC',ok:'#EAF3DE|#97C459',info:'#E6F1FB|#85B7EB'};
-    const [bg, border] = typeMap[ins.type].split('|');
-    d.style.cssText = `background:${bg};border:1.5px solid ${border};border-radius:12px;padding:12px 14px;margin-bottom:8px;position:relative`;
-    let h = `<div style="position:absolute;top:10px;right:12px;font-size:11px;color:#7F77DD;opacity:.8">✦</div>`;
-    h += `<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7F77DD;margin-bottom:3px">✦ ${ins.tag}</div>`;
-    h += `<div style="font-size:13px;line-height:1.5;margin-bottom:3px">${ins.text}</div>`;
-    h += `<div style="font-size:11px;color:#534AB7;opacity:.85;line-height:1.4;margin-bottom:${ins.acc||ins.rej?'8':'0'}px">${ins.goal}</div>`;
-    if (ins.acc || ins.rej) {
-      h += '<div style="display:flex;gap:6px;flex-wrap:wrap">';
-      if (ins.acc) h += `<button style="font-size:11px;padding:5px 12px;border-radius:20px;border:1.5px solid #7F77DD;cursor:pointer;background:#7F77DD;color:#fff" onclick="this.closest('div[style]').remove()">${ins.acc}</button>`;
-      if (ins.rej) h += `<button style="font-size:11px;padding:5px 12px;border-radius:20px;border:1.5px solid #c5c4bc;cursor:pointer;background:transparent;color:#888780" onclick="this.closest('div[style]').remove()">${ins.rej}</button>`;
-      h += '</div>';
+function renderAI(){
+  const z=document.getElementById('ai-zone');z.innerHTML='';
+  const cards=[];
+  if(S.sleep<7)cards.push({type:'warn',tag:'sleep debt',body:`You got ${S.sleep}h. Tomorrow is ${S.tonight.includes('networking')?'a high-alert startup event night':'a stairmaster day'} — aim for bed by ${S.tonight.includes('early')?'9:45':'10'}pm tonight.`,goal:'→ '+GOALS.sleep+' · '+GOALS.startup,acc:'Setting reminder',rej:'Noted'});
+  if(S.tonight.includes('networking'))cards.push({type:'info',tag:'tonight · stay sharp',body:'Startup dinner tonight — you need to be on. Energized, conversational, present.',goal:'→ '+GOALS.sharp+' · eat a real meal before, 1 drink max',acc:'Got it',rej:null});
+  if(S.tonight.includes('work'))cards.push({type:'sug',tag:'work block',body:'Heads down tonight. Social check-ins only at 6pm, then phone down. Protect the focus window.',goal:'→ '+GOALS.startup,acc:'Focus mode on',rej:null});
+  cards.push({type:'ok',tag:'flex day · right call',body:"Incline walk after travel is exactly right. Don't compensate for last week — just reset.",goal:'→ '+GOALS.lean+' · active recovery supports '+GOALS.muscle,acc:null,rej:null});
+  const typeStyles={warn:{bg:'#F7ECEC',border:'rgba(160,80,80,.3)'},sug:{bg:'var(--tl)',border:'rgba(193,122,86,.28)'},ok:{bg:'var(--gl)',border:'rgba(92,122,90,.25)'},info:{bg:'#EDF5FB',border:'rgba(60,100,160,.25)'}};
+  cards.forEach(c=>{
+    const d=document.createElement('div');const ts=typeStyles[c.type];
+    d.style.cssText=`background:${ts.bg};border:1px solid ${ts.border};border-radius:var(--r);padding:14px 16px;margin-bottom:10px`;
+    let h=`<div style="font-size:10px;font-weight:700;color:var(--terra);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px">✦ ${c.tag}</div>`;
+    h+=`<div style="font-size:13px;line-height:1.6;color:var(--ink2);margin-bottom:4px">${c.body}</div>`;
+    h+=`<div style="font-size:11px;color:var(--td);line-height:1.4;margin-bottom:${c.acc||c.rej?'10':'0'}px;opacity:.9">${c.goal}</div>`;
+    if(c.acc||c.rej){
+      h+='<div style="display:flex;gap:6px;flex-wrap:wrap">';
+      if(c.acc)h+=`<button style="font-size:12px;padding:6px 14px;border-radius:20px;border:1.5px solid var(--terra);cursor:pointer;background:var(--terra);color:#fff;font-weight:500" onclick="this.closest('div[style]').remove()">${c.acc}</button>`;
+      if(c.rej)h+=`<button style="font-size:12px;padding:6px 14px;border-radius:20px;border:1.5px solid var(--b2);cursor:pointer;background:transparent;color:var(--stone);font-weight:500" onclick="this.closest('div[style]').remove()">${c.rej}</button>`;
+      h+='</div>';
     }
-    d.innerHTML = h;
-    zone.appendChild(d);
+    d.innerHTML=h;z.appendChild(d);
   });
 }
 
 // ── MEALS ─────────────────────────────────────────────────────────────────
-function renderMeals() {
-  const card = document.getElementById('meal-card');
-  if (!card) return;
-  card.innerHTML = '';
-  meals.forEach((slot, si) => {
-    const sec = document.createElement('div'); sec.className = 'meal-slot';
-    const bubbles = slot.items.map((item,ii) =>
-      `<span class="bub" style="background:${slot.bg};color:${slot.tc}">${item}<span class="bx" onclick="removeItem(${si},${ii});event.stopPropagation()">✕</span></span>`
+function renderMeals(){
+  const card=document.getElementById('meal-card');if(!card)return;card.innerHTML='';
+  MEALS.forEach((slot,si)=>{
+    const sec=document.createElement('div');sec.className='mslot';
+    const bubs=slot.items.map((item,ii)=>
+      `<span class="bub" style="background:${slot.colors.bg};color:${slot.colors.tc}">${item}<span class="bx" onclick="removeItem(${si},${ii});event.stopPropagation()">✕</span></span>`
     ).join('');
-    sec.innerHTML = `
-      <div class="ms-time">${slot.time}</div>
-      <div class="ms-bubbles">${bubbles}<span class="badd" onclick="openMealModal(${si})">+</span></div>
-      <div style="font-size:11px;color:#888780">${slot.protein}g protein · ${slot.carbs}g carbs</div>`;
+    sec.innerHTML=`<div class="mtime">${slot.time}</div><div class="mbubs">${bubs}<span class="badd" onclick="openMealModal(${si})">+</span></div><div class="mmac">${slot.protein}g protein · ${slot.carbs}g carbs · ~${slot.cal} cal</div>`;
     card.appendChild(sec);
   });
 }
 
-function removeItem(si,ii){meals[si].items.splice(ii,1);renderMeals();renderMacros();}
+function removeItem(si,ii){MEALS[si].items.splice(ii,1);renderMeals();renderMacros();}
 
-function openMealModal(si) {
-  state.swapSlot = si;
-  const modal = document.getElementById('meal-modal');
-  document.getElementById('mm-sub').textContent = 'Adding to ' + meals[si].time;
-  const lib = document.getElementById('mm-lib'); lib.innerHTML = '';
-  [...FOOD.p,...FOOD.c,...FOOD.s].forEach(f => {
-    const chip = document.createElement('span'); chip.className = 'lchip'; chip.textContent = f;
-    chip.onclick = () => { meals[state.swapSlot].items.push(f); renderMeals(); renderMacros(); modal.style.display='none'; };
-    lib.appendChild(chip);
+function openMealModal(si){
+  S.swapSlot=si;
+  const modal=document.getElementById('meal-modal');
+  document.getElementById('mm-sub').textContent='Adding to '+MEALS[si].time;
+  const cats=document.getElementById('mm-cats');cats.innerHTML='';
+  const groups=[{label:'Proteins',key:'p'},{label:'Vegetables',key:'v'},{label:'Grains & carbs',key:'g'},{label:'Fruits',key:'fr'},{label:'Snacks & drinks',key:'s'}];
+  groups.forEach(g=>{
+    if(!LIB[g.key]||!LIB[g.key].length)return;
+    const lbl=document.createElement('div');lbl.style.cssText='font-size:10px;font-weight:700;color:var(--sl);text-transform:uppercase;letter-spacing:.08em;margin:10px 0 5px';lbl.textContent=g.label;cats.appendChild(lbl);
+    LIB[g.key].forEach(f=>{
+      const chip=document.createElement('span');chip.className='mlch';chip.textContent=f;
+      chip.onclick=()=>{MEALS[S.swapSlot].items.push(f);renderMeals();renderMacros();modal.style.display='none';};
+      cats.appendChild(chip);
+    });
   });
-  document.getElementById('mm-new').value = '';
-  modal.style.display = 'flex';
+  document.getElementById('mm-new').value='';
+  modal.style.display='flex';
 }
 
-function addAndSwap() {
-  const val = document.getElementById('mm-new').value.trim();
-  if (!val) return;
-  FOOD.s.push(val);
-  meals[state.swapSlot].items.push(val);
-  renderMeals(); renderMacros(); renderLib();
-  document.getElementById('meal-modal').style.display = 'none';
+function addAndSwap(){
+  const val=document.getElementById('mm-new').value.trim();if(!val)return;
+  LIB.s.push(val);ss('lib',LIB);
+  MEALS[S.swapSlot].items.push(val);
+  renderMeals();renderMacros();renderLib();
+  document.getElementById('meal-modal').style.display='none';
 }
 
 // ── MACROS ────────────────────────────────────────────────────────────────
-function renderMacros() {
-  const card = document.getElementById('macro-card');
-  if (!card) return;
-  const logProt = parseInt(document.getElementById('log-prot')?.value || 18);
-  const totalP = meals.reduce((a,s)=>a+s.protein,0);
-  const totalC = meals.reduce((a,s)=>a+s.carbs,0);
-  const pTarget = 120;
-  const pPct = Math.min(100, Math.round((totalP/pTarget)*100));
-  const pColor = totalP >= 80 ? '#639922' : totalP >= 50 ? '#EF9F27' : '#D85A30';
-
-  // AI commentary based on goals
-  let commentary = '';
-  if (totalP < 60) commentary = `✦ Only ${totalP}g protein so far. You need ${pTarget-totalP}g more today to support muscle recovery. → ${GOALS.muscle}`;
-  else if (totalP >= 80) commentary = `✦ Strong protein day at ${totalP}g. This directly supports the arm and inner thigh tone you're building. → ${GOALS.muscle}`;
-  else commentary = `✦ ${totalP}g protein — on track. Keep it up through dinner. → ${GOALS.lean}`;
-
-  card.innerHTML = `
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-      <div style="font-size:12px;font-weight:500">Macros today</div>
-      <div style="font-size:10px;color:#888780">target: 120g protein</div>
+function renderMacros(){
+  const card=document.getElementById('macro-card');if(!card)return;
+  const logP=parseInt(document.getElementById('log-prot')?.value||S.protein);
+  const totalP=MEALS.reduce((a,s)=>a+s.protein,0);
+  const totalC=MEALS.reduce((a,s)=>a+s.carbs,0);
+  const pTarget=120;const pPct=Math.min(100,Math.round(totalP/pTarget*100));
+  const pColor=totalP>=90?'var(--green)':totalP>=60?'var(--amber)':'var(--rose)';
+  let com='';
+  if(totalP<60)com=`✦ Only ${totalP}g protein so far. ${pTarget-totalP}g more today to support muscle recovery. → ${GOALS.muscle}`;
+  else if(totalP>=90)com=`✦ Strong protein day at ${totalP}g. Directly building the arm and inner thigh tone you want. → ${GOALS.muscle}`;
+  else com=`✦ ${totalP}g protein — on track. Keep going through dinner. → ${GOALS.lean}`;
+  card.innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <div style="font-size:13px;font-weight:600;color:var(--ink)">Macros today</div>
+      <div style="font-size:10px;color:var(--sl)">target 120g protein</div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
       <div>
-        <div style="font-size:10px;color:#888780;margin-bottom:3px">protein</div>
-        <div class="macro-bar-bg"><div class="macro-bar-fill" style="width:${pPct}%;background:${pColor}"></div></div>
-        <div style="font-size:11px;color:${pColor};font-weight:500">${totalP}g / ${pTarget}g</div>
+        <div style="font-size:10px;color:var(--stone);margin-bottom:3px;font-weight:600;text-transform:uppercase;letter-spacing:.06em">protein</div>
+        <div class="mbg"><div class="mfil" style="width:${pPct}%;background:${pColor}"></div></div>
+        <div class="mlbl"><span style="color:${pColor};font-weight:600">${totalP}g</span><span>${pTarget}g</span></div>
       </div>
       <div>
-        <div style="font-size:10px;color:#888780;margin-bottom:3px">carbs</div>
-        <div class="macro-bar-bg"><div class="macro-bar-fill" style="width:${Math.min(100,Math.round(totalC/150*100))}%;background:#7F77DD"></div></div>
-        <div style="font-size:11px;color:#7F77DD;font-weight:500">${totalC}g</div>
+        <div style="font-size:10px;color:var(--stone);margin-bottom:3px;font-weight:600;text-transform:uppercase;letter-spacing:.06em">carbs</div>
+        <div class="mbg"><div class="mfil" style="width:${Math.min(100,Math.round(totalC/150*100))}%;background:var(--terra)"></div></div>
+        <div class="mlbl"><span style="color:var(--terra);font-weight:600">${totalC}g</span><span>~150g</span></div>
       </div>
     </div>
-    <div style="font-size:11px;color:#534AB7;padding:7px 10px;background:#EEEDFE;border-radius:8px;line-height:1.5">${commentary}</div>`;
+    <div style="font-size:12px;color:var(--td);padding:8px 11px;background:var(--tl);border-radius:var(--rs);line-height:1.55">${com}</div>`;
 }
 
-function updateMacros() { renderMacros(); }
+function syncProtein(){S.protein=parseInt(document.getElementById('log-prot').value)||0;renderMacros();}
 
 // ── WORKOUT ───────────────────────────────────────────────────────────────
-function renderWo() {
-  document.getElementById('wo-name').textContent = wo.name;
-  document.getElementById('wo-det').textContent = wo.det;
-  const chk = document.getElementById('wo-chk');
-  chk.className = 'chk' + (wo.done?' gr':'');
-  chk.textContent = wo.done?'✓':'';
-  const tags = document.getElementById('wo-tags'); tags.innerHTML = '';
-  wo.tags.forEach(t => {
-    const s=document.createElement('span');s.className='tag';s.style.background=t.c;s.style.color=t.tc;s.textContent=t.t;tags.appendChild(s);
-  });
+function renderWo(){
+  document.getElementById('wo-n').textContent=S.woName;
+  document.getElementById('wo-d').textContent=S.woDet;
+  const chk=document.getElementById('wo-chk');
+  chk.className='chk'+(S.woDone?' gr':'');chk.textContent=S.woDone?'✓':'';
+  const tags=document.getElementById('wo-tags');tags.innerHTML='';
+  if(!S.woDone){
+    [{t:'flex day',bg:'#F0EDF9',tc:'var(--purple)'},{t:'travel recovery',bg:'var(--cream2)',tc:'var(--stone)'}].forEach(t=>{
+      const s=document.createElement('span');s.className='tag';s.style.background=t.bg;s.style.color=t.tc;s.textContent=t.t;tags.appendChild(s);
+    });
+  } else {
+    const s=document.createElement('span');s.className='tag';s.style.background='var(--gl)';s.style.color='var(--green)';s.textContent='✓ done';tags.appendChild(s);
+  }
 }
 
-function renderWoAI() {
-  const wrap = document.getElementById('wo-ai-wrap');
-  if (!wrap) return;
-  wrap.innerHTML = `
-    <div style="font-size:11px;color:#534AB7;padding:7px 10px 7px 12px;background:#EEEDFE;border-radius:8px;margin-top:-4px;margin-bottom:10px;line-height:1.5;border-left:3px solid #7F77DD">
-      ✦ Flex day is the right move after travel. Tomorrow: stairmaster 30m at 6/7/8 sets up Wednesday's 5am lift. → ${GOALS.muscle} · ${GOALS.lean}
-    </div>`;
+function renderWoAI(){
+  const w=document.getElementById('wo-ai');if(!w)return;
+  w.innerHTML=`<div style="font-size:12px;color:var(--td);padding:8px 12px 8px 14px;background:var(--tl);border-radius:var(--rs);margin-top:-6px;margin-bottom:12px;line-height:1.55;border-left:3px solid var(--terra)">✦ Flex day is the right move after travel. Tomorrow: stairmaster 30m at 6/7/8 sets up Wednesday's 5am lift. → ${GOALS.muscle} · ${GOALS.lean}</div>`;
 }
 
-function toggleWo() { wo.done=!wo.done; renderWo(); renderWoAI(); }
+function toggleWo(){S.woDone=!S.woDone;renderWo();renderWoAI();}
 
-function openWoModal() {
+function openWoModal(){
   const modal=document.getElementById('wo-modal');
-  const opts=document.getElementById('wm-opts'); opts.innerHTML='';
-  FOOD.wo.forEach(w => {
-    const chip=document.createElement('span');chip.className='lchip';chip.textContent=w;
-    chip.onclick=()=>{wo.name=w;wo.det='';wo.tags=[];renderWo();modal.style.display='none';};
+  const opts=document.getElementById('wm-opts');opts.innerHTML='';
+  LIB.wo.forEach(w=>{
+    const chip=document.createElement('span');chip.className='mlch';chip.textContent=w;
+    chip.onclick=()=>{S.woName=w;S.woDet='';renderWo();modal.style.display='none';};
     opts.appendChild(chip);
   });
-  document.getElementById('wm-new').value='';
-  modal.style.display='flex';
+  document.getElementById('wm-new').value='';modal.style.display='flex';
 }
-function setCustomWo(){const val=document.getElementById('wm-new').value.trim();if(!val)return;wo.name=val;wo.det='';wo.tags=[];renderWo();document.getElementById('wo-modal').style.display='none';}
-function syncWo(){wo.done=document.getElementById('lc-wo').classList.contains('on');renderWo();}
+
+function setCustomWo(){
+  const val=document.getElementById('wm-new').value.trim();if(!val)return;
+  S.woName=val;S.woDet='';renderWo();
+  document.getElementById('wo-modal').style.display='none';
+}
+
+function syncWoDone(){S.woDone=document.getElementById('lc-wo').classList.contains('on');renderWo();}
+function syncWoType(){const v=document.getElementById('log-wo-type').value;S.woName=v;S.woDet='';renderWo();}
 
 // ── SKINCARE ──────────────────────────────────────────────────────────────
-function renderSkincare() {
-  const card = document.getElementById('skin-card');
-  if (!card) return;
-  card.innerHTML = '';
-
-  const addSection = (label, items, prefix) => {
-    const header = document.createElement('div');
-    header.style.cssText = 'font-size:10px;font-weight:600;color:#b4b2a9;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;margin-top:' + (label==='AM'?'0':'10px');
-    header.textContent = label;
-    card.appendChild(header);
-    items.forEach((item,i) => {
-      const row = document.createElement('div'); row.className = 'skin-item';
-      row.innerHTML = `
-        <div>
-          <div class="skin-name">${item.name}</div>
-          <div class="skin-note">${item.note}</div>
-        </div>
-        <div class="sm-chk${item.done?' on':''}" id="${prefix}-${i}" onclick="toggleSkin('${prefix}',${i})">${item.done?'✓':''}</div>`;
+function renderSkincare(){
+  const card=document.getElementById('skin-card');if(!card)return;card.innerHTML='';
+  const addSec=(label,items,prefix)=>{
+    const hdr=document.createElement('div');
+    hdr.style.cssText='font-size:10px;font-weight:700;color:var(--sl);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px'+(label==='PM'?';margin-top:12px;padding-top:12px;border-top:1px solid var(--b1)':'');
+    hdr.textContent=label;card.appendChild(hdr);
+    items.forEach((item,i)=>{
+      const row=document.createElement('div');row.className='skit';
+      row.innerHTML=`<div class="woi"><div class="skin">${item.name}</div><div class="sknt">${item.note||''}</div></div><div class="sc${item.done?' on':''}" id="${prefix}-${i}" onclick="toggleSkin('${prefix}',${i})">${item.done?'✓':''}</div>`;
       card.appendChild(row);
     });
   };
-  addSection('AM', skinAM, 'am');
-  addSection('PM', skinPM, 'pm');
+  // Build skincare arrays from library
+  SKIN_AM=LIB.am.map((n,i)=>({name:n,done:SKIN_AM[i]?.done||false,note:n==='shiseido SPF'?'non-negotiable':'moisturizer'}));
+  const pmNote=isRetinol?'retinol night — you did BHA last night':'BHA night — pore minimizing';
+  SKIN_PM=LIB.pm.map((n,i)=>({name:n,done:SKIN_PM[i]?.done||false,note:i===0?pmNote:'lock in moisture'}));
+  addSec('AM',SKIN_AM,'am');addSec('PM',SKIN_PM,'pm');
 }
 
-function renderSkinAI() {
-  const wrap = document.getElementById('skin-ai-wrap');
-  if (!wrap) return;
-  const tonight = isRetinolDay ? 'retinol' : 'BHA';
-  const lastNight = isRetinolDay ? 'BHA' : 'retinol';
-  const dayOfWeek = NOW.getDay();
-  const maskSuggestion = dayOfWeek === 0 ? ' Sunday is a great day for a face mask instead of your usual PM routine.' : '';
-  wrap.innerHTML = `
-    <div style="font-size:11px;color:#534AB7;padding:7px 10px 7px 12px;background:#EEEDFE;border-radius:8px;margin-top:-4px;margin-bottom:10px;line-height:1.5;border-left:3px solid #7F77DD">
-      ✦ ${tonight.charAt(0).toUpperCase()+tonight.slice(1)} tonight — you did ${lastNight} last night. Alternating keeps your skin from getting irritated while still minimizing pores.${maskSuggestion} → ${GOALS.skin}
-    </div>`;
+function renderSkinAI(){
+  const w=document.getElementById('skin-ai');if(!w)return;
+  const tonight=isRetinol?'retinol':'BHA';const lastNight=isRetinol?'BHA':'retinol';
+  const isSun=NOW.getDay()===0;
+  const maskNote=isSun?' Sunday is a great day for a face mask or gua sha instead of your full PM routine.':'';
+  w.innerHTML=`<div style="font-size:12px;color:var(--td);padding:8px 12px 8px 14px;background:var(--tl);border-radius:var(--rs);margin-top:-6px;margin-bottom:12px;line-height:1.55;border-left:3px solid var(--terra)">✦ ${tonight.charAt(0).toUpperCase()+tonight.slice(1)} tonight — you used ${lastNight} last night. Alternating protects your skin while minimizing pores.${maskNote} → ${GOALS.skin}</div>`;
 }
 
-function toggleSkin(prefix, i) {
-  const arr = prefix === 'am' ? skinAM : skinPM;
-  arr[i].done = !arr[i].done;
-  const el = document.getElementById(prefix + '-' + i);
-  el.classList.toggle('on');
-  el.textContent = arr[i].done ? '✓' : '';
+function toggleSkin(prefix,i){
+  const arr=prefix==='am'?SKIN_AM:SKIN_PM;
+  arr[i].done=!arr[i].done;
+  const el=document.getElementById(prefix+'-'+i);
+  el.classList.toggle('on');el.textContent=arr[i].done?'✓':'';
 }
 
 // ── WEEK CARDS ────────────────────────────────────────────────────────────
-function renderWeekCards() {
-  const cont = document.getElementById('week-cards');
-  if (!cont) return; cont.innerHTML = '';
-  const scoreColors = {A:{bg:'#EEEDFE',tc:'#3C3489'},B:{bg:'#EAF3DE',tc:'#27500A'},C:{bg:'#FAEEDA',tc:'#633806'},D:{bg:'#FAECE7',tc:'#712B13'}};
-  WEEK.forEach((d,i) => {
-    const card = document.createElement('div');
-    card.className = 'wday-card' + (d.today?' today':'');
-    card.onclick = () => { card.classList.toggle('expanded'); };
-    const sc = d.score ? scoreColors[d.score] : null;
-    let h = `<div class="wdc-row">
-      <div class="wdc-day"><div class="wdc-name">${d.n}</div><div class="wdc-date">${d.date}</div></div>
-      <div style="flex:1"><div class="wdc-title">${d.title}</div><div class="wdc-sub">${d.sub}</div></div>`;
-    if (sc) h += `<div class="wdc-score" style="background:${sc.bg};color:${sc.tc}">${d.score}</div>`;
-    else if (d.today) h += `<div class="wdc-score" style="background:#EEEDFE;color:#7F77DD">today</div>`;
-    else h += `<div class="wdc-score" style="background:#f1efe8;color:#b4b2a9">—</div>`;
-    h += `</div>
-      <div class="wdc-body">
-        <div style="font-size:12px;color:#1a1a18;line-height:1.6;margin-bottom:6px">${d.insight}</div>
-        <div style="font-size:11px;padding:8px 11px;border-radius:8px;background:${d.sowhatColor};color:${d.sowhatTC};line-height:1.5">✦ ${d.sowhat}</div>
-      </div>`;
-    card.innerHTML = h;
-    cont.appendChild(card);
+function renderWeekCards(){
+  const cont=document.getElementById('week-cards');if(!cont)return;cont.innerHTML='';
+  const sc={A:{bg:'#EDF2EB',tc:'#3A5C38'},B:{bg:'var(--tl)',tc:'var(--td)'},C:{bg:'var(--al)',tc:'var(--amber)'},D:{bg:'#F7ECEC',tc:'var(--rose)'}};
+  WEEK.forEach((d,i)=>{
+    const card=document.createElement('div');card.className='wdc'+(d.today?' today':'');
+    card.onclick=()=>card.classList.toggle('exp');
+    const s=d.score?sc[d.score]:null;
+    let h=`<div class="wdt"><div style="min-width:38px"><div class="wdn">${d.n}</div><div class="wdd">${d.date}</div></div><div style="flex:1"><div class="wdti">${d.title}</div><div class="wdsu">${d.sub}</div></div>`;
+    if(s)h+=`<div class="wdsc" style="background:${s.bg};color:${s.tc}">${d.score}</div>`;
+    else if(d.today)h+=`<div class="wdsc" style="background:var(--tl);color:var(--terra)">today</div>`;
+    else h+=`<div class="wdsc" style="background:var(--cream2);color:var(--sl)">—</div>`;
+    h+=`</div><div class="wdb"><div class="wdins">${d.ins}</div><div class="wdsw" style="background:${d.swbg};color:${d.swtc}">✦ ${d.sw}</div></div>`;
+    card.innerHTML=h;cont.appendChild(card);
   });
 }
 
 // ── AHEAD ─────────────────────────────────────────────────────────────────
-function renderAhead() {
-  const card = document.getElementById('ahead-card');
-  if (!card) return; card.innerHTML = '';
-  AHEAD.forEach(a => {
-    const row = document.createElement('div'); row.className = 'ahead-item';
-    const tags = a.tags.map(t=>`<span class="tag" style="background:${t.c};color:${t.tc}">${t.t}</span>`).join('');
-    row.innerHTML = `
-      <div class="ai-day"><div class="ai-dayname">${a.day}</div><div class="ai-daydate">${a.date}</div></div>
-      <div style="flex:1">
-        <div style="font-size:13px;font-weight:500;color:#1a1a18;margin-bottom:2px">${a.title}</div>
-        <div style="font-size:11px;color:#888780;line-height:1.5;margin-bottom:4px">${a.detail}</div>
-        <div>${tags}</div>
-      </div>`;
+function renderAhead(){
+  const card=document.getElementById('ahead-card');if(!card)return;card.innerHTML='';
+  AHEAD.forEach((a,i)=>{
+    const row=document.createElement('div');row.className='ahrw';
+    const tags=a.tags.map(t=>`<span class="pill" style="background:${t.bg||'var(--cream2)'};color:${t.tc||'var(--stone)'}">${t.t}</span>`).join('');
+    row.innerHTML=`<div style="min-width:32px"><div class="ahdn">${a.day}</div><div class="ahdd">${a.date}</div></div><div style="flex:1"><div class="ahti">${a.title}</div><div class="ahde">${a.detail}</div><div>${tags}</div></div>`;
+    if(i===AHEAD.length-1)row.style.borderBottom='none';
     card.appendChild(row);
   });
-  if (card.lastChild) card.lastChild.style.borderBottom = 'none';
 }
 
 // ── HISTORY ───────────────────────────────────────────────────────────────
-function renderHist() {
-  const key = String(state.histOffset);
-  const wk = HIST[key] || HIST['0'];
-  document.getElementById('wk-label').textContent = wk.label;
-  const cont = document.getElementById('hist-rows'); cont.innerHTML = '';
-  const dc = {eat:'#639922',cardio:'#7F77DD',lift:'#534AB7',pilates:'#D4537E',flex:'#1D9E75',rest:'#e0dfd8',drk:'#D85A30',sk:'#D4537E'};
-  wk.days.forEach(d => {
-    const row = document.createElement('div'); row.className = 'hdrow';
-    const dot = (on,c) => `<div class="hd${on?' on':''}" style="${on?'background:'+c+';':''}">${on?'·':''}</div>`;
-    const woOn = d.wo !== 'rest';
-    const woColor = dc[d.wo] || '#7F77DD';
-    row.innerHTML =
-      `<div style="font-size:11px;font-weight:500;color:${d.free?'#b4b2a9':'#888780'}">${d.n}</div>` +
-      `<div style="font-size:10px;color:#b4b2a9;line-height:1.3">${d.note}</div>` +
-      dot(d.eat,'#639922')+dot(woOn,woColor)+dot(d.slp>=7,'#1D9E75')+dot(d.drk>0,'#D85A30')+dot(d.sk,'#D4537E');
+function renderHist(){
+  const key=String(S.histOff);const wk=HIST[key]||HIST['0'];
+  document.getElementById('wk-label').textContent=wk.label;
+  const cont=document.getElementById('hist-rows');cont.innerHTML='';
+  const dc={eat:'#5C7A5A',cardio:'#6B5B9E',lift:'#4A3A8E',pilates:'#A05050',flex:'#5C7A5A',rest:'var(--cream3)'};
+  wk.days.forEach(d=>{
+    const row=document.createElement('div');row.className='hrow';
+    const dot=(on,c)=>`<div class="hd${on?' on':''}" style="${on?'background:'+c+';':''}">${on?'·':''}</div>`;
+    row.innerHTML=`<div style="font-size:11px;font-weight:600;color:${d.free?'var(--sl)':'var(--stone)'}">${d.n}</div><div style="font-size:10px;color:var(--sl);line-height:1.4">${d.note}${d.drk>0?' · '+d.drk+'drk':''}</div>`+dot(d.eat,'#5C7A5A')+dot(d.wo!=='rest',dc[d.wo]||'#6B5B9E')+dot(d.slp&&d.slp>=7,'#C17A56')+dot(d.drk>0,'#A05050')+dot(d.sk,'#A87830');
     cont.appendChild(row);
   });
   const wos=wk.days.filter(d=>d.wo!=='rest').length;
   const eats=wk.days.filter(d=>d.eat).length;
-  const slpDays=wk.days.filter(d=>d.slp);
-  const avgSlp=slpDays.length?slpDays.reduce((a,d)=>a+(d.slp||0),0)/slpDays.length:0;
+  const slpd=wk.days.filter(d=>d.slp);
+  const avgS=slpd.length?(slpd.reduce((a,d)=>a+(d.slp||0),0)/slpd.length).toFixed(1):'—';
   const drinks=wk.days.reduce((a,d)=>a+d.drk,0);
-  document.getElementById('hist-sum').innerHTML=[
-    {l:'workouts',v:wos+'/7'},{l:'clean days',v:eats+'/7'},{l:'avg sleep',v:avgSlp.toFixed(1)+'h'},{l:'drinks',v:drinks}
-  ].map(s=>`<div style="background:#f1efe8;border-radius:8px;padding:8px 10px;text-align:center"><div style="font-size:10px;color:#888780;margin-bottom:2px">${s.l}</div><div style="font-size:16px;font-weight:500">${s.v}</div></div>`).join('');
-
-  const sowhat = document.getElementById('hist-sowhat');
-  sowhat.innerHTML = `<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7F77DD;margin-bottom:5px">✦ so what</div><div style="font-size:12px;color:#1a1a18;line-height:1.6">${wk.sowhat}</div>`;
+  document.getElementById('hist-sum').innerHTML=[{l:'workouts',v:wos+'/7'},{l:'clean days',v:eats+'/7'},{l:'avg sleep',v:avgS+'h'},{l:'drinks',v:drinks}]
+    .map(s=>`<div style="background:var(--cream2);border-radius:var(--rs);padding:10px;text-align:center"><div style="font-size:9px;font-weight:700;color:var(--sl);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px">${s.l}</div><div style="font-size:17px;font-weight:700;color:var(--ink)">${s.v}</div></div>`).join('');
+  document.getElementById('hist-sw').innerHTML=`<div class="aisp">✦ so what</div><div class="aibd" style="line-height:1.65">${wk.sw}</div>`;
 }
 
-function changeWeek(d){
+function chWk(d){
   const keys=Object.keys(HIST).map(Number).sort((a,b)=>a-b);
-  const nv=state.histOffset+d;
-  if(keys.includes(nv)){state.histOffset=nv;renderHist();}
+  const nv=S.histOff+d;if(keys.includes(nv)){S.histOff=nv;renderHist();}
 }
 
 // ── TRENDS ────────────────────────────────────────────────────────────────
-function renderTrends() {
-  // SLEEP
-  document.getElementById('sleep-sowhat').innerHTML = '✦ Your average is 6.8h — slightly under your 7h target. The dip on Friday (travel) is consistent with your LA pattern. Protecting Wednesday and Thursday nights is where you gain the most. → ' + GOALS.sleep;
-  renderBarChart('sleep-bars','sleep-lbls',SLEEP_DATA,TREND_LBLS,'#7F77DD',10,7);
-
-  // WORKOUTS
-  document.getElementById('wo-sowhat').innerHTML = '✦ 6 active sessions in the last 2 weeks despite travel. Your pilates sessions in LA are saving your consistency streak. This week: first fully self-programmed Wednesday and Friday lifts. → ' + GOALS.muscle;
-  const woCont = document.getElementById('wo-dots');
-  woCont.innerHTML = '';
-  const woC = {cardio:'#7F77DD',lift:'#534AB7',pilates:'#D4537E',flex:'#1D9E75',rest:'#e0dfd8'};
-  WO_DATA.forEach((w,i) => {
-    const d=document.createElement('div');d.className='wo-dot';
-    d.style.background=w?woC[w]||'#e0dfd8':'#f1efe8';
-    d.style.color=w&&w!=='rest'?'#fff':'#b4b2a9';
-    d.textContent=TREND_LBLS[i];
-    woCont.appendChild(d);
-  });
-  document.getElementById('wo-legend').innerHTML='<span style="color:#7F77DD">■</span> cardio &nbsp;<span style="color:#534AB7">■</span> lift &nbsp;<span style="color:#D4537E">■</span> pilates &nbsp;<span style="color:#1D9E75">■</span> flex &nbsp;<span style="color:#e0dfd8">■</span> rest';
-
-  // CLEAN EATING
-  document.getElementById('clean-sowhat').innerHTML = '✦ 5 clean days last 2 weeks. Your Fri–Sun pattern is the one thing holding you back from a full week. Free days are fine — just notice the pattern. → ' + GOALS.lean;
-  const cleanCont = document.getElementById('clean-dots');
-  cleanCont.innerHTML = '';
-  CLEAN_DATA.forEach((v,i) => {
-    const d=document.createElement('div');d.className='clean-dot';
-    d.style.background=v===1?'#639922':v===0?'#F0997B':'#f1efe8';
-    d.style.color=v!==null?'#fff':'#b4b2a9';
-    d.textContent=TREND_LBLS[i];
-    cleanCont.appendChild(d);
-  });
-
-  // ENERGY
-  document.getElementById('energy-sowhat').innerHTML = '✦ Your best energy days correlate with 7h+ sleep and clean eating the night before. Fridays are consistently your lowest — likely travel + Friday night drinks. → ' + GOALS.startup;
-  renderBarChart('energy-bars','energy-lbls',ENERGY_DATA,TREND_LBLS,'#1D9E75',5,3);
+function renderTrends(){
+  document.getElementById('slp-sw').innerHTML='✦ Your average is 6.8h — just under your 7h target. Travel Fridays consistently pull it down. Protecting Wed/Thu nights is where you gain most. → '+GOALS.sleep;
+  renderBars('slp-bars','slp-lbls',SLP_D,TLBLS,10,7,'#C17A56','#F0997B');
+  document.getElementById('wo-sw').innerHTML='✦ 6 active sessions in 2 weeks despite LA travel. Your pilates sessions are saving the consistency streak. This week: first fully self-programmed Wed + Fri lifts. → '+GOALS.muscle;
+  const wc={cardio:'#6B5B9E',lift:'#4A3A8E',pilates:'#A05050',flex:'#5C7A5A',rest:'var(--cream3)'};
+  const wdots=document.getElementById('wo-dots');wdots.innerHTML='';
+  WO_D.forEach((w,i)=>{const d=document.createElement('div');d.className='wdot';d.style.background=w?wc[w]||'var(--cream3)':'var(--cream2)';d.style.color=w&&w!=='rest'?'#fff':'var(--sl)';d.textContent=TLBLS[i];wdots.appendChild(d);});
+  document.getElementById('wo-leg').innerHTML='<span style="color:#6B5B9E">■</span> cardio &nbsp;<span style="color:#4A3A8E">■</span> lift &nbsp;<span style="color:#A05050">■</span> pilates &nbsp;<span style="color:#5C7A5A">■</span> flex';
+  document.getElementById('cl-sw').innerHTML='✦ 5 clean days last 2 weeks. Fri–Sun is the pattern. Free days are fine — just notice it. → '+GOALS.lean;
+  const cdots=document.getElementById('cl-dots');cdots.innerHTML='';
+  CL_D.forEach((v,i)=>{const d=document.createElement('div');d.className='cdot';d.style.background=v===1?'#5C7A5A':v===0?'#A05050':'var(--cream2)';d.style.color=v!==null?'#fff':'var(--sl)';d.textContent=TLBLS[i];cdots.appendChild(d);});
+  document.getElementById('en-sw').innerHTML='✦ Your best energy days match 7h+ sleep + clean eating the night before. Fridays are your lowest — travel + drinks pattern. → '+GOALS.startup;
+  renderBars('en-bars','en-lbls',EN_D,TLBLS,5,3,'#5C7A5A','#A87830');
 }
 
-function renderBarChart(chartId,lblId,data,lbls,color,maxVal,targetVal) {
-  const chart=document.getElementById(chartId);
-  const lblCont=document.getElementById(lblId);
-  if(!chart) return;
-  chart.innerHTML='';lblCont.innerHTML='';
+function renderBars(bid,lid,data,lbls,max,target,good,warn){
+  const c=document.getElementById(bid);const l=document.getElementById(lid);
+  if(!c||!l)return;c.innerHTML='';l.innerHTML='';
   data.forEach((v,i)=>{
-    const col=document.createElement('div');col.className='b-col';
-    const bar=document.createElement('div');bar.className='b-bar';
-    bar.style.height=v!==null?Math.round((v/maxVal)*72)+'px':'3px';
-    bar.style.background=v!==null?(v>=targetVal?color:'#F0997B'):'#f1efe8';
+    const col=document.createElement('div');col.className='bc';
+    const bar=document.createElement('div');bar.className='bb';
+    bar.style.height=v!==null?Math.round((v/max)*80)+'px':'3px';
+    bar.style.background=v!==null?(v>=target?good:warn):'var(--cream2)';
     col.appendChild(bar);
-    if(v!==null){const vl=document.createElement('div');vl.style.cssText='font-size:9px;color:#888780;text-align:center';vl.textContent=v;col.appendChild(vl);}
-    chart.appendChild(col);
-    const l=document.createElement('div');l.className='b-lbl';l.textContent=lbls[i];lblCont.appendChild(l);
+    if(v!==null){const vl=document.createElement('div');vl.className='bv';vl.textContent=v;col.appendChild(vl);}
+    c.appendChild(col);
+    const lb=document.createElement('div');lb.className='bl';lb.textContent=lbls[i];l.appendChild(lb);
   });
 }
-
-// ── LOG ───────────────────────────────────────────────────────────────────
-function toggleSmChk(id){
-  const el=document.getElementById(id);
-  el.classList.toggle('on');
-  el.textContent=el.classList.contains('on')?'✓':'';
-}
-function saveLog(){alert('Logged! Upload a new index.html to GitHub to see persistent history in the next version.');}
 
 // ── LIBRARY ───────────────────────────────────────────────────────────────
-function renderLib() {
-  const render=(id,arr)=>{const c=document.getElementById(id);if(!c)return;c.innerHTML='';arr.forEach(f=>{const ch=document.createElement('span');ch.className='lib-chip';ch.textContent=f;c.appendChild(ch);});};
-  render('lib-p',FOOD.p);render('lib-c',FOOD.c);render('lib-s',FOOD.s);render('lib-wo',FOOD.wo);
+function renderLib(){
+  const groups=[{id:'lib-p',key:'p'},{id:'lib-v',key:'v'},{id:'lib-g',key:'g'},{id:'lib-fr',key:'fr'},{id:'lib-s',key:'s'},{id:'lib-wo',key:'wo'},{id:'lib-am',key:'am'},{id:'lib-pm',key:'pm'}];
+  groups.forEach(g=>{
+    const cont=document.getElementById(g.id);if(!cont)return;cont.innerHTML='';
+    (LIB[g.key]||[]).forEach(item=>{
+      const chip=document.createElement('span');chip.className='lch';chip.textContent=item;cont.appendChild(chip);
+    });
+  });
 }
+
 function addLibItem(){
   const cat=document.getElementById('new-cat').value;
-  const val=document.getElementById('new-item').value.trim();
-  if(!val)return;
-  (cat==='wo'?FOOD.wo:FOOD[cat]).push(val);
+  const val=document.getElementById('new-item').value.trim();if(!val)return;
+  if(!LIB[cat])LIB[cat]=[];
+  if(!LIB[cat].includes(val)){LIB[cat].push(val);ss('lib',LIB);}
   document.getElementById('new-item').value='';
   renderLib();
+  if(cat==='am'||cat==='pm')renderSkincare();
 }
+
+// ── LOG SYNC ──────────────────────────────────────────────────────────────
+function toggleSC(id){
+  const el=document.getElementById(id);el.classList.toggle('on');el.textContent=el.classList.contains('on')?'✓':'';
+}
+function saveLog(){ss('log-'+NOW.toDateString(),{protein:document.getElementById('log-prot')?.value});alert('Logged! Your data is saved.');}
 
 // ── TABS ──────────────────────────────────────────────────────────────────
 function showTab(id,el){
